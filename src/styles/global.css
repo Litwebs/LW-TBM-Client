@@ -917,8 +917,8 @@ section.tight { padding: 64px 0; }
 }
 
 /* ===== Brand / logo image ===== */
-.brand { display: inline-flex; align-items: center; gap: 12px; }
-.brand-mark { height: 36px; width: auto; display: block; }
+.brand { display: inline-flex; align-items: center; gap: 12px; min-width: 0; }
+.brand-mark { height: 42px; width: auto; display: block; object-fit: contain; flex: 0 0 auto; }
 .brand-word { display: inline-block; }
 .footer .brand-mark { height: 40px; }
 
@@ -962,7 +962,7 @@ section.tight { padding: 64px 0; }
   .account-main > div[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
 }
 @media (max-width: 480px) {
-  .brand-mark { height: 30px; }
+  .brand-mark { height: 34px; }
   .logo { font-size: 20px; }
   .container { padding: 0 20px; }
   .page-header { padding: 52px 0 32px; }

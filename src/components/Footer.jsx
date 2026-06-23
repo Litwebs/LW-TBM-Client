@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useApp } from "../context/AppContext.jsx";
-import logoAsset from "../assets/panel-loft-logo.png.asset.json";
 
 export default function Footer() {
   const { toast } = useApp();
@@ -17,7 +16,7 @@ export default function Footer() {
         <div className="footer-grid">
           <div className="footer-brand-col">
             <div className="logo brand" style={{ color: "#fff", marginBottom: 16 }}>
-              <img src={logoAsset.url} alt="Panel Loft" className="brand-mark" />
+              <img src="/images/panel-loft-logo-mark.png" alt="Panel Loft" className="brand-mark" />
               <span className="brand-word">Panel Loft<small>UK</small></span>
             </div>
             <p className="footer-tag">Premium acoustic and decorative wall panels for modern interiors, designed and despatched from the UK.</p>
