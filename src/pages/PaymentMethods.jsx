@@ -23,9 +23,9 @@ export default function PaymentMethods() {
               <div className="card-brand">{m.brand}</div>
               <div className="card-num">•••• •••• •••• {m.last4}</div>
               <div className="card-meta"><span>{m.holder}</span><span>Exp {m.exp}</span></div>
-              <div style={{ display: "flex", gap: 10, marginTop: 18 }}>
-                {!m.default && <button className="btn btn-outline" style={{ padding: "8px 14px", fontSize: 11 }} onClick={() => setDefault(m.id)}>Set Default</button>}
-                {!m.default && <button className="btn btn-outline" style={{ padding: "8px 14px", fontSize: 11 }} onClick={() => remove(m.id)}>Remove</button>}
+              <div className="payment-actions">
+                {!m.default && <button className="btn btn-outline btn-compact" onClick={() => setDefault(m.id)}>Set Default</button>}
+                {!m.default && <button className="btn btn-outline btn-compact" onClick={() => remove(m.id)}>Remove</button>}
               </div>
             </div>
           ))}
