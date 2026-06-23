@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useApp } from "../context/AppContext.jsx";
+import logoAsset from "../assets/panel-loft-logo.png.asset.json";
 
 export default function Footer() {
   const { toast } = useApp();
@@ -14,9 +15,12 @@ export default function Footer() {
     <footer className="footer">
       <div className="container">
         <div className="footer-grid">
-          <div>
-            <div className="logo" style={{ color: "#fff", marginBottom: 16 }}>Panel Loft<small>UK</small></div>
-            <p style={{ maxWidth: 320, lineHeight: 1.6 }}>Premium acoustic and decorative wall panels for modern interiors, designed and despatched from the UK.</p>
+          <div className="footer-brand-col">
+            <div className="logo brand" style={{ color: "#fff", marginBottom: 16 }}>
+              <img src={logoAsset.url} alt="Panel Loft" className="brand-mark" />
+              <span className="brand-word">Panel Loft<small>UK</small></span>
+            </div>
+            <p className="footer-tag">Premium acoustic and decorative wall panels for modern interiors, designed and despatched from the UK.</p>
             <form onSubmit={submit} style={{ marginTop: 24, display: "flex", border: "1px solid #333", maxWidth: 320 }}>
               <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email address" style={{ flex: 1, background: "transparent", color: "#fff", border: "none", padding: "12px 14px", outline: "none" }} />
               <button type="submit" style={{ background: "#fff", color: "var(--ink)", padding: "0 18px", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase" }}>Join</button>
