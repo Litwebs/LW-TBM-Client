@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useApp } from "../context/AppContext.jsx";
 import { CartIcon, MenuIcon, SearchIcon, UserIcon, CloseIcon } from "./Icons.jsx";
 import { products } from "../data/products.js";
-import logoAsset from "../assets/panel-loft-logo.png.asset.json";
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -31,7 +30,7 @@ export default function Header() {
       <header className="header">
         <div className="header-inner">
           <Link to="/" className="logo brand">
-            <img src={logoAsset.url} alt="Panel Loft" className="brand-mark" />
+            <img src="/images/panel-loft-logo-mark.png" alt="Panel Loft" className="brand-mark" />
             <span className="brand-word">Panel Loft<small>UK</small></span>
           </Link>
           <nav className="nav">
