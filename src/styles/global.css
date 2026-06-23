@@ -910,3 +910,52 @@ section.tight { padding: 64px 0; }
   .kv-grid { grid-template-columns: 1fr; gap: 4px 0; }
   .kv-grid dd { margin-bottom: 10px; }
 }
+
+/* ===== Brand / logo image ===== */
+.brand { display: inline-flex; align-items: center; gap: 12px; }
+.brand-mark { height: 36px; width: auto; display: block; }
+.brand-word { display: inline-block; }
+.footer .brand-mark { height: 40px; }
+
+/* ===== Footer mobile fixes ===== */
+.footer-brand-col { min-width: 0; }
+.footer-tag { max-width: 320px; line-height: 1.6; }
+.footer ul li a { word-break: break-word; }
+@media (max-width: 640px) {
+  .footer { padding: 56px 0 24px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px 20px; margin-bottom: 40px; }
+  .footer-brand-col { grid-column: 1 / -1; }
+  .footer-tag { max-width: none; font-size: 14px; }
+  .footer-form { max-width: none !important; width: 100%; }
+  .footer h5 { margin-bottom: 14px; }
+  .footer ul { gap: 8px; font-size: 14px; }
+  .footer-bottom { font-size: 11px; }
+}
+
+/* ===== Account mobile polish ===== */
+@media (max-width: 900px) {
+  .account-grid { gap: 24px; padding-bottom: 64px; }
+  .account-sidebar { padding: 16px; }
+  .account-nav { flex-direction: row; flex-wrap: wrap; gap: 6px; }
+  .account-nav-link { flex: 1 1 auto; text-align: center; padding: 10px 12px; border-left: none; border-bottom: 2px solid transparent; font-size: 11px; }
+  .account-nav-link.is-active { border-left: none; border-bottom-color: var(--ink); }
+  .account-nav-logout { border-top: none; padding-top: 10px; margin-top: 0; flex-basis: 100%; }
+  .account-section { padding: 20px 18px; margin-bottom: 16px; }
+  .account-section-head { flex-direction: column; align-items: stretch; gap: 12px; }
+  .account-section-head .btn { align-self: flex-start; }
+  .account-stats { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .stat-card { padding: 16px; }
+  .stat-value { font-size: 22px; }
+  .order-row { grid-template-columns: 1fr 1fr; gap: 8px 12px; padding: 14px 0; font-size: 13px; }
+  .order-row.head { display: none; }
+  .order-row > div:nth-child(1) { font-weight: 600; }
+  .address-card .badge, .payment-card .badge { position: static; display: inline-block; margin-bottom: 10px; }
+  /* stack right column under items on order detail */
+  .account-main > div[style*="grid-template-columns: 1.4fr 1fr"] { grid-template-columns: 1fr !important; }
+  .account-main > div[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 480px) {
+  .brand-mark { height: 30px; }
+  .logo { font-size: 20px; }
+  .container { padding: 0 20px; }
+}
