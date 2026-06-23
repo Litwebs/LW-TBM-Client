@@ -634,7 +634,7 @@ section.tight { padding: 64px 0; }
 }
 
 /* ===== Footer ===== */
-.footer { background: var(--black); color: #c9c9c9; padding: 80px 0 24px; }
+.footer { background: var(--black); color: #c9c9c9; padding: 80px 0 24px; overflow-x: clip; }
 .footer-grid {
   display: grid; grid-template-columns: 2fr repeat(3, 1fr);
   gap: 48px; margin-bottom: 56px;
@@ -865,17 +865,18 @@ section.tight { padding: 64px 0; }
   .split-content { padding: 40px 24px; }
 }
 /* ===== Account ===== */
-.account-grid { display: grid; grid-template-columns: 260px 1fr; gap: 48px; padding: 0 0 96px; align-items: start; }
-.account-sidebar { position: sticky; top: calc(var(--header-h) + 24px); border: 1px solid var(--border); padding: 24px; }
-.account-user { display: flex; gap: 12px; align-items: center; padding-bottom: 20px; margin-bottom: 16px; border-bottom: 1px solid var(--border); }
+.account-grid { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 48px; padding: 0 0 96px; align-items: start; min-width: 0; }
+.account-sidebar { position: sticky; top: calc(var(--header-h) + 24px); border: 1px solid var(--border); padding: 24px; min-width: 0; }
+.account-user { display: flex; gap: 12px; align-items: center; padding-bottom: 20px; margin-bottom: 16px; border-bottom: 1px solid var(--border); min-width: 0; }
+.account-user > div:last-child { min-width: 0; overflow-wrap: anywhere; }
 .account-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--black); color: #fff; display: grid; place-items: center; font-weight: 600; letter-spacing: 0; text-transform: uppercase; }
 .account-nav { display: flex; flex-direction: column; gap: 2px; }
-.account-nav-link { display: block; text-align: left; width: 100%; padding: 12px 14px; font-size: 12px; letter-spacing: var(--track); text-transform: uppercase; color: var(--ink); border-left: 2px solid transparent; transition: all .2s var(--ease); }
+.account-nav-link { display: block; text-align: left; width: 100%; padding: 12px 14px; font-size: 12px; letter-spacing: var(--track); text-transform: uppercase; color: var(--ink); border-left: 2px solid transparent; transition: all .2s var(--ease); overflow-wrap: anywhere; }
 .account-nav-link:hover { background: var(--bg-cream-soft); }
 .account-nav-link.is-active { background: var(--bg-cream-soft); border-left-color: var(--ink); font-weight: 600; }
 .account-nav-logout { margin-top: 12px; border-top: 1px solid var(--border); padding-top: 16px; color: var(--muted); }
-.account-main { min-width: 0; }
-.account-section { border: 1px solid var(--border); padding: 28px 32px; margin-bottom: 24px; }
+.account-main { min-width: 0; overflow: hidden; }
+.account-section { border: 1px solid var(--border); padding: 28px 32px; margin-bottom: 24px; min-width: 0; }
 .account-section-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px; gap: 16px; }
 .account-section-head h2 { font-size: 13px; letter-spacing: var(--track); }
 .account-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
@@ -888,9 +889,13 @@ section.tight { padding: 64px 0; }
 .status-pill { display: inline-block; padding: 4px 10px; font-size: 11px; letter-spacing: var(--track); text-transform: uppercase; border-radius: 999px; }
 .order-row { display: grid; grid-template-columns: 1.1fr 1fr 1fr 1.2fr 1fr auto; gap: 16px; align-items: center; padding: 18px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
 .order-row.head { font-size: 10px; letter-spacing: var(--track-wide); text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--ink); padding-bottom: 12px; }
-.address-grid, .payment-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-.address-card, .payment-card { border: 1px solid var(--border); padding: 24px; position: relative; }
+.address-grid, .payment-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; min-width: 0; }
+.address-card, .payment-card { border: 1px solid var(--border); padding: 24px; position: relative; min-width: 0; overflow-wrap: anywhere; }
 .address-card .badge, .payment-card .badge { position: absolute; top: 16px; right: 16px; font-size: 10px; letter-spacing: var(--track); text-transform: uppercase; background: var(--ink); color: #fff; padding: 4px 8px; }
+.address-label { font-size: 11px; letter-spacing: var(--track); text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.address-body { font-size: 14px; line-height: 1.7; }
+.address-actions, .payment-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+.btn-compact { padding: 8px 14px; font-size: 11px; min-height: 38px; }
 .card-brand { font-family: var(--font-serif); font-size: 22px; letter-spacing: 0.04em; margin-bottom: 12px; }
 .card-num { font-family: ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: 0.2em; font-size: 14px; margin-bottom: 16px; }
 .card-meta { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); letter-spacing: var(--track); text-transform: uppercase; }
@@ -923,10 +928,12 @@ section.tight { padding: 64px 0; }
 .footer ul li a { word-break: break-word; }
 @media (max-width: 640px) {
   .footer { padding: 56px 0 24px; }
-  .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px 20px; margin-bottom: 40px; }
+  .footer-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px 20px; margin-bottom: 40px; }
   .footer-brand-col { grid-column: 1 / -1; }
   .footer-tag { max-width: none; font-size: 14px; }
   .footer-form { max-width: none !important; width: 100%; }
+  .footer-input { min-width: 0; }
+  .footer-submit { flex: 0 0 auto; }
   .footer h5 { margin-bottom: 14px; }
   .footer ul { gap: 8px; font-size: 14px; }
   .footer-bottom { font-size: 11px; }
@@ -958,4 +965,30 @@ section.tight { padding: 64px 0; }
   .brand-mark { height: 30px; }
   .logo { font-size: 20px; }
   .container { padding: 0 20px; }
+  .page-header { padding: 52px 0 32px; }
+  .page-header h1 { font-size: 30px; overflow-wrap: anywhere; }
+  .account-grid { gap: 18px; padding-bottom: 48px; }
+  .account-sidebar { padding: 14px; }
+  .account-user { align-items: flex-start; }
+  .account-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .account-nav-link { flex: none; min-width: 0; padding: 10px 8px; font-size: 10px; letter-spacing: 0.12em; line-height: 1.25; display: flex; align-items: center; justify-content: center; min-height: 42px; }
+  .account-nav-logout { grid-column: 1 / -1; }
+  .account-section { padding: 18px 14px; }
+  .account-section-head h2 { font-size: 12px; line-height: 1.35; overflow-wrap: anywhere; }
+  .account-section-head .btn { width: 100%; min-height: 48px; padding: 14px 18px; }
+  .account-stats { grid-template-columns: 1fr; }
+  .order-row { grid-template-columns: 1fr; gap: 6px; }
+  .address-card, .payment-card { padding: 20px 16px; }
+  .address-actions, .payment-actions { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .address-actions .btn, .payment-actions .btn { width: 100%; padding: 12px 10px; white-space: normal; letter-spacing: 0.14em; line-height: 1.25; }
+  .card-num { font-size: 12px; letter-spacing: 0.12em; }
+  .card-meta { flex-direction: column; gap: 6px; }
+}
+
+@media (max-width: 380px) {
+  .container { padding: 0 14px; }
+  .account-section { padding: 16px 12px; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-form { flex-direction: column; }
+  .footer-submit { min-height: 44px; }
 }
