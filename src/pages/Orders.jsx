@@ -1,35 +1,49 @@
-import { Link, Navigate } from "react-router-dom";
+import { useState, useMemo } from "react";
+import { Link } from "react-router-dom";
 import { useApp } from "../context/AppContext.jsx";
+import AccountLayout from "../components/AccountLayout.jsx";
+import { mockOrders, statusTone } from "../data/accountMock.js";
+
+const FILTERS = ["All", "Processing", "In Transit", "Delivered", "Refunded"];
+
 export default function Orders() {
-  const { user, orders } = useApp();
-  if (!user) return <Navigate to="/account/login" replace />;
+  const { orders: userOrders } = useApp();
+  const [filter, setFilter] = useState("All");
+  const [query, setQuery] = useState("");
+  const all = useMemo(() => [...(userOrders || []), ...mockOrders], [userOrders]);
+  const filtered = all.filter((o) =>
+    (filter === "All" || o.status === filter) &&
+    (!query || o.id.toLowerCase().includes(query.toLowerCase()))
+  );
   return (
-    <div className="container">
-      <div className="page-header"><h1>Order History</h1></div>
-      <div style={{ paddingBottom: 80 }}>
-        {orders.length === 0 ? <p className="muted center">No orders yet.</p> : (
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead><tr style={{ borderBottom: "1px solid var(--border)" }}>
-              <th style={{ padding: 16, textAlign: "left", fontSize: 11, letterSpacing: "0.18em" }}>Order</th>
-              <th style={{ padding: 16, textAlign: "left", fontSize: 11, letterSpacing: "0.18em" }}>Date</th>
-              <th style={{ padding: 16, textAlign: "left", fontSize: 11, letterSpacing: "0.18em" }}>Total</th>
-              <th style={{ padding: 16, textAlign: "left", fontSize: 11, letterSpacing: "0.18em" }}>Status</th>
-              <th></th>
-            </tr></thead>
-            <tbody>
-              {orders.map((o) => (
-                <tr key={o.id} style={{ borderBottom: "1px solid var(--border)" }}>
-                  <td style={{ padding: 16 }}>{o.id}</td>
-                  <td style={{ padding: 16 }}>{new Date(o.date).toLocaleDateString()}</td>
-                  <td style={{ padding: 16 }}>£{o.total.toFixed(2)}</td>
-                  <td style={{ padding: 16 }}>{o.status}</td>
-                  <td style={{ padding: 16 }}><Link to={`/account/orders/${o.id}`} style={{ textDecoration: "underline" }}>View</Link></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+    <AccountLayout title="Orders" subtitle="Track, reorder and manage your purchases">
+      <div className="account-section">
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 20, alignItems: "center" }}>
+          <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+            {FILTERS.map((f) => (
+              <button key={f} onClick={() => setFilter(f)} className={"btn " + (filter === f ? "" : "btn-outline")} style={{ padding: "8px 14px", fontSize: 11 }}>{f}</button>
+            ))}
+          </div>
+          <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search order ID" style={{ marginLeft: "auto", padding: "10px 14px", border: "1px solid var(--border)", minWidth: 220, fontSize: 13 }} />
+        </div>
+        <div className="order-row head"><div>Order</div><div>Date</div><div>Items</div><div>Status</div><div>Total</div><div></div></div>
+        {filtered.length === 0 ? (
+          <p className="muted center" style={{ padding: 40 }}>No orders found.</p>
+        ) : filtered.map((o) => {
+          const tone = statusTone(o.status);
+          const count = o.items.reduce((s, it) => s + it.qty, 0);
+          return (
+            <div className="order-row" key={o.id}>
+              <div style={{ fontWeight: 500 }}>{o.id}</div>
+              <div>{new Date(o.date).toLocaleDateString("en-GB")}</div>
+              <div className="muted">{count} item{count === 1 ? "" : "s"}</div>
+              <div><span className="status-pill" style={{ background: tone.bg, color: tone.fg }}>{o.status}</span></div>
+              <div>£{o.total.toFixed(2)}</div>
+              <div><Link to={`/account/orders/${o.id}`} style={{ textDecoration: "underline", fontSize: 12 }}>View</Link></div>
+            </div>
+          );
+        })}
       </div>
-    </div>
+    </AccountLayout>
   );
 }
