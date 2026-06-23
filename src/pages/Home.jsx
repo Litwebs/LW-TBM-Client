@@ -12,7 +12,7 @@ import { faqs } from "../data/faqs.js";
 import { reviews } from "../data/reviews.js";
 import { useState } from "react";
 
-const HERO_BG = "https://panel-hub.co.uk/cdn/shop/files/240_light_oak.png?v=1774026283&width=2000";
+const HERO_BG = "/images/hero-bg.jpg";
 
 export default function Home() {
   const [quickView, setQuickView] = useState(null);
