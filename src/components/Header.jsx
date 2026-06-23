@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useApp } from "../context/AppContext.jsx";
 import { CartIcon, MenuIcon, SearchIcon, UserIcon, CloseIcon } from "./Icons.jsx";
 import { products } from "../data/products.js";
+import logoAsset from "../assets/panel-loft-logo.png.asset.json";
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -29,7 +30,10 @@ export default function Header() {
     <>
       <header className="header">
         <div className="header-inner">
-          <Link to="/" className="logo">Panel Loft<small>UK</small></Link>
+          <Link to="/" className="logo brand">
+            <img src={logoAsset.url} alt="Panel Loft" className="brand-mark" />
+            <span className="brand-word">Panel Loft<small>UK</small></span>
+          </Link>
           <nav className="nav">
             {NAV.map((n) => (<NavLink key={n.to} to={n.to} end={n.to === "/"}>{n.label}</NavLink>))}
           </nav>
