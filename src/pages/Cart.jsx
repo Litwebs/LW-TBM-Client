@@ -1,0 +1,63 @@
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useApp } from "../context/AppContext.jsx";
+
+export default function Cart() {
+  const { cart, updateQty, removeFromCart, subtotal, toast } = useApp();
+  const [code, setCode] = useState("");
+  const [discount, setDiscount] = useState(0);
+  const applyCode = (e) => {
+    e.preventDefault();
+    if (code.toUpperCase() === "PANEL10") { setDiscount(subtotal * 0.1); toast("Discount applied: 10% off"); }
+    else toast("Invalid discount code");
+  };
+  const total = Math.max(0, subtotal - discount);
+
+  if (cart.length === 0) return (
+    <div className="container" style={{ padding: "80px 0" }}>
+      <div className="page-header"><h1>Your Cart</h1><p>Your cart is currently empty.</p></div>
+      <div style={{ textAlign: "center" }}><Link to="/collections/all-panels" className="btn">Continue Shopping</Link></div>
+    </div>
+  );
+
+  return (
+    <div className="container">
+      <div className="page-header"><h1>Your Cart</h1></div>
+      <div className="checkout-layout">
+        <div>
+          {cart.map((it) => (
+            <div key={it.key} style={{ display: "grid", gridTemplateColumns: "120px 1fr auto", gap: 20, padding: "20px 0", borderBottom: "1px solid var(--border)" }}>
+              <img src={it.product.image} alt="" style={{ width: 120, height: 120, objectFit: "cover" }} />
+              <div>
+                <Link to={`/products/${it.product.slug}`} style={{ fontSize: 13, letterSpacing: "0.18em", textTransform: "uppercase", display: "block", marginBottom: 8 }}>{it.product.title}</Link>
+                <div style={{ fontSize: 12, color: "var(--muted)", marginBottom: 12 }}>{Object.entries(it.variant).map(([k, v]) => `${k}: ${v}`).join(" · ")}</div>
+                <div className="qty-stepper" style={{ display: "inline-flex" }}>
+                  <button onClick={() => updateQty(it.key, it.qty - 1)}>−</button>
+                  <input value={it.qty} onChange={(e) => updateQty(it.key, Math.max(1, parseInt(e.target.value) || 1))} />
+                  <button onClick={() => updateQty(it.key, it.qty + 1)}>+</button>
+                </div>
+              </div>
+              <div style={{ textAlign: "right" }}>
+                <div style={{ fontWeight: 500, marginBottom: 8 }}>£{(it.product.price * it.qty).toFixed(2)}</div>
+                <button onClick={() => removeFromCart(it.key)} style={{ fontSize: 11, textDecoration: "underline", color: "var(--muted)" }}>Remove</button>
+              </div>
+            </div>
+          ))}
+          <form onSubmit={applyCode} style={{ display: "flex", gap: 8, marginTop: 32, maxWidth: 400 }}>
+            <input placeholder="Discount code (try PANEL10)" value={code} onChange={(e) => setCode(e.target.value)} style={{ flex: 1, padding: 14, border: "1px solid var(--border-dark)" }} />
+            <button className="btn btn-outline">Apply</button>
+          </form>
+        </div>
+        <div className="summary">
+          <h3>Order Summary</h3>
+          <div className="summary-row"><span>Subtotal</span><span>£{subtotal.toFixed(2)}</span></div>
+          {discount > 0 && <div className="summary-row"><span>Discount</span><span>−£{discount.toFixed(2)}</span></div>}
+          <div className="summary-row"><span>Delivery</span><span>Calculated at checkout</span></div>
+          <div className="summary-row total"><span>Total</span><span>£{total.toFixed(2)}</span></div>
+          <p className="muted" style={{ margin: "16px 0" }}>Estimated delivery: 2–4 working days. Express next-day available at checkout.</p>
+          <Link to="/checkout" className="btn btn-full btn-lg">Checkout</Link>
+        </div>
+      </div>
+    </div>
+  );
+}
