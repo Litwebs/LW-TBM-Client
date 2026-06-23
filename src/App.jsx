@@ -17,6 +17,8 @@ import ForgotPassword from "./pages/ForgotPassword.jsx";
 import Account from "./pages/Account.jsx";
 import Orders from "./pages/Orders.jsx";
 import OrderDetail from "./pages/OrderDetail.jsx";
+import Addresses from "./pages/Addresses.jsx";
+import PaymentMethods from "./pages/PaymentMethods.jsx";
 import Portfolio from "./pages/Portfolio.jsx";
 import Reviews from "./pages/Reviews.jsx";
 import FAQs from "./pages/FAQs.jsx";
@@ -43,6 +45,8 @@ export default function App() {
           <Route path="/account" element={<Account />} />
           <Route path="/account/orders" element={<Orders />} />
           <Route path="/account/orders/:id" element={<OrderDetail />} />
+          <Route path="/account/addresses" element={<Addresses />} />
+          <Route path="/account/payments" element={<PaymentMethods />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/reviews" element={<Reviews />} />
           <Route path="/faqs" element={<FAQs />} />
