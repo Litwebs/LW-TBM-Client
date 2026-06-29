@@ -32,7 +32,7 @@ export default function Home() {
       <section className="tight">
         <div className="container-narrow">
           <p className="intro-text">
-            Discover the full <Link to="/collections/all-panels">Panel Loft collection</Link> today and transform your space with premium wall panels designed for modern living. Alternatively, visit our showroom — open 7 days a week.
+            Discover the full <Link to="/collections/all-panels">The British Manor collection</Link> today and transform your space with premium wall panels designed for modern living. Alternatively, visit our showroom — open 7 days a week.
           </p>
         </div>
       </section>
@@ -58,7 +58,7 @@ export default function Home() {
         <div className="split-content">
           <div className="eyebrow">About</div>
           <h2>Stylish Acoustic &amp; Decorative Panels</h2>
-          <p>At Panel Loft, we bring over a decade of experience in the UK interiors and furniture industry to every product we create. Our wall panels bridge the gap between high-end design and accessible pricing, delivering exceptional quality, craftsmanship, and style without compromise.</p>
+          <p>At The British Manor, we bring over a decade of experience in the UK interiors and furniture industry to every product we create. Our wall panels bridge the gap between high-end design and accessible pricing, delivering exceptional quality, craftsmanship, and style without compromise.</p>
           <p>From acoustic wall panels that soften sound to MDF panels that turn plain walls into elegant features, our collection combines expert craftsmanship with creative design to add warmth, texture, and a modern edge to any space.</p>
           <Link to="/collections/all-panels" className="link">Shop All Panels</Link>
         </div>
@@ -68,7 +68,7 @@ export default function Home() {
 
       <section className="benefits">
         <div className="container">
-          <h2 className="section-title">The Panel Loft Difference</h2>
+          <h2 className="section-title">The The British Manor Difference</h2>
           <div className="benefits-grid">
             <div className="benefit"><div className="benefit-icon"><TruckIcon /></div><h4>Fast UK Delivery</h4><p>Enjoy express nationwide shipping across the UK, bringing high-quality design to your door quickly.</p></div>
             <div className="benefit"><div className="benefit-icon"><ToolIcon /></div><h4>Easy Installation</h4><p>Designed for effortless installation, ensuring a smooth process for homeowners and professionals.</p></div>
