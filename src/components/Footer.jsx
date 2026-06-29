@@ -21,7 +21,7 @@ export default function Footer() {
             </div>
             <p className="footer-tag">Premium acoustic and decorative wall panels for modern interiors, designed and despatched from the UK.</p>
             <form onSubmit={submit} className="footer-form" style={{ marginTop: 24, display: "flex", border: "1px solid #333", maxWidth: 320 }}>
-              <input className="footer-input" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email address" style={{ flex: 1, background: "transparent", color: "#fff", border: "none", padding: "12px 14px", outline: "none" }} />
+              <input className="footer-input" aria-label="Email address for newsletter" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email address" style={{ flex: 1, background: "transparent", color: "#fff", border: "none", padding: "12px 14px", outline: "none" }} />
               <button className="footer-submit" type="submit" style={{ background: "#fff", color: "var(--ink)", padding: "0 18px", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase" }}>Join</button>
             </form>
           </div>
