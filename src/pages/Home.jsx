@@ -12,14 +12,41 @@ import { faqs } from "../data/faqs.js";
 import { reviews } from "../data/reviews.js";
 import { useState } from "react";
 import Seo from "../components/Seo.jsx";
+import { SITE_BASE } from "../lib/api.js";
 
 const HERO_BG = "/images/hero-bg.jpg";
 
 export default function Home() {
   const [quickView, setQuickView] = useState(null);
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "The British Manor",
+      url: SITE_BASE,
+      logo: `${SITE_BASE}/images/panel-loft-logo-mark.png`,
+      email: "hello@thebritishmanor.co.uk",
+      sameAs: [],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "The British Manor",
+      url: SITE_BASE,
+      potentialAction: {
+        "@type": "SearchAction",
+        target: `${SITE_BASE}/collections/all-panels?q={search_term_string}`,
+        "query-input": "required name=search_term_string",
+      },
+    },
+  ];
   return (
     <>
-      <Seo />
+      <Seo
+        title="Luxury Furniture, Wall Panels & Interior Design"
+        description="The British Manor — luxury furniture, wall panels, lighting and clocks crafted for British interiors. Fast UK delivery and trade pricing."
+        jsonLd={jsonLd}
+      />
       <section className="hero" style={{ padding: 0 }}>
         <div className="hero-bg" style={{ backgroundImage: `url(${HERO_BG})` }} />
         <div className="hero-overlay">
