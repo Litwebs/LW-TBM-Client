@@ -31,7 +31,7 @@ export default function Portfolio() {
       {active && (
         <div className="modal-backdrop" onClick={() => setActive(null)}>
           <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 1100 }}>
-            <button className="modal-close" onClick={() => setActive(null)}><CloseIcon /></button>
+            <button className="modal-close" aria-label="Close" onClick={() => setActive(null)}><CloseIcon /></button>
             <img src={active.image} alt={active.title} style={{ width: "100%", maxHeight: "70vh", objectFit: "cover" }} />
             <div style={{ padding: 32 }}>
               <h2 style={{ fontFamily: "var(--font-serif)", fontWeight: 400, fontSize: 28, textTransform: "none", letterSpacing: "0.04em", marginBottom: 12 }}>{active.title}</h2>
