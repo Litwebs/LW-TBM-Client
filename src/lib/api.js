@@ -1,6 +1,10 @@
 import axios from "axios";
+export const API_BASE = "http://localhost:5001";
 
-export const API_BASE = "https://api.thebritishmanor.co.uk";
+// export const API_BASE =
+//   import.meta.env.VITE_API_BASE === "dev"
+//     ? "http://localhost:5001"
+//     : "https://api.thebritishmanor.co.uk";
 export const SITE_BASE = "https://thebritishmanor.co.uk";
 export const CONTACT_EMAIL = "hello@thebritishmanor.co.uk";
 
@@ -24,18 +28,9 @@ export function normalizeProduct(raw) {
   const slug = raw.slug || slugify(raw.sku || name);
   const category = raw.category || raw.categoryName || "Uncategorised";
   const price =
-    raw?.pricing?.price ??
-    raw?.pricing?.amount ??
-    raw?.price ??
-    raw?.variants?.[0]?.price ??
-    0;
-  const compareAt =
-    raw?.pricing?.compareAt ?? raw?.pricing?.rrp ?? raw?.compareAt ?? 0;
-  const image =
-    raw.thumbnailImage ||
-    raw?.galleryImages?.[0] ||
-    raw.image ||
-    "/images/hero-bg.jpg";
+    raw?.pricing?.price ?? raw?.pricing?.amount ?? raw?.price ?? raw?.variants?.[0]?.price ?? 0;
+  const compareAt = raw?.pricing?.compareAt ?? raw?.pricing?.rrp ?? raw?.compareAt ?? 0;
+  const image = raw.thumbnailImage || raw?.galleryImages?.[0] || raw.image || "/images/hero-bg.jpg";
   const gallery = Array.isArray(raw.galleryImages) ? raw.galleryImages : [];
   return {
     id: String(id),
@@ -71,8 +66,8 @@ export async function fetchAllProducts({ pageSize = 30 } = {}) {
   if (totalPages > 1) {
     const pages = await Promise.all(
       Array.from({ length: totalPages - 1 }, (_, i) =>
-        fetchProductsPage({ page: i + 2, pageSize }).catch(() => ({ items: [] }))
-      )
+        fetchProductsPage({ page: i + 2, pageSize }).catch(() => ({ items: [] })),
+      ),
     );
     items = items.concat(pages.flatMap((p) => p.items));
   }
