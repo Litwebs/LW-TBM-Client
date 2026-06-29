@@ -19,6 +19,7 @@ const NAV = [
 
 export default function Header() {
   const { cartCount, setCartOpen, searchOpen, setSearchOpen, menuOpen, setMenuOpen } = useApp();
+  const { products } = useProducts();
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
   const results = query.length > 1
