@@ -11,6 +11,7 @@ import { homeCategories } from "../data/categories.js";
 import { faqs } from "../data/faqs.js";
 import { reviews } from "../data/reviews.js";
 import { useState } from "react";
+import Seo from "../components/Seo.jsx";
 
 const HERO_BG = "/images/hero-bg.jpg";
 
