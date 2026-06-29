@@ -19,6 +19,8 @@ const HERO_BG = "/images/hero-bg.jpg";
 
 export default function Home() {
   const [quickView, setQuickView] = useState(null);
+  const { products: liveProducts, isLive } = useProducts();
+  const featured = isLive ? liveProducts.slice(0, 4) : bestSellers();
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -124,7 +126,7 @@ export default function Home() {
           <div className="section-eyebrow">Our Best Sellers</div>
           <h2 className="section-title" style={{ marginBottom: 48 }}>2.4m Acoustic Slatted Wall Panels</h2>
           <div className="product-grid">
-            {bestSellers().map((p) => (<ProductCard key={p.id} product={p} onQuickView={setQuickView} />))}
+            {featured.map((p) => (<ProductCard key={p.id} product={p} onQuickView={setQuickView} />))}
           </div>
           <div style={{ textAlign: "center", marginTop: 56 }}>
             <Link to="/collections/best-sellers" className="btn">View All</Link>
