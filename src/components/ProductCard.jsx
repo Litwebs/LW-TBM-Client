@@ -4,10 +4,11 @@ import { useApp } from "../context/AppContext.jsx";
 
 export default function ProductCard({ product, onQuickView }) {
   const { addToCart } = useApp();
+  const priceOnRequest = !product.price || product.price <= 0;
   return (
     <div className="product-card">
       <Link to={`/products/${product.slug}`} className="img-wrap" aria-label={product.title}>
-        {product.compareAt > product.price && <span className="badge">Sale</span>}
+        {!priceOnRequest && product.compareAt > product.price && <span className="badge">Sale</span>}
         <img
           src={product.image}
           alt={`${product.title} luxury ${product.category || "interior"} by The British Manor`}
@@ -16,16 +17,22 @@ export default function ProductCard({ product, onQuickView }) {
           height="600"
         />
       </Link>
-      <button className="quick-view" onClick={(e) => { e.preventDefault(); onQuickView ? onQuickView(product) : addToCart(product, 1); }}>
-        {onQuickView ? "Quick View" : "Add to Cart"}
+      <button className="quick-view" onClick={(e) => { e.preventDefault(); onQuickView ? onQuickView(product) : (priceOnRequest ? null : addToCart(product, 1)); }}>
+        {onQuickView ? "Quick View" : (priceOnRequest ? "View Details" : "Add to Cart")}
       </button>
       <div className="info">
         <Link to={`/products/${product.slug}`} className="title">{product.title}</Link>
         <div className="prices">
-          <span className="price-sale">£{product.price.toFixed(2)}</span>
-          {product.compareAt > product.price && <span className="price-compare">£{product.compareAt.toFixed(2)}</span>}
+          {priceOnRequest ? (
+            <span className="price-sale">Price on request</span>
+          ) : (
+            <>
+              <span className="price-sale">£{Number(product.price).toFixed(2)}</span>
+              {product.compareAt > product.price && <span className="price-compare">£{Number(product.compareAt).toFixed(2)}</span>}
+            </>
+          )}
         </div>
-        <div className="rating"><Rating value={product.rating} /></div>
+        {product.rating > 0 && <div className="rating"><Rating value={product.rating} /></div>}
       </div>
     </div>
   );

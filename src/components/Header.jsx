@@ -2,7 +2,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useApp } from "../context/AppContext.jsx";
 import { CartIcon, MenuIcon, SearchIcon, UserIcon, CloseIcon } from "./Icons.jsx";
-import { products } from "../data/products.js";
+import { useProducts } from "../context/ProductsContext.jsx";
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -19,6 +19,7 @@ const NAV = [
 
 export default function Header() {
   const { cartCount, setCartOpen, searchOpen, setSearchOpen, menuOpen, setMenuOpen } = useApp();
+  const { products } = useProducts();
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
   const results = query.length > 1
