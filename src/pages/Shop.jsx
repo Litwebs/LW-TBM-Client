@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import ProductCard from "../components/ProductCard.jsx";
 import QuickViewModal from "../components/QuickViewModal.jsx";
 import { productsInCollection, getCollection, filterOptions } from "../data/products.js";
+import Seo from "../components/Seo.jsx";
 
 export default function Shop() {
   const { slug } = useParams();
@@ -39,6 +40,7 @@ export default function Shop() {
 
   return (
     <div className="container">
+      <Seo title={collection.name} description={collection.description || "Shop premium wall panels."} path={`/collections/${slug || 'all-panels'}`} />
       <div className="breadcrumbs"><Link to="/">Home</Link> &nbsp;/&nbsp; <Link to="/collections/all-panels">Shop</Link> &nbsp;/&nbsp; <span>{collection.name}</span></div>
       <div className="shop-header"><h1>{collection.name}</h1></div>
       <div className="shop-toolbar">

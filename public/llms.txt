@@ -1,0 +1,24 @@
+# The British Manor
+
+> Premium acoustic and decorative wall panels for modern UK interiors — fast delivery, trade pricing, and a portfolio of real installations.
+
+## Pages
+
+- [Home](/): Brand overview, featured collections, and best-sellers.
+- [Shop all panels](/collections/all-panels): Complete catalogue of wall panels.
+- [Best Sellers](/collections/best-sellers): Most popular panels.
+- [2.4m Acoustic Slatted](/collections/acoustic-2-4m): Best-selling acoustic slatted panels.
+- [Slimline Acoustic](/collections/acoustic-slimline): Slim profile acoustic panels.
+- [3m Acoustic Slatted](/collections/acoustic-3m): Panels for high ceilings.
+- [Tiles 600mm](/collections/tiles-600): Compact square panels.
+- [Premium MDF](/collections/premium-mdf): Premium MDF acoustic slatted panels.
+- [Portfolio](/portfolio): Customer installation gallery.
+- [Reviews](/reviews): Verified customer reviews.
+- [FAQs](/faqs): Installation, fire rating, and delivery questions.
+- [About](/about): About The British Manor.
+- [Contact](/contact): Email, phone, and showroom.
+
+## Optional
+
+- [Sign in](/account/login): Customer account login.
+- [Create account](/account/register): Customer account registration.

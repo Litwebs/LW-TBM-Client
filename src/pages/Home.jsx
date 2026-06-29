@@ -11,6 +11,7 @@ import { homeCategories } from "../data/categories.js";
 import { faqs } from "../data/faqs.js";
 import { reviews } from "../data/reviews.js";
 import { useState } from "react";
+import Seo from "../components/Seo.jsx";
 
 const HERO_BG = "/images/hero-bg.jpg";
 
@@ -18,6 +19,7 @@ export default function Home() {
   const [quickView, setQuickView] = useState(null);
   return (
     <>
+      <Seo />
       <section className="hero" style={{ padding: 0 }}>
         <div className="hero-bg" style={{ backgroundImage: `url(${HERO_BG})` }} />
         <div className="hero-overlay">

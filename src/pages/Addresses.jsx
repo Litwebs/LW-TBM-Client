@@ -2,6 +2,7 @@ import { useState } from "react";
 import AccountLayout from "../components/AccountLayout.jsx";
 import { mockAddresses } from "../data/accountMock.js";
 import { useApp } from "../context/AppContext.jsx";
+import Seo from "../components/Seo.jsx";
 
 export default function Addresses() {
   const { toast } = useApp();
@@ -11,6 +12,7 @@ export default function Addresses() {
 
   return (
     <AccountLayout title="Addresses" subtitle="Manage shipping and billing addresses">
+      <Seo title="Saved addresses" description="Manage delivery and billing addresses." path="/account/addresses" />
       <div className="account-section">
         <div className="account-section-head">
           <h2>Saved Addresses</h2>

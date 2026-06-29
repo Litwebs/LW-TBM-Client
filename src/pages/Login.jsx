@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useApp } from "../context/AppContext.jsx";
+import Seo from "../components/Seo.jsx";
 
 export default function Login() {
   const { login } = useApp();
@@ -16,6 +17,7 @@ export default function Login() {
   };
   return (
     <div className="container" style={{ padding: "80px 0" }}>
+      <Seo title="Sign in" description="Sign in to your The British Manor account to view orders and addresses." path="/account/login" />
       <div className="auth-card">
         <h1>Sign In</h1>
         <form onSubmit={submit}>

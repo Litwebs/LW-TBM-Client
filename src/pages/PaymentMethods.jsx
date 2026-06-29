@@ -2,6 +2,7 @@ import { useState } from "react";
 import AccountLayout from "../components/AccountLayout.jsx";
 import { mockPayments } from "../data/accountMock.js";
 import { useApp } from "../context/AppContext.jsx";
+import Seo from "../components/Seo.jsx";
 
 export default function PaymentMethods() {
   const { toast } = useApp();
@@ -11,6 +12,7 @@ export default function PaymentMethods() {
 
   return (
     <AccountLayout title="Payment Methods" subtitle="Cards and wallets on file">
+      <Seo title="Payment methods" description="Manage your saved cards and payment methods." path="/account/payments" />
       <div className="account-section">
         <div className="account-section-head">
           <h2>Saved Methods</h2>

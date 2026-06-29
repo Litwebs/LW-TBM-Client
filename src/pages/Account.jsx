@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useApp } from "../context/AppContext.jsx";
 import AccountLayout from "../components/AccountLayout.jsx";
 import { mockOrders, mockAddresses, mockPayments, statusTone } from "../data/accountMock.js";
+import Seo from "../components/Seo.jsx";
 
 export default function Account() {
   const { user, orders: userOrders } = useApp();
@@ -14,6 +15,7 @@ export default function Account() {
 
   return (
     <AccountLayout title="Account" subtitle={`Welcome back, ${user?.name}`}>
+      <Seo title="Your account" description="Overview of your orders, addresses, and payment methods." path="/account" />
       <div className="account-stats">
         <div className="stat-card"><div className="stat-label">Total Orders</div><div className="stat-value">{orders.length}</div></div>
         <div className="stat-card"><div className="stat-label">Lifetime Spend</div><div className="stat-value">£{totalSpend.toFixed(0)}</div></div>
