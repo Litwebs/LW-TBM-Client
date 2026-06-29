@@ -1,0 +1,25 @@
+# The British Manor
+
+> Luxury furniture, wall panels, lighting and clocks for British interiors. Fast UK delivery, trade pricing, and a portfolio of real installations.
+
+Canonical domain: https://thebritishmanor.co.uk
+Contact: hello@thebritishmanor.co.uk
+Sitemap: https://thebritishmanor.co.uk/sitemap.xml
+
+## Categories
+
+- Wall panels — acoustic, slatted, MDF, flexible, paintable
+- Lighting — statement pendants, sconces and lamps
+- Clocks — heritage and contemporary timepieces
+- Furniture — luxury living, dining and bedroom pieces
+- Interiors — curated accessories and styling
+
+## Key pages
+
+- [Home](https://thebritishmanor.co.uk/)
+- [Shop all](https://thebritishmanor.co.uk/collections/all-panels)
+- [Portfolio](https://thebritishmanor.co.uk/portfolio)
+- [Reviews](https://thebritishmanor.co.uk/reviews)
+- [FAQs](https://thebritishmanor.co.uk/faqs)
+- [About](https://thebritishmanor.co.uk/about)
+- [Contact](https://thebritishmanor.co.uk/contact)
