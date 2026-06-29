@@ -7,6 +7,13 @@ import { AppProvider } from "./context/AppContext.jsx";
 import { ProductsProvider } from "./context/ProductsContext.jsx";
 import "./styles/global.css";
 
+const redirect = sessionStorage.getItem("redirect");
+
+if (redirect) {
+  sessionStorage.removeItem("redirect");
+  window.history.replaceState(null, "", redirect);
+}
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <HelmetProvider>
@@ -18,5 +25,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </ProductsProvider>
       </BrowserRouter>
     </HelmetProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
