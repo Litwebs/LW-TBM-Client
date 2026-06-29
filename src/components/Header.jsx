@@ -50,17 +50,17 @@ export default function Header() {
       <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
         <div className="mobile-menu-top">
           <span className="logo" style={{ color: "#fff" }}>The British Manor</span>
-          <button className="icon-btn" onClick={() => setMenuOpen(false)}><CloseIcon /></button>
+          <button className="icon-btn" aria-label="Close menu" onClick={() => setMenuOpen(false)}><CloseIcon /></button>
         </div>
         <nav>{NAV.map((n) => (<Link key={n.to} to={n.to} onClick={() => setMenuOpen(false)}>{n.label}</Link>))}</nav>
       </div>
       <div className={`search-overlay ${searchOpen ? "open" : ""}`} onClick={() => setSearchOpen(false)}>
         <div className="search-box" onClick={(e) => e.stopPropagation()}>
-          <input autoFocus={searchOpen} placeholder="Search panels, colours, sizes…" value={query} onChange={(e) => setQuery(e.target.value)} />
+          <input aria-label="Search products" autoFocus={searchOpen} placeholder="Search panels, colours, sizes…" value={query} onChange={(e) => setQuery(e.target.value)} />
           <div className="search-results">
             {results.map((p) => (
               <div key={p.id} className="search-result" onClick={() => { navigate(`/products/${p.slug}`); setSearchOpen(false); setQuery(""); }}>
-                <img src={p.image} alt="" />
+                <img src={p.image} alt={p.title} />
                 <div>
                   <div style={{ fontSize: 13, marginBottom: 4 }}>{p.title}</div>
                   <div style={{ fontSize: 13, color: "var(--accent)" }}>£{p.price.toFixed(2)}</div>
