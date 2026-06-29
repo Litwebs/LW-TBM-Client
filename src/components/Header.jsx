@@ -30,8 +30,8 @@ export default function Header() {
       <header className="header">
         <div className="header-inner">
           <Link to="/" className="logo brand">
-            <img src="/images/panel-loft-logo-mark.png" alt="Panel Loft" className="brand-mark" />
-            <span className="brand-word">Panel Loft<small>UK</small></span>
+            <img src="/images/panel-loft-logo-mark.png" alt="The British Manor" className="brand-mark" />
+            <span className="brand-word">The British Manor<small>UK</small></span>
           </Link>
           <nav className="nav">
             {NAV.map((n) => (<NavLink key={n.to} to={n.to} end={n.to === "/"}>{n.label}</NavLink>))}
@@ -49,7 +49,7 @@ export default function Header() {
       </header>
       <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
         <div className="mobile-menu-top">
-          <span className="logo" style={{ color: "#fff" }}>Panel Loft</span>
+          <span className="logo" style={{ color: "#fff" }}>The British Manor</span>
           <button className="icon-btn" onClick={() => setMenuOpen(false)}><CloseIcon /></button>
         </div>
         <nav>{NAV.map((n) => (<Link key={n.to} to={n.to} onClick={() => setMenuOpen(false)}>{n.label}</Link>))}</nav>

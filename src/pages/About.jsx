@@ -7,10 +7,10 @@ export default function About() {
         <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=2000&q=80" alt="" />
       </div>
       <div className="container">
-        <div className="page-header"><h1>About Panel Loft</h1></div>
+        <div className="page-header"><h1>About The British Manor</h1></div>
         <div className="container-narrow">
           <p className="intro-text" style={{ marginBottom: 64 }}>
-            With over a decade of experience in UK interiors, Panel Loft brings together craftsmanship and contemporary design. Every panel is engineered to elevate your space, soften sound, and make a lasting visual statement — all at a price that respects your budget.
+            With over a decade of experience in UK interiors, The British Manor brings together craftsmanship and contemporary design. Every panel is engineered to elevate your space, soften sound, and make a lasting visual statement — all at a price that respects your budget.
           </p>
         </div>
       </div>

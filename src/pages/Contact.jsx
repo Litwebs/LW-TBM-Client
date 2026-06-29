@@ -25,7 +25,7 @@ export default function Contact() {
           <h3 style={{ fontSize: 12, letterSpacing: "0.18em", margin: "28px 0 12px" }}>Opening Hours</h3>
           <p>Mon–Fri: 9am – 6pm<br/>Sat–Sun: 10am – 5pm<br/><em>Open 7 days a week</em></p>
           <h3 style={{ fontSize: 12, letterSpacing: "0.18em", margin: "28px 0 12px" }}>Contact</h3>
-          <p>hello@panelloft.co.uk<br/>0161 555 0199</p>
+          <p>hello@thebritishmanor.co.uk<br/>0161 555 0199</p>
           <h3 style={{ fontSize: 12, letterSpacing: "0.18em", margin: "28px 0 12px" }}>Delivery</h3>
           <p>Express delivery available at checkout. Standard UK delivery: 2–4 working days.</p>
           <div className="map-placeholder">Map placeholder</div>
