@@ -31,8 +31,8 @@ export default function Header() {
       <header className="header">
         <div className="header-inner">
           <Link to="/" className="logo brand">
-            <img src="/images/panel-loft-logo-mark.png" alt="The British Manor" className="brand-mark" />
-            <span className="brand-word">The British Manor<small>UK</small></span>
+            <img src="/images/tbm-logo.png" alt="The British Manor" className="brand-mark" />
+            <span className="brand-word">The British Manor<small>Heritage · Elegance · Distinction</small></span>
           </Link>
           <nav className="nav">
             {NAV.map((n) => (<NavLink key={n.to} to={n.to} end={n.to === "/"}>{n.label}</NavLink>))}
