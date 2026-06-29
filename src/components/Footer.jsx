@@ -16,8 +16,8 @@ export default function Footer() {
         <div className="footer-grid">
           <div className="footer-brand-col">
             <div className="logo brand" style={{ color: "#fff", marginBottom: 16 }}>
-              <img src="/images/panel-loft-logo-mark.png" alt="The British Manor" className="brand-mark" />
-              <span className="brand-word">The British Manor<small>UK</small></span>
+              <img src="/images/tbm-logo.png" alt="The British Manor" className="brand-mark" />
+              <span className="brand-word">The British Manor<small>Heritage · Elegance · Distinction</small></span>
             </div>
             <p className="footer-tag">Premium acoustic and decorative wall panels for modern interiors, designed and despatched from the UK.</p>
             <form onSubmit={submit} className="footer-form" style={{ marginTop: 24, display: "flex", border: "1px solid #333", maxWidth: 320 }}>
