@@ -45,7 +45,7 @@ export default function Product() {
         <div className="pdp-gallery">
           <img className="pdp-main-img" src={mainImg} alt={product.title} />
           <div className="pdp-thumbs">
-            {thumbs.map((t, i) => (<img key={i} src={t} alt="" className={t === mainImg ? "active" : ""} onClick={() => setMainImg(t)} />))}
+            {thumbs.map((t, i) => (<img key={i} src={t} alt={`${product.title} thumbnail ${i + 1}`} className={t === mainImg ? "active" : ""} onClick={() => setMainImg(t)} />))}
           </div>
         </div>
         <div className="pdp-info">
@@ -77,9 +77,9 @@ export default function Product() {
 
           <div className="qty-row">
             <div className="qty-stepper">
-              <button onClick={() => setQty((q) => Math.max(1, q - 1))}>−</button>
-              <input value={qty} onChange={(e) => setQty(Math.max(1, parseInt(e.target.value) || 1))} />
-              <button onClick={() => setQty((q) => q + 1)}>+</button>
+              <button aria-label="Decrease quantity" onClick={() => setQty((q) => Math.max(1, q - 1))}>−</button>
+              <input aria-label="Quantity" value={qty} onChange={(e) => setQty(Math.max(1, parseInt(e.target.value) || 1))} />
+              <button aria-label="Increase quantity" onClick={() => setQty((q) => q + 1)}>+</button>
             </div>
           </div>
           <div className="pdp-actions">
