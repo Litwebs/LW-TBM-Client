@@ -6,9 +6,15 @@ export default function ProductCard({ product, onQuickView }) {
   const { addToCart } = useApp();
   return (
     <div className="product-card">
-      <Link to={`/products/${product.slug}`} className="img-wrap">
+      <Link to={`/products/${product.slug}`} className="img-wrap" aria-label={product.title}>
         {product.compareAt > product.price && <span className="badge">Sale</span>}
-        <img src={product.image} alt={product.title} loading="lazy" />
+        <img
+          src={product.image}
+          alt={`${product.title} luxury ${product.category || "interior"} by The British Manor`}
+          loading="lazy"
+          width="600"
+          height="600"
+        />
       </Link>
       <button className="quick-view" onClick={(e) => { e.preventDefault(); onQuickView ? onQuickView(product) : addToCart(product, 1); }}>
         {onQuickView ? "Quick View" : "Add to Cart"}
