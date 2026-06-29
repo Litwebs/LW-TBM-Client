@@ -1,7 +1,8 @@
 User-agent: *
 Allow: /
 Disallow: /account
+Disallow: /account/
 Disallow: /checkout
 Disallow: /cart
 
-Sitemap: https://paneloef.lovable.app/sitemap.xml
+Sitemap: https://thebritishmanor.co.uk/sitemap.xml
