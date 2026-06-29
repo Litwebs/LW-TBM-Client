@@ -7,6 +7,7 @@ import Accordion from "../components/Accordion.jsx";
 import QuickViewModal from "../components/QuickViewModal.jsx";
 import { TruckIcon, ToolIcon, WaveIcon, ShieldIcon, HeartIcon } from "../components/Icons.jsx";
 import { bestSellers } from "../data/products.js";
+import { useProducts } from "../context/ProductsContext.jsx";
 import { homeCategories } from "../data/categories.js";
 import { faqs } from "../data/faqs.js";
 import { reviews } from "../data/reviews.js";
