@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
+import Seo from "../components/Seo.jsx";
 
 export default function About() {
   return (
     <>
+      <Seo title="About us" description="A decade of UK interiors expertise behind every The British Manor wall panel." path="/about" />
       <div className="about-hero">
         <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=2000&q=80" alt="" />
       </div>

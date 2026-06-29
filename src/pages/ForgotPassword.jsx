@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useApp } from "../context/AppContext.jsx";
+import Seo from "../components/Seo.jsx";
 export default function ForgotPassword() {
   const { toast } = useApp();
   const [email, setEmail] = useState("");
@@ -12,6 +13,7 @@ export default function ForgotPassword() {
   };
   return (
     <div className="container" style={{ padding: "80px 0" }}>
+      <Seo title="Reset password" description="Reset your The British Manor account password." path="/account/forgot" />
       <div className="auth-card">
         <h1>Reset Password</h1>
         {sent ? <p className="center muted">If an account exists for {email}, you'll receive a reset link shortly.</p> : (

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useApp } from "../context/AppContext.jsx";
+import Seo from "../components/Seo.jsx";
 
 export default function Checkout() {
   const { cart, subtotal, placeOrder, user } = useApp();
@@ -40,6 +41,7 @@ export default function Checkout() {
 
   if (done) return (
     <div className="container" style={{ padding: "80px 0", textAlign: "center" }}>
+      <Seo title="Checkout" description="Complete your wall panel order with fast UK delivery." path="/checkout" />
       <h1 style={{ fontFamily: "var(--font-serif)", fontSize: 40, fontWeight: 400, letterSpacing: "0.05em", marginBottom: 16 }}>Thank You!</h1>
       <p className="muted" style={{ marginBottom: 8 }}>Order {done.id} placed successfully.</p>
       <p style={{ marginBottom: 32 }}>A confirmation has been sent to {form.email}.</p>

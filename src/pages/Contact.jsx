@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useApp } from "../context/AppContext.jsx";
+import Seo from "../components/Seo.jsx";
 
 export default function Contact() {
   const { toast } = useApp();
@@ -11,6 +12,7 @@ export default function Contact() {
   };
   return (
     <div className="container">
+      <Seo title="Contact" description="Visit our showroom or contact The British Manor for help with your project." path="/contact" />
       <div className="page-header"><h1>Contact</h1><p>Visit our showroom or get in touch — we're here to help with every project.</p></div>
       <div className="contact-grid">
         <form onSubmit={submit}>

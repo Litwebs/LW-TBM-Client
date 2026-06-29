@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { portfolio } from "../data/portfolio.js";
 import { CloseIcon } from "../components/Icons.jsx";
+import Seo from "../components/Seo.jsx";
 
 const ROOMS = [
   { v: "all", l: "All" }, { v: "living", l: "Living Room" }, { v: "bedroom", l: "Bedroom" },
@@ -14,6 +15,7 @@ export default function Portfolio() {
   const items = room === "all" ? portfolio : portfolio.filter((p) => p.room === room);
   return (
     <div className="container">
+      <Seo title="Portfolio" description="Real installations of acoustic and decorative wall panels in UK homes and businesses." path="/portfolio" />
       <div className="page-header"><h1>Portfolio</h1><p>Real installations from our customers and partner designers.</p></div>
       <div className="portfolio-filters">
         {ROOMS.map((r) => (<button key={r.v} className={room === r.v ? "active" : ""} onClick={() => setRoom(r.v)}>{r.l}</button>))}

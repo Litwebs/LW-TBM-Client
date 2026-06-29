@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useApp } from "../context/AppContext.jsx";
+import Seo from "../components/Seo.jsx";
 
 export default function Register() {
   const { register } = useApp();
@@ -16,6 +17,7 @@ export default function Register() {
   };
   return (
     <div className="container" style={{ padding: "80px 0" }}>
+      <Seo title="Create account" description="Create a The British Manor account for faster checkout and order tracking." path="/account/register" />
       <div className="auth-card">
         <h1>Create Account</h1>
         <form onSubmit={submit}>

@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { useApp } from "../context/AppContext.jsx";
 import AccountLayout from "../components/AccountLayout.jsx";
 import { mockOrders, statusTone } from "../data/accountMock.js";
+import Seo from "../components/Seo.jsx";
 
 const STAGES = ["Order placed", "Payment confirmed", "Preparing for dispatch", "In transit", "Out for delivery", "Delivered"];
 
@@ -26,6 +27,7 @@ export default function OrderDetail() {
 
   return (
     <AccountLayout title={`Order ${order.id}`} subtitle={`Placed ${new Date(order.date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}`}>
+      <Seo title="Order details" description="Order summary with delivery timeline, tracking, and itemised costs." />
       <div className="account-section" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
         <div>
           <span className="status-pill" style={{ background: tone.bg, color: tone.fg }}>{order.status}</span>

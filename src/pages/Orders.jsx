@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useApp } from "../context/AppContext.jsx";
 import AccountLayout from "../components/AccountLayout.jsx";
 import { mockOrders, statusTone } from "../data/accountMock.js";
+import Seo from "../components/Seo.jsx";
 
 const FILTERS = ["All", "Processing", "In Transit", "Delivered", "Refunded"];
 
@@ -17,6 +18,7 @@ export default function Orders() {
   );
   return (
     <AccountLayout title="Orders" subtitle="Track, reorder and manage your purchases">
+      <Seo title="Your orders" description="Track every order, delivery status, and tracking number in one place." path="/account/orders" />
       <div className="account-section">
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 20, alignItems: "center" }}>
           <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>

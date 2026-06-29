@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useApp } from "../context/AppContext.jsx";
+import Seo from "../components/Seo.jsx";
 
 export default function Cart() {
   const { cart, updateQty, removeFromCart, subtotal, toast } = useApp();
@@ -15,6 +16,7 @@ export default function Cart() {
 
   if (cart.length === 0) return (
     <div className="container" style={{ padding: "80px 0" }}>
+      <Seo title="Cart" description="Review the wall panels in your cart and proceed to secure checkout." path="/cart" />
       <div className="page-header"><h1>Your Cart</h1><p>Your cart is currently empty.</p></div>
       <div style={{ textAlign: "center" }}><Link to="/collections/all-panels" className="btn">Continue Shopping</Link></div>
     </div>
