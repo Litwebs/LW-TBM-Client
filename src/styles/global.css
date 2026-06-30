@@ -2319,6 +2319,131 @@ a:hover { color: var(--royal-blue); }
   .brand-center .brand-word small { display: none; }
   .nav-row { display: none; }
 }
+
+/* =============================================
+   v5 — Broaden blue accents (~30% surface presence)
+   ============================================= */
+
+/* Top announcement strip in royal blue */
+.announcement {
+  background: var(--manor-blue-deep);
+  color: #fff;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  font-size: 11px;
+  border-bottom: 1px solid var(--royal-blue);
+}
+
+/* Marquee + trust ticker in blue ink */
+.marquee {
+  background: var(--manor-blue);
+  color: #fff;
+  border-top: 1px solid var(--royal-blue);
+  border-bottom: 1px solid var(--royal-blue);
+}
+.marquee-track span { color: #fff; letter-spacing: 0.32em; }
+.marquee-track span::after { color: var(--silver) !important; }
+
+.trust-ticker {
+  background: var(--silver-soft);
+  color: var(--manor-blue-deep);
+  border-top: 1px solid var(--silver);
+  border-bottom: 1px solid var(--silver);
+}
+.ticker-track span { color: var(--manor-blue-deep); letter-spacing: 0.28em; }
+
+/* Sale / Best Seller badges */
+.product-card .badge,
+.badge {
+  background: var(--manor-blue) !important;
+  color: #fff !important;
+  border: 1px solid var(--royal-blue) !important;
+  letter-spacing: 0.28em;
+}
+
+/* Section eyebrows get a thin blue rule on either side */
+.section-eyebrow::before,
+.section-eyebrow::after { background: var(--royal-blue) !important; opacity: 0.55; }
+
+/* Atelier + split content */
+.atelier-signature { color: var(--manor-blue); }
+.split-content .link { color: var(--manor-blue); }
+.split-content .link::after,
+.split-content .link { border-bottom-color: var(--royal-blue); }
+
+/* Craft stats — blue numerals */
+.craft-stat .num { color: var(--manor-blue); }
+.craft-stat .num em { color: var(--royal-blue); }
+.craft-stat .lbl { color: var(--silver-deep); }
+
+/* Accordion + breadcrumbs */
+.accordion-icon::before, .accordion-icon::after { background: var(--manor-blue) !important; }
+.breadcrumbs a { color: var(--manor-blue); }
+.breadcrumbs a:hover { color: var(--royal-blue); }
+
+/* Reviews stars */
+.review-stars { color: var(--royal-blue) !important; }
+
+/* Lifestyle gallery tags */
+.lifestyle-gallery .ls-tag {
+  background: var(--manor-blue);
+  color: #fff;
+  letter-spacing: 0.24em;
+  border: 1px solid var(--royal-blue);
+}
+
+/* Category card overlay tint */
+.cat-card .cat-overlay {
+  background: linear-gradient(180deg, rgba(20,38,74,0) 40%, rgba(20,38,74,0.78) 100%);
+}
+.cat-card .cat-overlay .view { color: var(--silver-soft); border-bottom: 1px solid var(--silver); }
+
+/* Product card quick-view in blue */
+.product-card .quick-view {
+  background: var(--manor-blue) !important;
+  color: #fff !important;
+  letter-spacing: 0.26em;
+}
+.product-card .quick-view:hover { background: var(--royal-blue) !important; }
+.product-card .title:hover { color: var(--royal-blue); }
+
+/* Newsletter — blue submit */
+.newsletter { background: var(--silver-soft); border-top: 1px solid var(--silver); border-bottom: 1px solid var(--silver); }
+.newsletter h2 { color: var(--manor-blue-deep); }
+.newsletter button {
+  background: var(--manor-blue) !important;
+  color: #fff !important;
+  letter-spacing: 0.28em;
+}
+.newsletter button:hover { background: var(--royal-blue) !important; }
+.newsletter input { border-color: var(--silver); }
+.newsletter input:focus { border-color: var(--manor-blue); outline: none; }
+
+/* Footer — manor-navy backdrop with blue brand line */
+.footer { background: var(--manor-blue-deep); color: var(--silver-soft); }
+.footer h4, .footer h5 { color: #fff; }
+.footer a { color: var(--silver-soft); }
+.footer a:hover { color: #fff; }
+.footer-brand-col .logo { color: #fff; }
+.footer-brand-col .logo small { color: var(--silver); }
+.footer-submit { background: var(--royal-blue) !important; color: #fff !important; }
+.footer-submit:hover { background: var(--manor-blue) !important; }
+
+/* Cart drawer header + checkout button */
+.cart-header { border-bottom: 1px solid var(--silver); }
+.cart-header h3 { color: var(--manor-blue-deep); }
+.cart-total { color: var(--manor-blue-deep); }
+.cart-drawer .btn:not(.btn-outline) { background: var(--manor-blue); color: #fff; }
+.cart-drawer .btn:not(.btn-outline):hover { background: var(--royal-blue); }
+
+/* Account status pills + timeline */
+.status-pill { border-color: var(--silver); color: var(--manor-blue); }
+.status-pill.delivered { background: rgba(31,58,104,0.08); color: var(--manor-blue-deep); border-color: var(--manor-blue); }
+.timeline li.done::before { background: var(--royal-blue) !important; box-shadow: 0 0 0 4px rgba(46,91,186,0.18) !important; }
+.stat-card .num { color: var(--manor-blue); }
+
+/* Focus ring in blue */
+:focus-visible { outline-color: var(--royal-blue) !important; }
 @media (max-width: 480px) {
   .brand-center .brand-mark { height: 42px; }
   .brand-center .brand-word { font-size: 15px; }
