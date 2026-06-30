@@ -1873,14 +1873,16 @@ section.tight { padding: 88px 0; }
 
 /* ===== Toast ===== */
 .toast {
-  background: var(--bg-ink);
-  color: var(--bg);
+  background: #fff;
+  color: var(--bg-ink);
   border-radius: 0;
-  box-shadow: 0 20px 50px -20px rgba(11,26,43,0.5);
-  letter-spacing: 0.22em;
+  box-shadow: 0 8px 30px rgba(17,36,58,0.08);
+  letter-spacing: 0.16em;
   font-family: var(--font-sans);
   font-size: 12px;
-  padding: 16px 28px;
+  padding: 14px 28px;
+  border: 1px solid var(--silver-soft);
+  min-width: 320px;
 }
 
 /* ===== Portfolio ===== */
