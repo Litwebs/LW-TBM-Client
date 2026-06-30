@@ -2442,6 +2442,9 @@ a:hover { color: var(--royal-blue); }
 .newsletter button:hover { background: var(--royal-blue) !important; }
 .newsletter input { border-color: var(--silver); }
 .newsletter input:focus { border-color: var(--manor-blue); outline: none; }
+.newsletter p { color: var(--manor-blue-deep); opacity: 0.78; }
+.newsletter input { background: #fff; color: var(--manor-blue-deep); }
+.newsletter input::placeholder { color: rgba(17, 36, 58, 0.5); }
 
 /* Footer — manor-navy backdrop with blue brand line */
 .footer { background: var(--manor-blue-deep); color: var(--silver-soft); }
