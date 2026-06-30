@@ -30,16 +30,15 @@ export default function Header() {
     <>
       <header className="header">
         <div className="header-inner">
-          <Link to="/" className="logo brand">
+          <div className="header-side header-side-left">
+            <button className="icon-btn hamburger" aria-label="Menu" onClick={() => setMenuOpen(true)}><MenuIcon /></button>
+            <button className="icon-btn" aria-label="Search" onClick={() => setSearchOpen(true)}><SearchIcon /></button>
+          </div>
+          <Link to="/" className="logo brand brand-center">
             <img src="/images/tbm-logo.png" alt="The British Manor" className="brand-mark" />
             <span className="brand-word">The British Manor<small>Heritage · Elegance · Distinction</small></span>
           </Link>
-          <nav className="nav">
-            {NAV.map((n) => (<NavLink key={n.to} to={n.to} end={n.to === "/"}>{n.label}</NavLink>))}
-          </nav>
-          <div className="header-icons">
-            <button className="icon-btn hamburger" aria-label="Menu" onClick={() => setMenuOpen(true)}><MenuIcon /></button>
-            <button className="icon-btn" aria-label="Search" onClick={() => setSearchOpen(true)}><SearchIcon /></button>
+          <div className="header-side header-side-right header-icons">
             <Link to="/account" className="icon-btn" aria-label="Account"><UserIcon /></Link>
             <button className="icon-btn" aria-label="Cart" onClick={() => setCartOpen(true)}>
               <CartIcon />
@@ -47,6 +46,9 @@ export default function Header() {
             </button>
           </div>
         </div>
+        <nav className="nav nav-row">
+          {NAV.map((n) => (<NavLink key={n.to} to={n.to} end={n.to === "/"}>{n.label}</NavLink>))}
+        </nav>
       </header>
       <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
         <div className="mobile-menu-top">
