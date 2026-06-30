@@ -1,8 +1,6 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 import { useApp } from "../context/AppContext.jsx";
-import { CartIcon, MenuIcon, SearchIcon, UserIcon, CloseIcon } from "./Icons.jsx";
-import { useProducts } from "../context/ProductsContext.jsx";
+import { CartIcon, MenuIcon, UserIcon, CloseIcon } from "./Icons.jsx";
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -18,28 +16,20 @@ const NAV = [
 ];
 
 export default function Header() {
-  const { cartCount, setCartOpen, searchOpen, setSearchOpen, menuOpen, setMenuOpen } = useApp();
-  const { products } = useProducts();
-  const [query, setQuery] = useState("");
-  const navigate = useNavigate();
-  const results = query.length > 1
-    ? products.filter((p) => p.title.toLowerCase().includes(query.toLowerCase())).slice(0, 6)
-    : [];
+  const { cartCount, setCartOpen, menuOpen, setMenuOpen } = useApp();
 
   return (
     <>
       <header className="header">
-        <div className="header-inner">
-          <Link to="/" className="logo brand">
+        <div className="header-top">
+          <div className="header-side header-side-left">
+            <button className="icon-btn hamburger" aria-label="Menu" onClick={() => setMenuOpen(true)}><MenuIcon /></button>
+          </div>
+          <Link to="/" className="logo brand brand-center">
             <img src="/images/tbm-logo.png" alt="The British Manor" className="brand-mark" />
             <span className="brand-word">The British Manor<small>Heritage · Elegance · Distinction</small></span>
           </Link>
-          <nav className="nav">
-            {NAV.map((n) => (<NavLink key={n.to} to={n.to} end={n.to === "/"}>{n.label}</NavLink>))}
-          </nav>
-          <div className="header-icons">
-            <button className="icon-btn hamburger" aria-label="Menu" onClick={() => setMenuOpen(true)}><MenuIcon /></button>
-            <button className="icon-btn" aria-label="Search" onClick={() => setSearchOpen(true)}><SearchIcon /></button>
+          <div className="header-side header-side-right">
             <Link to="/account" className="icon-btn" aria-label="Account"><UserIcon /></Link>
             <button className="icon-btn" aria-label="Cart" onClick={() => setCartOpen(true)}>
               <CartIcon />
@@ -47,6 +37,9 @@ export default function Header() {
             </button>
           </div>
         </div>
+        <nav className="nav nav-row">
+          {NAV.map((n) => (<NavLink key={n.to} to={n.to} end={n.to === "/"}>{n.label}</NavLink>))}
+        </nav>
       </header>
       <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
         <div className="mobile-menu-top">
@@ -54,23 +47,6 @@ export default function Header() {
           <button className="icon-btn" aria-label="Close menu" onClick={() => setMenuOpen(false)}><CloseIcon /></button>
         </div>
         <nav>{NAV.map((n) => (<Link key={n.to} to={n.to} onClick={() => setMenuOpen(false)}>{n.label}</Link>))}</nav>
-      </div>
-      <div className={`search-overlay ${searchOpen ? "open" : ""}`} onClick={() => setSearchOpen(false)}>
-        <div className="search-box" onClick={(e) => e.stopPropagation()}>
-          <input aria-label="Search products" autoFocus={searchOpen} placeholder="Search panels, colours, sizes…" value={query} onChange={(e) => setQuery(e.target.value)} />
-          <div className="search-results">
-            {results.map((p) => (
-              <div key={p.id} className="search-result" onClick={() => { navigate(`/products/${p.slug}`); setSearchOpen(false); setQuery(""); }}>
-                <img src={p.image} alt={p.title} />
-                <div>
-                  <div style={{ fontSize: 13, marginBottom: 4 }}>{p.title}</div>
-                  <div style={{ fontSize: 13, color: "var(--accent)" }}>£{p.price.toFixed(2)}</div>
-                </div>
-              </div>
-            ))}
-            {query.length > 1 && results.length === 0 && (<div style={{ padding: 20, textAlign: "center", color: "#888" }}>No results</div>)}
-          </div>
-        </div>
       </div>
     </>
   );

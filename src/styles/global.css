@@ -2184,3 +2184,142 @@ section.tight { padding: 88px 0; }
   .hero { min-height: 92vh; }
   .brand-mark { height: 34px; }
 }
+
+/* =============================================
+   v4 — Blue accents, silver hairlines, centered logo
+   ============================================= */
+:root {
+  --manor-blue: #1F3A68;
+  --manor-blue-deep: #14264A;
+  --royal-blue: #2E5BBA;
+  --silver: #C7CBD1;
+  --silver-soft: #E2E5EA;
+  --silver-deep: #9097A1;
+}
+
+/* Silver hairlines replace soft brass borders site-wide */
+:root {
+  --border: rgba(31,58,104,0.14);
+  --border-dark: rgba(31,58,104,0.28);
+  --hairline: rgba(31,58,104,0.20);
+}
+
+/* Wider, more elegant serif tracking */
+h1, h2, h3 { letter-spacing: 0.005em; }
+h4, h5, h6 { letter-spacing: 0.14em; text-transform: uppercase; font-size: 12px; }
+.section-title { letter-spacing: 0.01em; }
+.section-eyebrow,
+.eyebrow {
+  letter-spacing: 0.44em !important;
+  color: var(--manor-blue) !important;
+  font-weight: 500;
+}
+
+/* Subtle blue link/selection accents */
+a:hover { color: var(--royal-blue); }
+::selection { background: var(--manor-blue); color: #fff; }
+.nav a::after { background: var(--royal-blue); }
+.nav a:hover, .nav a.active { color: var(--manor-blue); }
+
+/* Buttons — keep dark, but with a blue underline shine */
+.btn-outline { border-color: var(--silver); color: var(--manor-blue); }
+.btn-outline:hover { border-color: var(--manor-blue); color: var(--manor-blue); background: rgba(31,58,104,0.04); }
+.link { color: var(--manor-blue); border-bottom-color: var(--royal-blue); }
+.link:hover { color: var(--royal-blue); }
+
+/* Price + small accent surfaces */
+.product-card .price-sale,
+.pdp-info .prices .price-sale { color: var(--royal-blue); }
+.review-stars, .reviews-grid .review-card h5 { color: var(--manor-blue); }
+.benefit-icon { border-color: var(--silver); color: var(--manor-blue); }
+.benefit-icon svg { color: var(--manor-blue); }
+.cart-count { background: var(--manor-blue); color: #fff; }
+
+/* ===== Centered logo header — two-row layout ===== */
+.header {
+  background: rgba(246,241,232,0.92);
+  border-bottom: 1px solid var(--silver);
+}
+.header-top {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 20px 48px 14px;
+  gap: 24px;
+  border-bottom: 1px solid var(--silver-soft);
+}
+.header-side { display: flex; align-items: center; gap: 14px; }
+.header-side-left { justify-content: flex-start; }
+.header-side-right { justify-content: flex-end; }
+.header-side .hamburger { display: none; }
+
+.brand-center {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  justify-self: center;
+  text-align: center;
+}
+.brand-center .brand-mark {
+  height: 78px;
+  width: auto;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+  border-radius: 0;
+}
+.brand-center .brand-word {
+  font-size: 30px;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  color: var(--manor-blue);
+}
+.brand-center .brand-word small {
+  font-size: 9px;
+  letter-spacing: 0.5em;
+  color: var(--silver-deep);
+  margin-top: 8px;
+}
+
+/* Bottom centered nav row */
+.nav-row {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  padding: 14px 48px 16px;
+  flex-wrap: wrap;
+}
+.nav-row a {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--manor-blue);
+  font-weight: 500;
+  opacity: 0.85;
+}
+.nav-row a:hover, .nav-row a.active { opacity: 1; color: var(--royal-blue); }
+
+/* Header icons take blue ink */
+.icon-btn { color: var(--manor-blue); }
+.icon-btn:hover { background: rgba(31,58,104,0.06); color: var(--manor-blue-deep); }
+
+/* Footer accents */
+.footer { border-top: 1px solid var(--silver); }
+.footer a:hover { color: var(--silver-soft); }
+.footer-brand-col .logo small { color: var(--silver); }
+
+/* Mobile — collapse to single row */
+@media (max-width: 900px) {
+  .header-top { grid-template-columns: auto 1fr auto; padding: 12px 18px; gap: 12px; }
+  .header-side .hamburger { display: inline-flex; }
+  .brand-center { gap: 10px; }
+  .brand-center .brand-mark { height: 48px; }
+  .brand-center .brand-word { font-size: 18px; letter-spacing: 0.06em; }
+  .brand-center .brand-word small { display: none; }
+  .nav-row { display: none; }
+}
+@media (max-width: 480px) {
+  .brand-center .brand-mark { height: 42px; }
+  .brand-center .brand-word { font-size: 15px; }
+}
