@@ -1,7 +1,7 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useApp } from "../context/AppContext.jsx";
-import { CartIcon, MenuIcon, UserIcon, CloseIcon } from "./Icons.jsx";
+import { CartIcon, MenuIcon, SearchIcon, UserIcon, CloseIcon } from "./Icons.jsx";
 import { useProducts } from "../context/ProductsContext.jsx";
 
 const NAV = [
@@ -30,14 +30,16 @@ export default function Header() {
     <>
       <header className="header">
         <div className="header-inner">
-          <div className="header-side header-side-left">
-            <button className="icon-btn hamburger" aria-label="Menu" onClick={() => setMenuOpen(true)}><MenuIcon /></button>
-          </div>
-          <Link to="/" className="logo brand brand-center">
+          <Link to="/" className="logo brand">
             <img src="/images/tbm-logo.png" alt="The British Manor" className="brand-mark" />
             <span className="brand-word">The British Manor<small>Heritage · Elegance · Distinction</small></span>
           </Link>
-          <div className="header-side header-side-right header-icons">
+          <nav className="nav">
+            {NAV.map((n) => (<NavLink key={n.to} to={n.to} end={n.to === "/"}>{n.label}</NavLink>))}
+          </nav>
+          <div className="header-icons">
+            <button className="icon-btn hamburger" aria-label="Menu" onClick={() => setMenuOpen(true)}><MenuIcon /></button>
+            <button className="icon-btn" aria-label="Search" onClick={() => setSearchOpen(true)}><SearchIcon /></button>
             <Link to="/account" className="icon-btn" aria-label="Account"><UserIcon /></Link>
             <button className="icon-btn" aria-label="Cart" onClick={() => setCartOpen(true)}>
               <CartIcon />
@@ -45,9 +47,6 @@ export default function Header() {
             </button>
           </div>
         </div>
-        <nav className="nav nav-row">
-          {NAV.map((n) => (<NavLink key={n.to} to={n.to} end={n.to === "/"}>{n.label}</NavLink>))}
-        </nav>
       </header>
       <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
         <div className="mobile-menu-top">
