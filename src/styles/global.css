@@ -2347,8 +2347,8 @@ a:hover { color: var(--royal-blue); }
   border-top: 1px solid var(--royal-blue);
   border-bottom: 1px solid var(--royal-blue);
 }
-.marquee-track span { color: #fff; letter-spacing: 0.32em; }
-.marquee-track span::after { color: var(--silver) !important; }
+.marquee-track span { color: #F6F1E8 !important; letter-spacing: 0.32em; }
+.marquee-track span::after { color: var(--brass-soft) !important; }
 
 .trust-ticker {
   background: var(--silver-soft);
@@ -2369,7 +2369,11 @@ a:hover { color: var(--royal-blue); }
 
 /* Section eyebrows get a thin blue rule on either side */
 .section-eyebrow::before,
-.section-eyebrow::after { background: var(--royal-blue) !important; opacity: 0.55; }
+.section-eyebrow::after { background: var(--manor-blue) !important; opacity: 0.55; }
+
+/* Hero overlay sits on a dark image — keep eyebrow legible */
+.hero-overlay .eyebrow { color: var(--brass-soft) !important; }
+.hero-overlay h1 { color: #F6F1E8; }
 
 /* Atelier + split content */
 .atelier-signature { color: var(--manor-blue); }
