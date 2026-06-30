@@ -23,7 +23,7 @@ html, body { margin: 0; padding: 0; }
 body {
   font-family: var(--font-sans);
   color: var(--ink);
-  background: var(--bg);
+  background: #E2E5EA;
   -webkit-font-smoothing: antialiased;
   font-size: 15px;
   line-height: 1.55;
@@ -2272,7 +2272,7 @@ a:hover { color: var(--royal-blue); }
   text-align: center;
 }
 .brand-center .brand-mark {
-  height: 78px;
+  height: 110px;
   width: auto;
   background: transparent;
   padding: 0;
