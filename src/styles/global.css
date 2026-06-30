@@ -2324,7 +2324,6 @@ a:hover { color: var(--royal-blue); }
 @media (max-width: 900px) {
   .header-top { grid-template-columns: auto 1fr auto; padding: 12px 18px; gap: 12px; position: relative; }
   .header-side .hamburger { display: inline-flex; }
-    }
   .brand-center { position: absolute; left: 50%; transform: translateX(-50%); gap: 10px; }
   .brand-center .brand-mark { height: 48px; }
   .brand-center .brand-word { font-size: 18px; letter-spacing: 0.06em; }
