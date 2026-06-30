@@ -2197,6 +2197,12 @@ section.tight { padding: 88px 0; }
   --silver-deep: #9097A1;
 }
 
+/* Unify all blue accents to the deep navy used by the announcement bar */
+:root {
+  --manor-blue: #14264A;
+  --royal-blue: #14264A;
+}
+
 /* Silver hairlines replace soft brass borders site-wide */
 :root {
   --border: rgba(31,58,104,0.14);
