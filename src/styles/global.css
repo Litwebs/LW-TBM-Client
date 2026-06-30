@@ -2375,6 +2375,15 @@ a:hover { color: var(--royal-blue); }
 .hero-overlay .eyebrow { color: var(--brass-soft) !important; }
 .hero-overlay h1 { color: #F6F1E8; }
 
+/* Atelier "The Craft" section — navy block, cream text */
+.atelier { background: var(--manor-blue-deep) !important; color: #F6F1E8; }
+.atelier .section-eyebrow { color: var(--brass-soft) !important; }
+.atelier .section-eyebrow::before,
+.atelier .section-eyebrow::after { background: var(--brass-soft) !important; opacity: 0.6; }
+.atelier .atelier-quote { color: #F6F1E8; }
+.atelier .atelier-quote::before { color: var(--brass-soft); }
+.atelier .atelier-signature { color: var(--brass-soft) !important; }
+
 /* Atelier + split content */
 .atelier-signature { color: var(--manor-blue); }
 .split-content .link { color: var(--manor-blue); }
