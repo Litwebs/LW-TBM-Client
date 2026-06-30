@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
-import AnnouncementBar from "./components/AnnouncementBar.jsx";
+
 import CartDrawer from "./components/CartDrawer.jsx";
 import ToastHost from "./components/ToastHost.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
@@ -31,7 +31,6 @@ export default function App() {
   return (
     <>
       <ScrollToTop />
-      <AnnouncementBar />
       <Header />
       <main>
         <Routes>
