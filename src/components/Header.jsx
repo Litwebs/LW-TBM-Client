@@ -27,7 +27,6 @@ export default function Header() {
           </div>
           <Link to="/" className="logo brand brand-center">
             <img src="/images/tbm-logo.png" alt="The British Manor" className="brand-mark" />
-            <span className="brand-word">The British Manor<small>Heritage · Elegance · Distinction</small></span>
           </Link>
           <div className="header-side header-side-right">
             <Link to="/account" className="icon-btn" aria-label="Account"><UserIcon /></Link>
