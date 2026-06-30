@@ -2323,3 +2323,105 @@ a:hover { color: var(--royal-blue); }
   .brand-center .brand-mark { height: 42px; }
   .brand-center .brand-word { font-size: 15px; }
 }
+
+/* =============================================
+   v4.1 — More blue presence (tasteful)
+   ============================================= */
+
+/* Primary CTA: dark manor blue */
+.btn {
+  background: var(--manor-blue);
+  color: #fff;
+  border: 1px solid var(--manor-blue);
+}
+.btn:hover {
+  background: var(--manor-blue-deep);
+  border-color: var(--manor-blue-deep);
+  color: #fff;
+}
+.btn-light { color: #fff; border-color: rgba(255,255,255,0.7); background: transparent; }
+.btn-light:hover { background: #fff; color: var(--manor-blue); border-color: #fff; }
+
+/* Marquee — slim blue ribbon */
+.marquee {
+  background: var(--manor-blue);
+  color: #fff;
+  border-top: 1px solid var(--manor-blue-deep);
+  border-bottom: 1px solid var(--manor-blue-deep);
+}
+.marquee-track span::after { color: var(--silver); }
+
+/* Announcement bar — deep blue */
+.announcement { background: var(--manor-blue-deep); color: #fff; }
+
+/* Trust ticker — thin silver lines, blue ink */
+.trust-ticker { background: #fff; border-top: 1px solid var(--silver-soft); border-bottom: 1px solid var(--silver-soft); }
+.trust-ticker, .trust-ticker * { color: var(--manor-blue); }
+
+/* Category overlays — blue veil + silver underline */
+.cat-overlay h3 { color: #fff; }
+.cat-overlay .view { color: var(--silver-soft); }
+.cat-overlay .view::after { background: var(--silver) !important; }
+.cat-card:hover .cat-overlay { background: linear-gradient(to top, rgba(20,38,74,0.78), rgba(20,38,74,0.18)); }
+
+/* Split section — blue eyebrow + accents */
+.split-content { background: #fff; }
+.split-content .eyebrow { color: var(--manor-blue); }
+.split-content .link { color: var(--manor-blue); }
+.split-content .link::after { background: var(--royal-blue); }
+.split-content .link:hover { color: var(--royal-blue); }
+
+/* Atelier quote tinted background */
+.atelier { background: linear-gradient(180deg, #F6F1E8 0%, #ECEEF4 100%); }
+.atelier-quote { color: var(--manor-blue); }
+.atelier-signature { color: var(--silver-deep); letter-spacing: 0.32em; }
+
+/* Concierge / FAQ section — soft blue wash */
+:root { --bg-2: #EEF1F6; }
+
+/* Reviews section — pale blue tint */
+.reviews-section { background: #F4F6FA; }
+.review-card { border: 1px solid var(--silver-soft); background: #fff; }
+.review-stars { color: var(--royal-blue); }
+
+/* Newsletter — deep manor blue panel */
+.newsletter {
+  background: var(--manor-blue-deep);
+  color: #fff;
+  border-top: 1px solid var(--manor-blue);
+}
+.newsletter h2 { color: #fff; }
+.newsletter p { color: var(--silver-soft); }
+.newsletter input { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.22); color: #fff; }
+.newsletter input::placeholder { color: var(--silver); }
+.newsletter button { background: #fff; color: var(--manor-blue-deep); }
+.newsletter button:hover { background: var(--silver-soft); }
+
+/* Footer — manor blue */
+.footer {
+  background: var(--manor-blue-deep);
+  color: var(--silver-soft);
+  border-top: 1px solid var(--manor-blue);
+}
+.footer h5 { color: #fff; letter-spacing: 0.32em; }
+.footer a { color: var(--silver-soft); }
+.footer a:hover { color: #fff; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.10); color: var(--silver); }
+.footer-input { color: #fff !important; }
+.footer-input::placeholder { color: var(--silver) !important; }
+.footer-submit { background: #fff !important; color: var(--manor-blue-deep) !important; }
+.footer-submit:hover { background: var(--silver-soft) !important; color: var(--manor-blue-deep) !important; }
+.footer form { border-color: rgba(255,255,255,0.25) !important; }
+
+/* Product cards — silver hairline, blue hover title */
+.product-card { border: 1px solid var(--silver-soft); background: #fff; }
+.product-card .title:hover { color: var(--manor-blue); }
+.product-card .quick-view { background: var(--manor-blue); color: #fff; }
+.product-card .quick-view:hover { background: var(--royal-blue); }
+
+/* PDP small blue highlights */
+.pdp-info .prices .price-sale { color: var(--royal-blue); }
+.breadcrumbs a:hover { color: var(--royal-blue); }
+
+/* Hero overlay eyebrow blue tint stays subtle (already set); CTA gets blue */
+.hero-overlay .btn-light:hover { color: var(--manor-blue-deep); }
