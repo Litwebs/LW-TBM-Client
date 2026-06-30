@@ -2444,7 +2444,6 @@ a:hover { color: var(--royal-blue); }
 
 /* Focus ring in blue */
 :focus-visible { outline-color: var(--royal-blue) !important; }
-}
 @media (max-width: 480px) {
   .brand-center .brand-mark { height: 42px; }
   .brand-center .brand-word { font-size: 15px; }
