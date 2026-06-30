@@ -64,8 +64,6 @@ export default function Home() {
         </div>
       </section>
 
-      <Marquee text="The Spring Edit Now Available" />
-
       <section className="tight">
         <div className="container-narrow">
           <div className="section-eyebrow">A Word from the Atelier</div>
