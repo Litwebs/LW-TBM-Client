@@ -2989,3 +2989,21 @@ section .section-eyebrow,
   .about-feature-grid { grid-template-columns: 1fr; }
   .contact-info { border-left: 0; padding-left: 0; }
 }
+
+/* ===== Portfolio filters — dark theme contrast ===== */
+.portfolio-filters button {
+  background: rgba(255,255,255,0.04) !important;
+  color: var(--dm-ink-soft) !important;
+  border: 1px solid var(--dm-silver-line-strong) !important;
+  letter-spacing: 0.28em;
+}
+.portfolio-filters button:hover {
+  color: #fff !important;
+  border-color: var(--dm-silver) !important;
+  background: rgba(255,255,255,0.08) !important;
+}
+.portfolio-filters button.active {
+  background: #fff !important;
+  color: var(--dm-navy) !important;
+  border-color: #fff !important;
+}
