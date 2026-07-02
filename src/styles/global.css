@@ -2579,6 +2579,7 @@ section a.link:hover { color: #fff; border-bottom-color: #fff; }
 .benefit h4 { color: #fff !important; }
 .benefit p { color: var(--dm-ink-soft) !important; }
 .benefit-icon { color: var(--dm-silver) !important; border-color: var(--dm-silver-line) !important; background: transparent !important; }
+.benefit-icon svg { color: var(--dm-silver) !important; stroke: var(--dm-silver) !important; }
 .craft-stat .num, .craft-stat em { color: #fff !important; }
 .craft-stat .lbl { color: var(--dm-silver) !important; }
 
