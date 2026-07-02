@@ -2639,8 +2639,8 @@ section .accordion-item .content, section .accordion-item p { color: var(--dm-in
 .ba-tag-after { right: 20px; }
 .ba-handle {
   position: absolute; top: 0; bottom: 0;
-  width: 2px; background: rgba(255,255,255,0.9);
-  transform: translateX(-1px);
+  width: 48px;
+  transform: translateX(-50%);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   pointer-events: none;
 }
