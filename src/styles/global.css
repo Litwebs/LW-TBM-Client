@@ -2652,6 +2652,13 @@ section .accordion-item .content, section .accordion-item p { color: var(--dm-in
   box-shadow: 0 10px 30px -8px rgba(0,0,0,0.45);
   margin: 8px 0;
 }
+.ba-handle-pulse {
+  animation: baPulse 2.2s ease-in-out infinite;
+}
+@keyframes baPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 10px 30px -8px rgba(0,0,0,0.45); }
+  50% { transform: scale(1.08); box-shadow: 0 12px 34px -6px rgba(0,0,0,0.55); }
+}
 .ba-clip .ba-img { width: 100%; }
 
 /* Better contrast for tight/plain sections */
