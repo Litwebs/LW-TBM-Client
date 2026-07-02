@@ -2646,10 +2646,11 @@ section .accordion-item .content, section .accordion-item p { color: var(--dm-in
 }
 .ba-handle-line { flex: 1; width: 2px; background: rgba(255,255,255,0.9); }
 .ba-handle-knob {
-  width: 48px; height: 48px; border-radius: 50%;
+  width: 52px; height: 52px; border-radius: 50%;
   background: #fff; color: var(--dm-navy);
   display: grid; place-items: center;
-  box-shadow: 0 10px 30px -8px rgba(0,0,0,0.45);
+  box-shadow: 0 10px 30px -8px rgba(0,0,0,0.45), inset 0 0 0 2px rgba(10,25,48,0.25);
+  border: 2px solid var(--dm-navy);
   margin: 8px 0;
 }
 .ba-handle-pulse {
