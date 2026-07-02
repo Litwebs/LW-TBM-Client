@@ -3148,3 +3148,183 @@ section .section-eyebrow,
 .cart-drawer .btn:not(.btn-outline):hover { background: var(--dm-navy-2) !important; }
 .cart-drawer .btn-outline { color: var(--ink) !important; border-color: var(--ink) !important; background: transparent !important; }
 .cart-drawer .btn-outline:hover { background: var(--ink) !important; color: #fff !important; }
+
+/* ===== Final dark-theme contrast pass ===== */
+.product-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+@media (max-width: 900px) {
+  .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+@media (max-width: 560px) {
+  .product-grid { grid-template-columns: 1fr !important; }
+}
+
+/* PDP: keep every control readable on navy */
+.pdp,
+.pdp-info,
+.pdp-info h1,
+.pdp-info p,
+.pdp-info li,
+.pdp-info strong,
+.pdp-desc,
+.pdp-features,
+.pdp-features h4,
+.pdp-features li,
+.variant-group .label,
+.qty-stepper input,
+.qty-stepper button {
+  color: var(--dm-ink) !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+.pdp-desc,
+.pdp-features li,
+.variant-group .label {
+  color: var(--dm-ink-soft) !important;
+}
+.pdp-info .prices .price-sale { color: #fff !important; }
+.pdp-info .prices .price-compare,
+.pdp-info .rating-row { display: none !important; }
+.variant-pill,
+.qty-stepper {
+  background: rgba(255,255,255,0.055) !important;
+  color: var(--dm-ink) !important;
+  border-color: var(--dm-silver-line-strong) !important;
+}
+.variant-pill:hover,
+.variant-pill.selected {
+  background: var(--dm-navy-3) !important;
+  color: #fff !important;
+  border-color: var(--dm-silver) !important;
+}
+.pdp-features {
+  background: rgba(255,255,255,0.035) !important;
+  border-color: var(--dm-silver-line-strong) !important;
+}
+
+/* Checkout: remove white panels and make all form surfaces dark */
+.checkout-layout > div:first-child,
+.checkout-layout .summary {
+  background: rgba(255,255,255,0.035) !important;
+  border: 1px solid var(--dm-silver-line) !important;
+  color: var(--dm-ink) !important;
+  padding: 32px !important;
+}
+.checkout-layout h1,
+.checkout-layout h2,
+.checkout-layout h3,
+.checkout-layout label,
+.checkout-layout span,
+.checkout-layout div,
+.checkout-layout .summary h3,
+.checkout-layout .summary-row,
+.checkout-layout .total {
+  color: var(--dm-ink) !important;
+}
+.checkout-layout .muted { color: var(--dm-ink-soft) !important; }
+.checkout-layout input,
+.checkout-layout textarea,
+.checkout-layout select,
+.checkout-layout label[style*="justify-content"] {
+  background: rgba(255,255,255,0.055) !important;
+  color: #fff !important;
+  border-color: var(--dm-silver-line-strong) !important;
+}
+.checkout-layout label[style*="justify-content"] {
+  border: 1px solid var(--dm-silver-line-strong) !important;
+}
+.checkout-layout input[type="radio"] {
+  accent-color: var(--dm-silver);
+}
+.checkout-layout img {
+  border: 1px solid var(--dm-silver-line) !important;
+}
+.checkout-layout .summary-row.total {
+  border-top-color: var(--dm-silver-line-strong) !important;
+}
+
+/* Customer portal: dark navy cards instead of white/ivory components */
+.account-sidebar,
+.account-section,
+.stat-card,
+.address-card,
+.payment-card,
+.order-summary-card,
+.order-detail-card {
+  background: rgba(255,255,255,0.035) !important;
+  border-color: var(--dm-silver-line-strong) !important;
+  color: var(--dm-ink) !important;
+}
+.account-main,
+.account-main *,
+.account-sidebar,
+.account-sidebar *,
+.account-section,
+.account-section *,
+.stat-card,
+.stat-card *,
+.address-card,
+.address-card *,
+.payment-card,
+.payment-card * {
+  color: var(--dm-ink) !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+.account-main .muted,
+.account-section .muted,
+.account-sidebar .muted,
+.stat-label,
+.address-label,
+.card-meta,
+.kv-grid dt,
+.timeline-date {
+  color: var(--dm-ink-soft) !important;
+}
+.account-nav-link {
+  background: transparent !important;
+  color: var(--dm-ink-soft) !important;
+  border-color: transparent !important;
+}
+.account-nav-link:hover,
+.account-nav-link.is-active {
+  background: rgba(255,255,255,0.06) !important;
+  color: #fff !important;
+  border-left-color: var(--dm-silver) !important;
+}
+.account-avatar,
+.address-card .badge,
+.payment-card .badge {
+  background: var(--dm-navy-3) !important;
+  color: #fff !important;
+  border: 1px solid var(--dm-silver-line-strong) !important;
+}
+.order-row,
+.account-user {
+  border-color: var(--dm-silver-line) !important;
+}
+.order-row.head {
+  color: var(--dm-silver) !important;
+  border-bottom-color: var(--dm-silver-line-strong) !important;
+}
+.account-main input,
+.account-main textarea,
+.account-main select {
+  background: rgba(255,255,255,0.055) !important;
+  color: #fff !important;
+  border: 1px solid var(--dm-silver-line-strong) !important;
+}
+.account-main .btn-outline,
+.account-section .btn-outline {
+  color: #fff !important;
+  border-color: var(--dm-silver-line-strong) !important;
+}
+.account-main .btn:not(.btn-outline),
+.account-section .btn:not(.btn-outline) {
+  background: #fff !important;
+  color: var(--dm-navy) !important;
+  border-color: #fff !important;
+}
+.account-main .status-pill,
+.account-section .status-pill {
+  -webkit-text-fill-color: initial !important;
+}
