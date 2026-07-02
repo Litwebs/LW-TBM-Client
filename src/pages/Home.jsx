@@ -78,10 +78,10 @@ export default function Home() {
             into a considered, architectural space.
           </p>
           <BeforeAfter
-            beforeSrc="https://images.unsplash.com/photo-1618221118493-9cfa1a1c00da?w=1600&q=80"
-            afterSrc="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1600&q=80"
-            beforeAlt="Plain living room wall"
-            afterAlt="Living room with slatted oak panelling"
+            beforeSrc="/images/ba-before.jpg"
+            afterSrc="/images/ba-after.jpg"
+            beforeAlt="Living room with a plain painted wall — before"
+            afterAlt="The same living room transformed with slatted oak wall panels — after"
           />
         </div>
       </section>
