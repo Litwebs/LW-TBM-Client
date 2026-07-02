@@ -3417,3 +3417,80 @@ section .section-eyebrow,
 .checkout-layout textarea::placeholder {
   color: rgba(237,238,242,0.55) !important;
 }
+
+/* Account page: remove inherited section spacing so content aligns with sidebar */
+.account-main {
+  padding: 0 !important;
+  margin: 0 !important;
+  align-self: start !important;
+}
+.account-grid {
+  align-items: start !important;
+}
+
+/* Cart / checkout slide-out: match dark manor theme instead of ivory */
+.cart-backdrop.open {
+  background: rgba(3, 8, 18, 0.72) !important;
+}
+.cart-drawer,
+.cart-header,
+.cart-footer {
+  background: var(--dm-navy) !important;
+  color: var(--dm-ink) !important;
+  border-color: var(--dm-silver-line-strong) !important;
+}
+.cart-drawer {
+  border-left: 1px solid var(--dm-silver-line-strong) !important;
+  box-shadow: -28px 0 70px rgba(0,0,0,0.38) !important;
+}
+.cart-drawer,
+.cart-drawer h3,
+.cart-drawer .title,
+.cart-drawer .cart-total,
+.cart-drawer .cart-total span,
+.cart-drawer .icon-btn,
+.cart-drawer .cart-item > div:last-child,
+.cart-drawer .qty button,
+.cart-drawer .qty span {
+  color: var(--dm-ink) !important;
+  -webkit-text-fill-color: var(--dm-ink) !important;
+}
+.cart-drawer .meta,
+.cart-drawer .remove,
+.cart-empty {
+  color: var(--dm-ink-soft) !important;
+  -webkit-text-fill-color: var(--dm-ink-soft) !important;
+}
+.cart-item,
+.cart-header,
+.cart-footer {
+  border-color: var(--dm-silver-line) !important;
+}
+.cart-item img {
+  border: 1px solid var(--dm-silver-line) !important;
+}
+.cart-item .qty {
+  background: rgba(255,255,255,0.055) !important;
+  border-color: var(--dm-silver-line-strong) !important;
+}
+.cart-drawer .btn:not(.btn-outline) {
+  background: #fff !important;
+  color: var(--dm-navy) !important;
+  border-color: #fff !important;
+  -webkit-text-fill-color: var(--dm-navy) !important;
+}
+.cart-drawer .btn:not(.btn-outline):hover {
+  background: var(--dm-silver) !important;
+  border-color: var(--dm-silver) !important;
+}
+.cart-drawer .btn-outline {
+  background: transparent !important;
+  color: var(--dm-ink) !important;
+  border-color: var(--dm-silver-line-strong) !important;
+  -webkit-text-fill-color: var(--dm-ink) !important;
+}
+.cart-drawer .btn-outline:hover {
+  background: rgba(255,255,255,0.08) !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
