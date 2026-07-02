@@ -2475,3 +2475,183 @@ a:hover { color: var(--royal-blue); }
   .brand-center .brand-mark { height: 42px; }
   .brand-center .brand-word { font-size: 15px; }
 }
+
+/* ============================================================
+   ============ THE BRITISH MANOR — DARK MANOR v5 =============
+   Dark navy canvas · silver accents · luxury minimalism
+   ============================================================ */
+:root {
+  --dm-navy: #0A1930;
+  --dm-navy-2: #0F2340;
+  --dm-navy-3: #14294A;
+  --dm-ink: #EDEEF2;
+  --dm-ink-soft: #C7CBD1;
+  --dm-mute: #8B93A1;
+  --dm-silver: #C7CBD1;
+  --dm-silver-line: rgba(199, 203, 209, 0.18);
+  --dm-silver-line-strong: rgba(199, 203, 209, 0.32);
+  --dm-accent: #C7CBD1;
+}
+
+body {
+  background: radial-gradient(1200px 800px at 80% -10%, rgba(46, 91, 186, 0.14), transparent 60%),
+              radial-gradient(900px 700px at -10% 20%, rgba(199, 203, 209, 0.05), transparent 60%),
+              var(--dm-navy) !important;
+  background-attachment: fixed;
+  color: var(--dm-ink);
+}
+
+/* Default section text on dark canvas */
+section { color: var(--dm-ink); }
+section .section-eyebrow { color: var(--dm-silver); opacity: 0.75; }
+section .section-title, section h1, section h2, section h3 { color: var(--dm-ink); }
+section .intro-text, section p { color: var(--dm-ink-soft); }
+section a.link { color: var(--dm-ink); border-bottom-color: var(--dm-silver-line-strong); }
+section a.link:hover { color: #fff; border-bottom-color: #fff; }
+
+/* Hero — deeper vignette, silver eyebrow, wider CTA row */
+.hero-overlay { background: linear-gradient(180deg, rgba(6,14,28,0.20) 0%, rgba(6,14,28,0.62) 100%); }
+.hero-overlay .eyebrow { color: var(--dm-silver); letter-spacing: 0.38em; }
+.hero-overlay h1 { color: #fff; }
+.hero-overlay h1 em { color: var(--dm-silver); font-style: italic; }
+.editorial-hero-meta { color: var(--dm-silver); }
+.hero-cta-row { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
+
+/* Buttons — luxury silver-outlined pill */
+.btn { transition: background .35s var(--ease), color .35s var(--ease), border-color .35s var(--ease), transform .35s var(--ease); }
+.btn:hover { transform: translateY(-1px); }
+.btn-light { background: #fff; color: var(--dm-navy) !important; border: 1px solid #fff !important; }
+.btn-light:hover { background: transparent; color: #fff !important; border-color: #fff !important; }
+.btn-ghost {
+  background: transparent; color: #fff !important;
+  border: 1px solid rgba(255,255,255,0.55) !important;
+  padding: 14px 28px; letter-spacing: 0.28em; font-size: 12px; text-transform: uppercase;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.btn-ghost:hover { background: rgba(255,255,255,0.08); border-color: #fff !important; }
+
+/* Announcement / marquee / trust ticker on dark */
+.announcement { background: var(--dm-navy-2); color: var(--dm-silver); border-bottom: 1px solid var(--dm-silver-line); }
+.trust-ticker, .trust-ticker * { background: transparent !important; color: var(--dm-silver) !important; border-color: var(--dm-silver-line) !important; }
+
+/* Header — dark glass */
+.header { background: rgba(10, 25, 48, 0.82) !important; backdrop-filter: saturate(140%) blur(14px); -webkit-backdrop-filter: saturate(140%) blur(14px); border-bottom: 1px solid var(--dm-silver-line); }
+.header .nav a { color: var(--dm-ink-soft); }
+.header .nav a:hover, .header .nav a.active { color: #fff; }
+.header .nav a::after { background: var(--dm-silver); }
+.header .icon-btn { color: var(--dm-ink); }
+.header .icon-btn:hover { background: rgba(255,255,255,0.06); color: #fff; }
+.header .cart-count { background: var(--dm-silver); color: var(--dm-navy); }
+
+/* Category grid — two-up, taller, silver frame */
+.cat-grid.cat-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
+@media (max-width: 800px) { .cat-grid.cat-grid-2 { grid-template-columns: 1fr; } }
+.cat-card { border: 1px solid var(--dm-silver-line); border-radius: 2px; overflow: hidden; background: var(--dm-navy-2); }
+.cat-card img { aspect-ratio: 4/3; object-fit: cover; transition: transform 1.2s var(--ease); }
+.cat-card:hover img { transform: scale(1.05); }
+.cat-card .cat-overlay {
+  background: linear-gradient(180deg, rgba(10,25,48,0) 30%, rgba(10,25,48,0.88) 100%) !important;
+  padding: 32px !important; color: #fff !important;
+}
+.cat-card .cat-overlay h3 { color: #fff !important; font-family: var(--font-serif); font-size: 26px; letter-spacing: 0.02em; text-transform: none; margin-bottom: 6px; }
+.cat-card .cat-tagline { color: var(--dm-ink-soft); font-size: 13px; line-height: 1.5; margin: 4px 0 14px; max-width: 42ch; }
+.cat-card .cat-overlay .view { color: #fff !important; border-bottom: 1px solid rgba(255,255,255,0.5) !important; letter-spacing: 0.32em; }
+
+/* Product cards — dark ivory-on-navy */
+.product-card { background: var(--dm-navy-2) !important; border: 1px solid var(--dm-silver-line) !important; }
+.product-card .image-wrap { background: #0c1f3a !important; }
+.product-card .title { color: #fff !important; }
+.product-card .title:hover { color: var(--dm-silver) !important; }
+.product-card .price, .product-card .rating { color: var(--dm-ink-soft) !important; }
+
+/* Split & atelier sections adapt to dark */
+.split { background: var(--dm-navy) !important; }
+.split-content, .split-content * { color: var(--dm-ink) !important; }
+.split-content p { color: var(--dm-ink-soft) !important; }
+.atelier { background: var(--dm-navy-2) !important; }
+.atelier * { color: var(--dm-ink) !important; }
+.atelier-quote { color: #fff !important; }
+.atelier-signature { color: var(--dm-silver) !important; }
+
+/* Benefits & craft stats */
+.benefits { background: transparent !important; }
+.benefit { background: var(--dm-navy-2); border: 1px solid var(--dm-silver-line); padding: 32px; }
+.benefit h4 { color: #fff !important; }
+.benefit p { color: var(--dm-ink-soft) !important; }
+.benefit-icon { color: var(--dm-silver) !important; border-color: var(--dm-silver-line) !important; background: transparent !important; }
+.craft-stat .num, .craft-stat em { color: #fff !important; }
+.craft-stat .lbl { color: var(--dm-silver) !important; }
+
+/* Reviews section on dark */
+.reviews-section { background: var(--dm-navy-2) !important; }
+.review-card { background: rgba(255,255,255,0.03) !important; border: 1px solid var(--dm-silver-line); }
+.review-card h5, .review-card .review-stars { color: #fff !important; }
+.review-card .body { color: var(--dm-ink-soft) !important; }
+.review-card .meta { color: var(--dm-mute) !important; }
+
+/* Newsletter — invert to dark */
+.newsletter { background: var(--dm-navy-2) !important; border-top: 1px solid var(--dm-silver-line) !important; border-bottom: 1px solid var(--dm-silver-line) !important; }
+.newsletter h2 { color: #fff !important; }
+.newsletter p { color: var(--dm-ink-soft) !important; opacity: 1 !important; }
+.newsletter input { background: rgba(255,255,255,0.06) !important; color: #fff !important; border: 1px solid var(--dm-silver-line-strong) !important; }
+.newsletter input::placeholder { color: rgba(255,255,255,0.5) !important; }
+.newsletter button { background: #fff !important; color: var(--dm-navy) !important; }
+.newsletter button:hover { background: var(--dm-silver) !important; color: var(--dm-navy) !important; }
+
+/* Footer stays deep */
+.footer { background: #060F1E !important; color: var(--dm-ink-soft) !important; border-top: 1px solid var(--dm-silver-line); }
+.footer a, .footer h4, .footer h5 { color: var(--dm-ink) !important; }
+.footer a:hover { color: #fff !important; }
+
+/* Lifestyle gallery frames */
+.lifestyle-gallery a { border: 1px solid var(--dm-silver-line); }
+.lifestyle-gallery .ls-tag { background: rgba(10, 25, 48, 0.75); color: var(--dm-silver); border: 1px solid var(--dm-silver-line-strong); }
+
+/* Accordion (FAQ) legibility */
+section .accordion-item { border-bottom-color: var(--dm-silver-line) !important; }
+section .accordion-item button { color: #fff !important; }
+section .accordion-item .content, section .accordion-item p { color: var(--dm-ink-soft) !important; }
+
+/* ===== Before/After image comparison slider ===== */
+.ba-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/10;
+  overflow: hidden;
+  user-select: none;
+  cursor: ew-resize;
+  border: 1px solid var(--dm-silver-line-strong);
+  box-shadow: 0 40px 80px -40px rgba(0,0,0,0.55);
+  background: var(--dm-navy-2);
+}
+.ba-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.ba-clip { position: absolute; top: 0; left: 0; height: 100%; overflow: hidden; }
+.ba-clip .ba-img { width: 100vw; max-width: none; }
+.ba-tag {
+  position: absolute; top: 20px;
+  font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase;
+  padding: 8px 14px; color: #fff;
+  background: rgba(10,25,48,0.7); border: 1px solid var(--dm-silver-line-strong);
+  backdrop-filter: blur(4px);
+}
+.ba-tag-before { left: 20px; }
+.ba-tag-after { right: 20px; }
+.ba-handle {
+  position: absolute; top: 0; bottom: 0;
+  width: 2px; background: rgba(255,255,255,0.9);
+  transform: translateX(-1px);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  pointer-events: none;
+}
+.ba-handle-line { flex: 1; width: 2px; background: rgba(255,255,255,0.9); }
+.ba-handle-knob {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: #fff; color: var(--dm-navy);
+  display: grid; place-items: center;
+  box-shadow: 0 10px 30px -8px rgba(0,0,0,0.45);
+  margin: 8px 0;
+}
+.ba-clip .ba-img { width: 100%; }
+
+/* Better contrast for tight/plain sections */
+.tight .intro-text { color: var(--dm-ink-soft) !important; }
