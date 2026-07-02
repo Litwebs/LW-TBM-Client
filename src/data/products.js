@@ -19,22 +19,17 @@ export const products = [
   { id: "p16", slug: "premium-mdf-oak", title: "Premium MDF Acoustic Slatted 2400 x 600mm — Oak", price: 44.99, compareAt: 129.99, rating: 4.8, reviews: 31, image: img("240_smoke.jpg?v=1774026282&width=1024"), category: "mdf", finish: "Premium MDF", colour: "Light Oak", size: "2400 x 600mm", stock: true },
   { id: "p17", slug: "flexible-walnut", title: "Flexible Wall Panel 2400 x 600mm — Walnut", price: 54.99, compareAt: 139.99, rating: 4.6, reviews: 22, image: img("240_walnut.jpg?v=1774026705&width=1024"), category: "flexible", finish: "Flexible", colour: "Walnut", size: "2400 x 600mm", stock: true },
   { id: "p18", slug: "paintable-mdf", title: "Paintable MDF Wall Panel 2400 x 600mm", price: 34.99, compareAt: 89.99, rating: 4.5, reviews: 19, image: img("240_light_grey.jpg?v=1774026705&width=1024"), category: "paintable", finish: "Paintable", colour: "White Marble", size: "2400 x 600mm", stock: true },
-  { id: "p19", slug: "artificial-eucalyptus-fleuri", title: "Artificial Eucalyptus Tree — Fleuri Beige Planter", price: 356, compareAt: 445, rating: 4.7, reviews: 12, image: img("eucafleuri.jpg?v=1761133588&width=1000"), category: "trees", finish: "Acoustic Slatted", colour: "Light Oak", size: "2400 x 600mm", stock: true },
-  { id: "p20", slug: "artificial-olive-lena", title: "Artificial Olive Tree — Lena Beige Planter", price: 464, compareAt: 580, rating: 4.9, reviews: 8, image: img("lifestyle_shoot_day_3_1a-1577_cd7341c9-ae80-41a8-a542-9c825ff36d5f.jpg?v=1761133503&width=4429"), category: "trees", finish: "Acoustic Slatted", colour: "Light Oak", size: "2400 x 600mm", stock: true },
+  { id: "o1", slug: "outdoor-charred-oak", title: "Outdoor Composite Panel 2400 x 300mm — Charred Oak", price: 64.99, compareAt: 149.99, rating: 4.8, reviews: 44, image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80", category: "outdoor", finish: "Composite", colour: "Charred Oak", size: "2400 x 300mm", stock: true, bestseller: true },
+  { id: "o2", slug: "outdoor-slate-grey", title: "Outdoor Composite Panel 2400 x 300mm — Slate Grey", price: 62.99, compareAt: 139.99, rating: 4.7, reviews: 31, image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1200&q=80", category: "outdoor", finish: "Composite", colour: "Slate Grey", size: "2400 x 300mm", stock: true },
+  { id: "o3", slug: "outdoor-natural-teak", title: "Outdoor Composite Panel 2400 x 300mm — Natural Teak", price: 69.99, compareAt: 159.99, rating: 4.9, reviews: 22, image: "https://images.unsplash.com/photo-1592595896616-c37162298647?w=1200&q=80", category: "outdoor", finish: "Composite", colour: "Natural Teak", size: "2400 x 300mm", stock: true, bestseller: true },
+  { id: "o4", slug: "outdoor-graphite-black", title: "Outdoor Composite Panel 2400 x 300mm — Graphite Black", price: 66.99, compareAt: 149.99, rating: 4.8, reviews: 18, image: "https://images.unsplash.com/photo-1618221469555-7f3ad97540d6?w=1200&q=80", category: "outdoor", finish: "Composite", colour: "Graphite", size: "2400 x 300mm", stock: true },
 ];
 
 export const collections = [
   { slug: "all-panels", name: "All Panels", description: "Our complete collection of premium wall panels." },
-  { slug: "acoustic-2-4m", name: "2.4m Acoustic Slatted Wall Panels", description: "Best-selling 2.4m acoustic panels.", filter: (p) => p.category === "acoustic" },
-  { slug: "acoustic-slimline", name: "2.4m Acoustic Slimline Slatted Wall Panels", description: "Slim profile acoustic panels.", filter: (p) => p.category === "slimline" },
-  { slug: "acoustic-3m", name: "3m Acoustic Slatted Wall Panels", description: "Taller 3m panels for high ceilings.", filter: (p) => p.category === "3m" },
-  { slug: "acoustic-3-6m", name: "3.6m Acoustic Slatted Wall Panels", description: "Statement panels for high spaces.", filter: (p) => p.category === "3-6m" },
-  { slug: "tiles-600", name: "600mm Acoustic Slatted Wall Panels", description: "Compact square panels.", filter: (p) => p.category === "tiles" },
-  { slug: "premium-mdf", name: "2.4m Premium MDF Acoustic Slatted", description: "Premium MDF construction.", filter: (p) => p.category === "mdf" },
-  { slug: "flexible", name: "2.4m Flexible Wall Panels", description: "Bendable panels for curved surfaces.", filter: (p) => p.category === "flexible" },
-  { slug: "paintable", name: "2.4m Paintable MDF Wall Panels", description: "Paint to match any interior.", filter: (p) => p.category === "paintable" },
+  { slug: "wall-panels", name: "Interior Wall Panels", description: "Our full range of acoustic slatted timber wall panels — from 600mm tiles to 3.6m statement lengths.", filter: (p) => ["acoustic","slimline","3m","3-6m","tiles","mdf","flexible","paintable"].includes(p.category) },
+  { slug: "outdoor-panels", name: "Outdoor Panels", description: "Weatherproof composite panels for gardens, façades and exterior feature walls.", filter: (p) => p.category === "outdoor" },
   { slug: "best-sellers", name: "Best Sellers", description: "Our most loved panels.", filter: (p) => p.bestseller },
-  { slug: "trees", name: "Artificial Trees", description: "Lifelike artificial trees.", filter: (p) => p.category === "trees" },
 ];
 
 export const filterOptions = {
