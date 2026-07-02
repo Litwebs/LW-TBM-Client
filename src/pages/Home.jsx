@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import Marquee from "../components/Marquee.jsx";
 import TrustTicker from "../components/TrustTicker.jsx";
 import Newsletter from "../components/Newsletter.jsx";
 import ProductCard from "../components/ProductCard.jsx";
 import Accordion from "../components/Accordion.jsx";
 import QuickViewModal from "../components/QuickViewModal.jsx";
+import BeforeAfter from "../components/BeforeAfter.jsx";
 import { TruckIcon, ToolIcon, WaveIcon, ShieldIcon, HeartIcon } from "../components/Icons.jsx";
 import { bestSellers } from "../data/products.js";
 import { useProducts } from "../context/ProductsContext.jsx";
@@ -54,13 +54,14 @@ export default function Home() {
       <section className="hero" style={{ padding: 0 }}>
         <div className="hero-bg" style={{ backgroundImage: `url(${HERO_BG})` }} />
         <div className="hero-overlay">
-          <div className="eyebrow">The Spring Collection · MMXXVI</div>
+          <div className="eyebrow">Heritage · Elegance · Distinction</div>
           <h1>
-            Interiors composed with <em>quiet</em> distinction.
+            Curated British <em>elegance</em> for refined living spaces.
           </h1>
-          <Link to="/collections/all-panels" className="btn btn-light btn-lg">
-            Discover the Collection
-          </Link>
+          <div className="hero-cta-row">
+            <Link to="/collections/wall-panels" className="btn btn-light btn-lg">Wall Panels</Link>
+            <Link to="/collections/outdoor-panels" className="btn btn-ghost btn-lg">Outdoor Panels</Link>
+          </div>
         </div>
         <div className="editorial-hero-meta">
           <span>Hand-finished in Britain</span>
@@ -70,26 +71,32 @@ export default function Home() {
 
       <section className="tight">
         <div className="container-narrow">
-          <div className="section-eyebrow">A Word from the Atelier</div>
-          <p className="intro-text">
-            The British Manor is a quiet conversation between heritage craft and contemporary form.
-            Each piece in our <Link to="/collections/all-panels">curated collection</Link> is
-            designed in London, finished by hand, and intended to settle into your home as if it had
-            always belonged there.
+          <div className="section-eyebrow">Turn your space into luxury</div>
+          <h2 className="section-title" style={{ marginBottom: 16 }}>See the transformation.</h2>
+          <p className="intro-text" style={{ marginBottom: 40 }}>
+            Drag the slider to reveal how our slatted timber panels transform an ordinary wall
+            into a considered, architectural space.
           </p>
+          <BeforeAfter
+            beforeSrc="https://images.unsplash.com/photo-1618221118493-9cfa1a1c00da?w=1600&q=80"
+            afterSrc="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1600&q=80"
+            beforeAlt="Plain living room wall"
+            afterAlt="Living room with slatted oak panelling"
+          />
         </div>
       </section>
 
       <section style={{ paddingTop: 0 }}>
         <div className="container">
-          <div className="section-eyebrow">Featured Collections</div>
-          <h2 className="section-title">The seasonal edit</h2>
-          <div className="cat-grid">
+          <div className="section-eyebrow">The Collections</div>
+          <h2 className="section-title">Two ranges. One standard.</h2>
+          <div className="cat-grid cat-grid-2">
             {homeCategories.map((c) => (
               <Link key={c.slug} to={`/collections/${c.slug}`} className="cat-card">
                 <img src={c.image} alt={c.name} />
                 <div className="cat-overlay">
                   <h3>{c.name}</h3>
+                  {c.tagline && <p className="cat-tagline">{c.tagline}</p>}
                   <span className="view">Explore</span>
                 </div>
               </Link>
