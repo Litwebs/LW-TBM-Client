@@ -299,13 +299,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section
-        style={{
-          background: "var(--bg-2)",
-          borderTop: "1px solid var(--border)",
-          borderBottom: "1px solid var(--border)",
-        }}
-      >
+      <section className="concierge-section">
         <div className="container-narrow">
           <div className="section-eyebrow">The Concierge</div>
           <h2 className="section-title">Questions, answered.</h2>

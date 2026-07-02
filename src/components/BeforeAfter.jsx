@@ -63,9 +63,13 @@ export default function BeforeAfter({
       }}
     >
       <img className="ba-img ba-after" src={afterSrc} alt={afterAlt} draggable={false} />
-      <div className="ba-clip" style={{ width: `${pos}%` }}>
-        <img className="ba-img ba-before" src={beforeSrc} alt={beforeAlt} draggable={false} />
-      </div>
+      <img
+        className="ba-img ba-before"
+        src={beforeSrc}
+        alt={beforeAlt}
+        draggable={false}
+        style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
+      />
       <span className="ba-tag ba-tag-before">{beforeLabel}</span>
       <span className="ba-tag ba-tag-after">{afterLabel}</span>
       <div className="ba-handle" style={{ left: `${pos}%` }} aria-hidden="true">

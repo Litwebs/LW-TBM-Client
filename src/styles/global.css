@@ -2733,7 +2733,82 @@ section .accordion-item .content, section .accordion-item p { color: var(--dm-in
 
 /* Product card price legibility on dark */
 .product-card .price-sale { color: #fff !important; }
-.product-card .price-compare { color: var(--dm-mute) !important; text-decoration: line-through; }
+.product-card .price-compare { color: rgba(255,255,255,0.55) !important; text-decoration: line-through; }
+.pdp-info .prices .price-compare { color: rgba(255,255,255,0.55) !important; text-decoration: line-through; }
+
+/* ===== Fix contrast — dark manor everywhere ===== */
+/* Header: fully solid navy, no transparency */
+.header {
+  background: var(--dm-navy) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: 1px solid var(--dm-silver-line-strong) !important;
+}
+
+/* Section eyebrows: brighter, no faint opacity */
+section .section-eyebrow,
+.section-eyebrow {
+  color: var(--dm-silver) !important;
+  opacity: 1 !important;
+}
+.section-eyebrow::before,
+.section-eyebrow::after {
+  background: var(--dm-silver-line-strong) !important;
+  opacity: 1 !important;
+}
+
+/* Split (House Philosophy) — force navy bg + readable text */
+.split-content {
+  background: var(--dm-navy-2) !important;
+}
+.split-content .eyebrow { color: var(--dm-silver) !important; }
+.split-content h2 {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+.split-content p { color: var(--dm-ink-soft) !important; }
+.split-content .link { color: #fff !important; }
+.split-content .link::after { background: var(--dm-silver) !important; }
+
+/* Concierge FAQ section — navy bg with cream accordion cards */
+.concierge-section {
+  background: var(--dm-navy-2) !important;
+  border-top: 1px solid var(--dm-silver-line) !important;
+  border-bottom: 1px solid var(--dm-silver-line) !important;
+}
+.concierge-section .section-eyebrow { color: var(--dm-silver) !important; }
+.concierge-section .section-title { color: #fff !important; -webkit-text-fill-color: #fff !important; }
+.concierge-section .intro-text { color: var(--dm-ink-soft) !important; }
+.concierge-section .accordion-item { border-bottom-color: var(--dm-silver-line-strong) !important; }
+.concierge-section .accordion-trigger,
+.concierge-section .accordion-item button { color: #fff !important; font-size: 17px; }
+.concierge-section .accordion-content,
+.concierge-section .accordion-item .content,
+.concierge-section .accordion-item p { color: var(--dm-ink-soft) !important; }
+.concierge-section .accordion-icon::before,
+.concierge-section .accordion-icon::after { background: var(--dm-silver) !important; }
+
+/* Outline button on dark canvas — legible border + text */
+.btn-outline {
+  color: #fff !important;
+  border: 1px solid rgba(255,255,255,0.5) !important;
+  background: transparent !important;
+}
+.btn-outline:hover {
+  background: rgba(255,255,255,0.08) !important;
+  border-color: #fff !important;
+  color: #fff !important;
+}
+
+/* Benefit / craft eyebrows brighter */
+.benefits .section-eyebrow,
+.reviews-section .section-eyebrow,
+.atelier .section-eyebrow { color: var(--dm-silver) !important; opacity: 1 !important; }
+
+/* Before/After — before image stays put, only clip changes */
+.ba-clip { display: none; }
+.ba-img.ba-before { z-index: 2; }
+.ba-img.ba-after { z-index: 1; }
 .product-card .rating { color: var(--dm-ink-soft) !important; }
 .product-card .sale-badge, .product-card .badge {
   background: var(--dm-navy-3) !important;
