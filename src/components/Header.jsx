@@ -4,10 +4,9 @@ import { CartIcon, MenuIcon, UserIcon, CloseIcon } from "./Icons.jsx";
 
 const NAV = [
   { to: "/", label: "Home" },
-  { to: "/collections/all-panels", label: "All Panels" },
+  { to: "/collections/wall-panels", label: "Wall Panels" },
+  { to: "/collections/outdoor-panels", label: "Outdoor Panels" },
   { to: "/collections/best-sellers", label: "Best Sellers" },
-  { to: "/collections/acoustic-2-4m", label: "Shop by Style" },
-  { to: "/collections/trees", label: "Artificial Trees" },
   { to: "/portfolio", label: "Portfolio" },
   { to: "/reviews", label: "Reviews" },
   { to: "/faqs", label: "FAQs" },
