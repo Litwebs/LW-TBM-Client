@@ -3328,3 +3328,92 @@ section .section-eyebrow,
 .account-section .status-pill {
   -webkit-text-fill-color: initial !important;
 }
+
+/* Final override: account/checkout readability over older editorial rules */
+.auth-card {
+  background: rgba(255,255,255,0.035) !important;
+  border: 1px solid var(--dm-silver-line-strong) !important;
+  box-shadow: none !important;
+  color: var(--dm-ink) !important;
+}
+.auth-card,
+.auth-card h1,
+.auth-card p,
+.auth-card label,
+.auth-card a {
+  color: var(--dm-ink) !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+.auth-card .muted { color: var(--dm-ink-soft) !important; }
+.auth-card input {
+  background: rgba(255,255,255,0.055) !important;
+  color: #fff !important;
+  border-color: var(--dm-silver-line-strong) !important;
+}
+
+.account-sidebar h1,
+.account-sidebar h2,
+.account-sidebar h3,
+.account-sidebar h4,
+.account-section h1,
+.account-section h2,
+.account-section h3,
+.account-section h4,
+.account-section-head h2,
+.account-main h1,
+.account-main h2,
+.account-main h3,
+.account-main h4,
+.account-main strong,
+.account-main th,
+.account-main td,
+.account-main a,
+.account-section a,
+.stat-card .stat-value,
+.kv-grid dd,
+.address-body,
+.card-brand,
+.card-num {
+  color: var(--dm-ink) !important;
+  -webkit-text-fill-color: var(--dm-ink) !important;
+}
+.stat-card .stat-label,
+.account-main .muted,
+.account-section .muted,
+.account-sidebar .muted,
+.kv-grid dt,
+.address-label,
+.card-meta,
+.timeline-date,
+.order-row.head {
+  color: var(--dm-ink-soft) !important;
+  -webkit-text-fill-color: var(--dm-ink-soft) !important;
+}
+.stat-card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.025)) !important;
+}
+.stat-card .stat-value {
+  text-shadow: 0 0 18px rgba(237,238,242,0.08);
+}
+.account-main .status-pill,
+.account-section .status-pill {
+  background: rgba(255,255,255,0.075) !important;
+  border: 1px solid var(--dm-silver-line-strong) !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+.account-main .order-row,
+.account-section .order-row {
+  color: var(--dm-ink) !important;
+  -webkit-text-fill-color: var(--dm-ink) !important;
+}
+.checkout-layout .form-row label,
+.checkout-layout h3,
+.checkout-layout .summary h3 {
+  color: var(--dm-ink) !important;
+  -webkit-text-fill-color: var(--dm-ink) !important;
+}
+.checkout-layout input::placeholder,
+.checkout-layout textarea::placeholder {
+  color: rgba(237,238,242,0.55) !important;
+}
