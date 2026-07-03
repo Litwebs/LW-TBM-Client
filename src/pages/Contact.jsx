@@ -16,8 +16,8 @@ export default function Contact() {
     <div className="container">
       <Seo title="Contact" description="Visit our showroom or contact The British Manor for help with your project." path="/contact" />
       <div className="contact-hero">
-        <h1 className="contact-hero-title">LET'S CREATE<br/>SOMETHING AMAZING</h1>
         <span className="contact-hero-script" aria-hidden="true">Contact us</span>
+        <h1 className="contact-hero-title">LET'S CREATE<br/>SOMETHING AMAZING</h1>
       </div>
       <div className="contact-grid contact-grid-elegant">
         <form className="contact-form-elegant" onSubmit={submit} noValidate>
