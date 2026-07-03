@@ -3750,9 +3750,9 @@ section .section-eyebrow,
   font-family: "Dancing Script", "Brittany Signature", cursive;
   font-weight: 500;
   font-size: clamp(56px, 8vw, 120px);
-  color: #fff !important;
-  -webkit-text-fill-color: #fff !important;
-  opacity: 0.7;
+  color: #bbbbbb !important;
+  -webkit-text-fill-color: #bbbbbb !important;
+  opacity: 1;
   white-space: nowrap;
   pointer-events: none;
   z-index: 1;
