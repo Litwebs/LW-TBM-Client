@@ -5,6 +5,7 @@ import Footer from "./components/Footer.jsx";
 import CartDrawer from "./components/CartDrawer.jsx";
 import ToastHost from "./components/ToastHost.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
+import ScrollTopButton from "./components/ScrollTopButton.jsx";
 
 import Home from "./pages/Home.jsx";
 import Shop from "./pages/Shop.jsx";
@@ -59,6 +60,7 @@ export default function App() {
       <Footer />
       <CartDrawer />
       <ToastHost />
+      <ScrollTopButton />
     </>
   );
 }

@@ -203,18 +203,32 @@ export function StorefrontProvider({ children }) {
     const isLive = products.length > 0;
 
     const catMap = new Map();
-    allProducts.forEach((p) => {
-      const name = p.category || "Uncategorised";
-      const slug = p.categorySlug || slugify(name);
-      if (!catMap.has(slug)) catMap.set(slug, { slug, name, count: 0 });
-      catMap.get(slug).count += 1;
-    });
 
     (apiCategories || []).forEach((c) => {
       const normalized = normalizeCategory(c);
       if (!normalized) return;
-      const slug = normalized.slug;
-      if (!catMap.has(slug)) catMap.set(slug, { slug, name: normalized.name, count: 0 });
+      catMap.set(normalized.slug, {
+        slug: normalized.slug,
+        name: normalized.name,
+        subtitle: normalized.subtitle || "",
+        image: normalized.image || "",
+        count: 0,
+      });
+    });
+
+    allProducts.forEach((p) => {
+      const name = p.category || "Uncategorised";
+      const slug = p.categorySlug || slugify(name);
+      if (!catMap.has(slug)) {
+        catMap.set(slug, {
+          slug,
+          name,
+          subtitle: "",
+          image: "",
+          count: 0,
+        });
+      }
+      catMap.get(slug).count += 1;
     });
 
     const categories = Array.from(catMap.values()).sort((a, b) => a.name.localeCompare(b.name));

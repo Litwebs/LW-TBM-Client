@@ -219,7 +219,7 @@ export default function Shop() {
               No products match your filters.
             </p>
           ) : (
-            <div className="product-grid">
+            <div className="product-grid collections-products-container">
               {serverItems.map((p) => (
                 <ProductCard key={p.id} product={p} onQuickView={setQuickView} />
               ))}

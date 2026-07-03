@@ -17,6 +17,14 @@ import { SITE_BASE } from "../lib/api.js";
 
 const HERO_BG = "/images/hero-bg.jpg";
 
+const CATEGORY_FALLBACK_IMAGES = [
+  "https://images.unsplash.com/photo-1618220179428-22790b461013?w=1400&q=80",
+  "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1400&q=80",
+  "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1400&q=80",
+  "https://images.unsplash.com/photo-1567016432779-094069958ea5?w=1400&q=80",
+  "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=1400&q=80",
+];
+
 function formatDiscountDescription(offer) {
   const kind = String(offer?.kind || "").toLowerCase();
   const percentOff = Number(offer?.percentOff || 0);
@@ -43,8 +51,12 @@ function formatDiscountDescription(offer) {
 
 export default function Home() {
   const [quickView, setQuickView] = useState(null);
-  const { products: liveProducts, isLive, discounts } = useProducts();
+  const { products: liveProducts, isLive, discounts, categories } = useProducts();
   const featured = isLive ? liveProducts.slice(0, 4) : bestSellers();
+  const apiCategories = (categories || [])
+    .filter((c) => c?.name)
+    .filter((c) => c.slug !== "uncategorised")
+    .slice(0, 6);
   const jsonLd = [
     {
       "@context": "https://schema.org",
@@ -115,6 +127,37 @@ export default function Home() {
           />
         </div>
       </section>
+
+      {apiCategories.length > 0 && (
+        <section className="api-categories-section" style={{ paddingTop: 0 }}>
+          <div className="container">
+            <div className="section-eyebrow">Categories</div>
+            <h2 className="section-title" style={{ marginBottom: 40 }}>
+              Shop by category.
+            </h2>
+            <div className="api-categories-grid">
+              {apiCategories.map((category, index) => {
+                const image =
+                  category.image ||
+                  CATEGORY_FALLBACK_IMAGES[index % CATEGORY_FALLBACK_IMAGES.length];
+                return (
+                  <Link
+                    key={category.slug}
+                    to={`/collections/${category.slug}`}
+                    className="api-category-card"
+                  >
+                    <img src={image} alt={category.name} loading="lazy" />
+                    <div className="api-category-overlay">
+                      <h3>{category.name}</h3>
+                      <span className="api-category-cta">Shop Now</span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
 
       <section style={{ paddingTop: 0 }}>
         <div className="container">
@@ -294,7 +337,7 @@ export default function Home() {
             ))}
           </div>
           <div style={{ textAlign: "center", marginTop: 72 }}>
-            <Link to="/collections/best-sellers" className="btn">
+            <Link to="/collections/best-sellers" className="btn btn-full-edit">
               View the Full Edit
             </Link>
           </div>

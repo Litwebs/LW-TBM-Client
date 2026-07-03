@@ -1,11 +1,11 @@
 import axios from "axios";
-export const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5001";
+// import.meta.env.VITE_API_BASE ||
+// (import.meta.env.PROD ? "https://api.thebritishmanor.co.uk" : "");
 
-// export const API_BASE =
-//   import.meta.env.VITE_API_BASE === "dev"
-//     ? "http://localhost:5001"
-//     : "https://api.thebritishmanor.co.uk";
-export const SITE_BASE = "https://thebritishmanor.co.uk";
+export const SITE_BASE = import.meta.env.PROD
+  ? "https://thebritishmanor.co.uk"
+  : "http://localhost:5001";
+export const API_BASE = SITE_BASE;
 export const CONTACT_EMAIL = "hello@thebritishmanor.co.uk";
 
 export const api = axios.create({

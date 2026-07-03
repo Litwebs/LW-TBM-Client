@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useApp } from "../context/AppContext.jsx";
 import { useStorefront } from "../context/StorefrontContext.jsx";
@@ -44,7 +44,53 @@ export default function Header() {
   const { cartCount, setCartOpen, menuOpen, setMenuOpen } = useApp();
   const { announcement, discounts } = useStorefront();
   const headerRef = useRef(null);
+  const [isCondensed, setIsCondensed] = useState(false);
   const topDiscount = Array.isArray(discounts) && discounts.length > 0 ? discounts[0] : null;
+
+  useEffect(() => {
+    const CONDENSE_AT = 140;
+    const EXPAND_AT = 40;
+    // The header animates its height over ~0.35s. While it animates, the
+    // document height changes and the browser clamps scrollY, firing a burst
+    // of scroll events. Lock out state changes for slightly longer than the
+    // transition so those resize-driven events can't flip the state back and
+    // cause the header to oscillate.
+    const LOCK_MS = 450;
+    let locked = false;
+    let lockTimer;
+    let frame = 0;
+
+    const evaluate = () => {
+      frame = 0;
+      if (locked) return;
+      const y = window.scrollY;
+      setIsCondensed((prev) => {
+        const next = prev ? y > EXPAND_AT : y > CONDENSE_AT;
+        if (next !== prev) {
+          locked = true;
+          clearTimeout(lockTimer);
+          lockTimer = setTimeout(() => {
+            locked = false;
+          }, LOCK_MS);
+        }
+        return next;
+      });
+    };
+
+    const onScroll = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(evaluate);
+    };
+
+    evaluate();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      clearTimeout(lockTimer);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, []);
 
   useEffect(() => {
     const updateHeaderOffset = () => {
@@ -61,6 +107,7 @@ export default function Header() {
       window.removeEventListener("resize", updateHeaderOffset);
     };
   }, [
+    isCondensed,
     announcement?.title,
     announcement?.description,
     topDiscount?.code,
@@ -72,7 +119,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="header" ref={headerRef}>
+      <header className={`header ${isCondensed ? "is-condensed" : "is-expanded"}`} ref={headerRef}>
         {(announcement?.title || announcement?.description) && (
           <div className="announcement-bar">
             {announcement?.title && <p className="announcement-title">{announcement.title}</p>}
