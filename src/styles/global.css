@@ -3722,3 +3722,100 @@ section .section-eyebrow,
   color: #fff !important;
   -webkit-text-fill-color: #fff !important;
 }
+
+/* ===== Elegant Contact page (Bodoni Moda + script) ===== */
+.contact-hero {
+  position: relative;
+  padding: 140px 0 40px;
+  text-align: center;
+}
+.contact-hero-title {
+  font-family: "Bodoni Moda", "Playfair Display", Georgia, serif !important;
+  font-weight: 600;
+  font-size: clamp(44px, 6.4vw, 96px);
+  line-height: 1.02;
+  letter-spacing: 0.005em;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  margin: 0;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 2;
+}
+.contact-hero-script {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  transform: translateX(-50%);
+  font-family: "Dancing Script", "Brittany Signature", cursive;
+  font-weight: 500;
+  font-size: clamp(56px, 8vw, 120px);
+  color: var(--dm-silver, #c9b98a) !important;
+  -webkit-text-fill-color: var(--dm-silver, #c9b98a) !important;
+  opacity: 0.55;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 1;
+  line-height: 1;
+}
+.contact-grid-elegant {
+  grid-template-columns: 1.35fr 1fr;
+  gap: 96px;
+  padding: 24px 0 96px;
+}
+@media (max-width: 900px) {
+  .contact-grid-elegant { grid-template-columns: 1fr; gap: 48px; }
+}
+.contact-form-elegant .cf-field {
+  position: relative;
+  margin-bottom: 36px;
+}
+.contact-form-elegant .cf-field input,
+.contact-form-elegant .cf-field textarea {
+  width: 100%;
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--dm-silver-line-strong, rgba(255,255,255,0.28)) !important;
+  border-radius: 0 !important;
+  padding: 22px 0 10px !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  font-family: "Bodoni Moda", "Playfair Display", Georgia, serif !important;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  outline: none;
+  transition: border-color 0.25s ease;
+}
+.contact-form-elegant .cf-field textarea {
+  resize: vertical;
+  min-height: 96px;
+}
+.contact-form-elegant .cf-field input:focus,
+.contact-form-elegant .cf-field textarea:focus {
+  border-bottom-color: #fff !important;
+}
+.contact-form-elegant .cf-field label {
+  position: absolute;
+  left: 0;
+  top: 22px;
+  font-family: "Bodoni Moda", "Playfair Display", Georgia, serif !important;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  color: var(--dm-ink-soft, rgba(255,255,255,0.55)) !important;
+  pointer-events: none;
+  transition: transform 0.22s ease, font-size 0.22s ease, color 0.22s ease, letter-spacing 0.22s ease;
+  transform-origin: left top;
+}
+.contact-form-elegant .cf-field input:focus + label,
+.contact-form-elegant .cf-field input:not(:placeholder-shown) + label,
+.contact-form-elegant .cf-field textarea:focus + label,
+.contact-form-elegant .cf-field textarea:not(:placeholder-shown) + label {
+  transform: translateY(-22px) scale(0.78);
+  color: var(--dm-silver, #c9b98a) !important;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.contact-form-elegant .cf-submit {
+  margin-top: 12px;
+  letter-spacing: 0.24em;
+}
