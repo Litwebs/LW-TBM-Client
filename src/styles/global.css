@@ -3390,8 +3390,19 @@ section .section-eyebrow,
   grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
 }
 .collections-products-container {
-  background: #7B7D84 !important;
+  background:
+    linear-gradient(#7B7D84, #7B7D84) padding-box,
+    linear-gradient(115deg, #ffffff 0%, #eceef2 8%, #9a9ca3 16%, #ffffff 26%, #b6b8bf 34%, #ffffff 44%, #8d8f96 52%, #ffffff 62%, #cfd2d8 70%, #ffffff 80%, #9a9ca3 88%, #ffffff 100%) border-box !important;
+  background-size: 100% 100%, 260% 100% !important;
+  border: 2px solid transparent !important;
+  border-radius: 1px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.28) inset, 0 0 26px 0 rgba(255,255,255,0.55), 0 0 60px -10px rgba(255,255,255,0.35), 0 20px 50px -30px rgba(0,0,0,0.6);
   padding: 32px !important;
+  animation: containerSilverShine 4s linear infinite;
+}
+@keyframes containerSilverShine {
+  0% { background-position: 0 0, 0% 0; }
+  100% { background-position: 0 0, 200% 0; }
 }
 @media (max-width: 900px) {
   .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
@@ -4012,5 +4023,146 @@ section .section-eyebrow,
     bottom: 18px;
     width: 46px;
     height: 46px;
+  }
+}
+
+/* ===== Contact Elegant ===== */
+.contact-hero {
+  position: relative;
+  text-align: center;
+  padding: 34px 0 34px;
+}
+
+.contact-hero-title {
+  margin: 0;
+  font-family: "Bodoni Moda", var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(40px, 8vw, 92px);
+  line-height: 0.98;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: rgba(237, 238, 242, 0.92);
+}
+
+.contact-hero-script {
+  position: absolute;
+  left: 50%;
+  bottom: -18px;
+  transform: translateX(-50%);
+  font-family: "Brittany Signature", "Dancing Script", cursive;
+  font-size: clamp(40px, 6vw, 74px);
+  line-height: 1;
+  color: var(--dm-silver);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.contact-grid-elegant {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.95fr);
+  gap: 62px;
+  padding: 20px 0 80px;
+}
+
+.contact-form-elegant {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.contact-form-elegant .cf-field {
+  position: relative;
+  border-bottom: 1px solid var(--dm-silver-line-strong);
+}
+
+.contact-form-elegant .cf-field input,
+.contact-form-elegant .cf-field textarea {
+  width: 100%;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: none;
+  color: var(--dm-ink) !important;
+  font-family: var(--font-serif);
+  padding: 18px 0 10px;
+  min-height: 48px;
+}
+
+.contact-form-elegant .cf-field textarea {
+  min-height: 84px;
+  resize: vertical;
+}
+
+.contact-form-elegant .cf-field label {
+  position: absolute;
+  left: 0;
+  top: 16px;
+  color: var(--dm-ink-soft) !important;
+  opacity: 1 !important;
+  font-family: "Bodoni Moda", var(--font-serif);
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  pointer-events: none;
+  transition: transform 0.22s var(--ease), color 0.22s var(--ease),
+    font-size 0.22s var(--ease), letter-spacing 0.22s var(--ease);
+}
+
+.contact-form-elegant .cf-field input:focus + label,
+.contact-form-elegant .cf-field input:not(:placeholder-shown) + label,
+.contact-form-elegant .cf-field textarea:focus + label,
+.contact-form-elegant .cf-field textarea:not(:placeholder-shown) + label {
+  transform: translateY(-14px);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dm-silver) !important;
+}
+
+.contact-form-elegant .cf-submit {
+  justify-self: start;
+  margin-top: 18px;
+  min-width: 150px;
+  padding: 13px 26px;
+  font-family: "Bodoni Moda", var(--font-serif);
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  background: var(--dm-navy-2) !important;
+  border: 1px solid var(--dm-silver-line-strong) !important;
+  color: #fff !important;
+}
+
+.contact-form-elegant .cf-submit:hover {
+  background: var(--dm-silver) !important;
+  border-color: var(--dm-silver) !important;
+}
+
+@media (max-width: 900px) {
+  .contact-hero {
+    text-align: left;
+    padding: 18px 0 16px;
+  }
+
+  .contact-hero-title {
+    font-size: clamp(30px, 10vw, 52px);
+  }
+
+  .contact-hero-script {
+    left: 0;
+    bottom: auto;
+    top: 10px;
+    transform: none;
+    font-size: clamp(28px, 8vw, 44px);
+  }
+
+  .contact-grid-elegant {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 16px 0 60px;
+  }
+
+  .contact-form-elegant .cf-field label {
+    font-size: 16px;
   }
 }
