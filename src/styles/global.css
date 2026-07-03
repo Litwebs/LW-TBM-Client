@@ -3735,8 +3735,8 @@ section .section-eyebrow,
   font-size: clamp(44px, 6.4vw, 96px);
   line-height: 1.02;
   letter-spacing: 0.005em;
-  color: var(--dm-silver, #c9b98a) !important;
-  -webkit-text-fill-color: var(--dm-silver, #c9b98a) !important;
+  color: #333333 !important;
+  -webkit-text-fill-color: #333333 !important;
   margin: 0;
   text-transform: uppercase;
   position: relative;
