@@ -4,22 +4,44 @@ import Seo from "../components/Seo.jsx";
 
 export default function Contact() {
   const { toast } = useApp();
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [form, setForm] = useState({ name: "", phone: "", email: "", subject: "", message: "" });
+  const update = (k) => (e) => setForm({ ...form, [k]: e.target.value });
   const submit = (e) => {
     e.preventDefault();
-    if (!form.name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email) || !form.message) return toast("Please complete the form");
-    setForm({ name: "", email: "", message: "" }); toast("Message sent — we'll be in touch");
+    if (!form.name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) return toast("Please complete the form");
+    setForm({ name: "", phone: "", email: "", subject: "", message: "" });
+    toast("Message sent — we'll be in touch");
   };
   return (
     <div className="container">
       <Seo title="Contact" description="Visit our showroom or contact The British Manor for help with your project." path="/contact" />
-      <div className="page-header"><h1>Contact</h1><p>Visit our showroom or get in touch — we're here to help with every project.</p></div>
-      <div className="contact-grid">
-        <form onSubmit={submit}>
-          <div className="form-row"><label>Name</label><input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></div>
-          <div className="form-row"><label>Email</label><input value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /></div>
-          <div className="form-row"><label>Message</label><textarea rows={6} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} /></div>
-          <button className="btn">Send Message</button>
+      <div className="contact-hero">
+        <span className="contact-hero-script" aria-hidden="true">Contact us</span>
+        <h1 className="contact-hero-title">LET'S CREATE<br/>SOMETHING AMAZING</h1>
+      </div>
+      <div className="contact-grid contact-grid-elegant">
+        <form className="contact-form-elegant" onSubmit={submit} noValidate>
+          <div className="cf-field">
+            <input id="cf-name" value={form.name} onChange={update("name")} placeholder=" " />
+            <label htmlFor="cf-name">Your name</label>
+          </div>
+          <div className="cf-field">
+            <input id="cf-phone" value={form.phone} onChange={update("phone")} placeholder=" " />
+            <label htmlFor="cf-phone">Your contact number</label>
+          </div>
+          <div className="cf-field">
+            <input id="cf-email" type="email" value={form.email} onChange={update("email")} placeholder=" " />
+            <label htmlFor="cf-email">Your email</label>
+          </div>
+          <div className="cf-field">
+            <input id="cf-subject" value={form.subject} onChange={update("subject")} placeholder=" " />
+            <label htmlFor="cf-subject">Subject</label>
+          </div>
+          <div className="cf-field">
+            <textarea id="cf-message" rows={4} value={form.message} onChange={update("message")} placeholder=" " />
+            <label htmlFor="cf-message">Your message (optional)</label>
+          </div>
+          <button className="btn cf-submit">Send Message</button>
         </form>
         <div className="contact-info">
           <h3 style={{ fontSize: 12, letterSpacing: "0.18em", marginBottom: 20 }}>Showroom</h3>
