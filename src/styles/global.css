@@ -3735,8 +3735,8 @@ section .section-eyebrow,
   font-size: clamp(44px, 6.4vw, 96px);
   line-height: 1.02;
   letter-spacing: 0.005em;
-  color: #fff !important;
-  -webkit-text-fill-color: #fff !important;
+  color: var(--dm-silver, #c9b98a) !important;
+  -webkit-text-fill-color: var(--dm-silver, #c9b98a) !important;
   margin: 0;
   text-transform: uppercase;
   position: relative;
@@ -3750,9 +3750,9 @@ section .section-eyebrow,
   font-family: "Dancing Script", "Brittany Signature", cursive;
   font-weight: 500;
   font-size: clamp(56px, 8vw, 120px);
-  color: var(--dm-silver, #c9b98a) !important;
-  -webkit-text-fill-color: var(--dm-silver, #c9b98a) !important;
-  opacity: 0.55;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  opacity: 0.7;
   white-space: nowrap;
   pointer-events: none;
   z-index: 1;
