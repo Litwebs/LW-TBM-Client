@@ -3735,12 +3735,12 @@ section .section-eyebrow,
   font-size: clamp(44px, 6.4vw, 96px);
   line-height: 1.02;
   letter-spacing: 0.005em;
-  color: #333333 !important;
-  -webkit-text-fill-color: #333333 !important;
+  color: #B4B5BA !important;
+  -webkit-text-fill-color: #B4B5BA !important;
   margin: 0;
   text-transform: uppercase;
   position: relative;
-  z-index: 2;
+  z-index: 1;
 }
 .contact-hero-script {
   position: absolute;
