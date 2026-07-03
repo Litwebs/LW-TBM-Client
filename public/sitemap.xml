@@ -2,1357 +2,463 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://thebritishmanor.co.uk/</loc>
-    <lastmod>2026-07-02</lastmod>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://thebritishmanor.co.uk/portfolio</loc>
-    <lastmod>2026-07-02</lastmod>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://thebritishmanor.co.uk/reviews</loc>
-    <lastmod>2026-07-02</lastmod>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://thebritishmanor.co.uk/faqs</loc>
-    <lastmod>2026-07-02</lastmod>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://thebritishmanor.co.uk/about</loc>
-    <lastmod>2026-07-02</lastmod>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://thebritishmanor.co.uk/contact</loc>
-    <lastmod>2026-07-02</lastmod>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://thebritishmanor.co.uk/collections/all-panels</loc>
-    <lastmod>2026-07-02</lastmod>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/categories/clocks</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/categories/accessory</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/categories/lighting</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/categories/fencing</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/categories/mirror-products</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/categories/panels</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/categories/outdoors</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/categories/decking</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/categories/wall-panels</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/categories/acoustic</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/categories/sofas</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-accessory-lattice-02-fence-lattice-02-0068</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/categories/chairs</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-accessory-lattice-01-fence-lattice-01-0067</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/categories/table-top-colours</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-accessory-fence-post-fitting-kit-0066</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/categories/tables</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-accessory-fence-post-black-0065</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/table-clock-0445</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-accessory-decking-fittings-0064</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/sy922-0444</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-accessory-outdoor-brackets-for-8384-panels-0063</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/sy921-0443</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-accessory-86-fencing-86-trims-0062</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/sy919-0441</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-accessory-84-wall-panel-84-trims-0061</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/sy910-0440</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-accessory-7383-wall-panel-7383-trims-0060</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/sy909-0439</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-fencing-94t-fencing-walnut-0059</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/sy908-0438</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-fencing-94d-fencing-dark-oak-0058</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/sy902-0432</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-fencing-94b-fencing-grey-oak-0057</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/sy901-0431</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-fencing-94a-fencing-oak-0056</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/sg04-0430</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-panels-92t-panel-walnut-0055</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/sg03-0429</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-panels-92e-panel-black-0054</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/sg02-0428</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-panels-92d-panel-dark-oak-0053</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/sg01-0427</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-panels-92b-panel-grey-0052</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/md25-0426</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-panels-92a-panel-oak-0051</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/sy6306-0425</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-panels-87f-panel-khaki-0050</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/f1761-led-0424</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-panels-87e-panel-black-0049</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/sy1761-octagon-0423</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-panels-87d-panel-dark-brown-0048</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/sy1760-0422</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-panels-87b-panel-grey-0047</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/pu657-led-wings-03-0421</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-panels-87a-panel-oak-03-0046</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/pu656-led-wings-02-0420</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-fencing-86f-fencing-khaki-0045</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/pu655-led-wings-01-0419</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-fencing-86e-fencing-black-0044</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/pu651-feather-light-0418</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-fencing-86d-fencing-dark-brown-0043</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/md42-gold-table-lamp-0417</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-fencing-86b-fencing-grey-0042</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/md41-silver-table-lamp-0416</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-fencing-86a-fencing-oak-03-0041</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/md02-floor-lamp-0415</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-decking-85f-decking-khaki-0040</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/heart-console-table-led-0414</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-decking-85e-decking-black-0039</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/dmd13-table-lamp-0413</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-decking-85d-decking-dark-brown-0038</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/dmd12-table-lamp-0412</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-decking-85b-decking-grey-0037</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/dmd11-table-lamp-0411</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-decking-85a-decking-oak-03-0036</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/dmd02-floor-lamp-0410</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-panels-84f-panel-khaki-0035</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/dmd01-floor-lamp-0409</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-panels-84e-panel-black-0034</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/angel-wings-0408</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-panels-84d-panel-dark-brown-0033</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/led-07-flexible-0407</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-panels-84c-panel-light-brown-0032</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/led-06-0406</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-panels-84b-panel-grey-0031</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/led-05-0405</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-panels-84a-panel-oak-03-0030</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/led-03-0404</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-panels-83f-panel-khaki-0029</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/roma-corner-tv-unit-0403</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-panels-83e-panel-black-0028</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/roma-tv-unit-with-heater-0402</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-panels-83d-panel-dark-brown-0027</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/roma-tv-unit-0401</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-panels-83c-panel-light-brown-0026</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/roma-large-sideboard-0400</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-panels-83b-panel-grey-0025</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/roma-small-sideboard-0399</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-panels-83a-panel-oak-03-0024</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/roma-pedestal-33-0398</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-panels-73t-panel-walnut-0022</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/roma-pedestal-22-0397</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-panels-73e-panel-black-0021</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/roma-pedestal-11-0396</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-panels-73d-panel-dark-brown-0020</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/roma-nest-of-3-tables-0395</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-panels-73b-panel-grey-0019</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/roma-fireplace-with-colours-0394</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/outdoors-panels-73a-panel-oak-03-0018</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/roma-fireplace-0393</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/wall-panels-accessory-01wn-fence-post-fitting-kit-0015</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/roma-mirrored-stool-0392</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/wall-panels-acoustic-01wk-white-marble-0014</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/roma-dressing-table-0391</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/wall-panels-acoustic-01wj-metallic-dark-grey-0013</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/v-console-table-led-0390</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/wall-panels-acoustic-01wh-metallic-light-grey-0012</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/roma-coffee-kd-table-0388</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/wall-panels-acoustic-01wg-metallic-gold-0011</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/roma-coffee-table-0387</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/wall-panels-acoustic-01wf-metallic-brown-0010</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/roma-high-bookcase-0386</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/wall-panels-acoustic-01t-walnut-0009</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/roma-bookcase-0385</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/wall-panels-acoustic-01s-silver-0008</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/roma-4-drawer-chest-0384</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/wall-panels-acoustic-01p-teak-oak-0007</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/roma-3-drawer-bedside-0383</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/wall-panels-acoustic-01g-gold-0006</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/vase-02-0382</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/wall-panels-acoustic-01e-black-0005</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/ms086-square-coaster-0381</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/wall-panels-acoustic-01d-dark-oak-0004</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/ms085-circle-coaster-0380</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/wall-panels-acoustic-01c-dark-grey-0003</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/round-mirror-tray-0379</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/wall-panels-acoustic-01b-light-grey-0002</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thebritishmanor.co.uk/products/mirror-tray-0378</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/jewellery-box-with-drawers-0377</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/jewellery-box-0376</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/g-mt03-0375</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/g-mt02-0374</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/g-mt01-0373</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/roma-placemat-0372</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/roma-coaster-0371</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/candle-holder-holder-0370</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/5h-diamond-tealight-holder-0369</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/4h-love-tealight-holder-0368</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/4h-home-tealight-holder-0367</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/3h-diamond-candle-holder-0366</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/1h-candle-holder-0365</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/wf-silver-0364</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/wf-gold-0363</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/wf-champagne-0362</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/sy1720-0358</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/sy1719-0357</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/f1710-0356</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/sy1710-0355</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/sy1705-0354</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/sy1701sy1703-0351</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/sy1701sy1707-0350</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/pu010-0349</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/pu006pu007-0348</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/g-m015-2-pack-of-gold-and-black-0347</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/g-m011-0346</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/g-m010-0345</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/g-m009-gold-or-silver-0344</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/83e-panel-black-0250</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/83d-panel-dark-brown-0249</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/83c-panel-light-brown-0248</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/83b-panel-grey-0247</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/83a-panel-oak-03-0246</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/83a-panel-oak-02-0245</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/73t-panel-walnut-0244</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/73e-panel-black-0243</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/73d-panel-dark-brown-0242</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/73b-panel-grey-0241</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/73a-panel-oak-03-0240</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/brackets-for-0507118182-pvc-panels-0239</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/wall-panel-leds-0238</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/cover-slips-gold-or-silver-0237</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/wall-panel-white-silicone-adhesive-0236</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/82t-walnut-0235</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/82e-black-0234</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/82b-grey-0233</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/82a-oak-0232</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/81e-black-0231</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/81d-dark-grey-0230</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/81c-light-grey-0229</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/81b-walnut-0228</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/81a-oak-0227</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/80d-mid-grey-0226</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/80c-dark-oak-0225</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/80b-light-grey-0224</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/80a-oak-0223</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/64t-walnut-0222</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/64d-dark-oak-0221</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/64b-grey-0220</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/64a-oak-0219</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/63t-walnut-0218</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/63b-grey-0217</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/63a-oak-0216</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/62t-walnut-0215</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/62d-dark-oak-0214</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/62c-dark-grey-0213</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/62b-light-grey-0212</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/62a-oak-0211</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/61t-walnut-0210</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/61d-dark-oak-0209</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/61b-light-grey-0208</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/61a-oak-0207</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/42wt-walnut-0206</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/42k-shadow-oak-0205</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/42h-oak-0204</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/42f-grey-oak-0203</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/41wt-walnut-0202</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/41k-shadow-oak-0201</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/41h-oak-0200</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/41f-grey-oak-0199</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/013b-ps-gold-and-brown-0198</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/013a-ps-gold-and-grey-0197</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/011d-gold-and-white-marble-0196</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/011c-gold-and-black-marble-0195</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/011b-grey-marble-0194</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/011a-white-marble-0193</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/010c-antique-metallic-brown-0192</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/010b-antique-metallic-gold-0191</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/rose-brown-recliner-chair-0130</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/roma-mixed-grey-sofa-0129</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/g-paris-grey-sofas-0128</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/paris-grey-sofas-0127</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/montana-ivory-3-seater-recliner-sofa-0126</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/montana-ivory-2-seater-recliner-sofa-0125</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/montana-ivory-recliner-chair-0124</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/montana-grey-3-seater-recliner-sofa-0123</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/montana-grey-2-seater-recliner-sofa-0122</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/montana-grey-recliner-chair-0121</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/montana-brown-3-seater-recliner-sofa-0120</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/montana-brown-2-seater-recliner-sofa-0119</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/montana-brown-recliner-chair-0118</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/montana-black-3-seater-recliner-sofa-0117</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/montana-black-2-seater-recliner-sofa-0116</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/montana-black-recliner-chair-0115</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/milan-compression-ivory-sofa-0114</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/milan-compression-grey-sofa-0113</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/milan-compression-blue-sofa-0112</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/milan-compression-black-sofa-0111</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/lucy-grey-fabric-sofa-0110</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/lucy-black-pu-sofa-0109</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/bella-grey-3-seater-sofa-0108</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/g-milan-ivory-stool-0107</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/g-milan-dark-grey-stool-0106</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/g-milan-black-stool-0105</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/mayfair-silver-grey-stool-0104</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/mayfair-mink-stool-0103</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/mayfair-dark-grey-stool-with-lion-knocker-0102</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/lewis-mink-stool-0100</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/kasi-gold-ceramic-0030</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/chanel-ceramic-0029</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/armani-ceramic-0028</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/gs-grey-marble-0027</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/gs-cream-marble-0026</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/mb-white-marble-0025</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/white-marble-0024</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/mixed-brown-marble-0023</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/grey-marble-0022</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/gold-and-white-marble-0021</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/cream-marble-0020</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/black-marble-0019</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/venice-black-tables-0018</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/siena-tables-0017</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/roma-black-tables-0016</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/monaco-gold-table-0015</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/milan-black-tables-0014</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/mb-white-marble-table-0013</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/london-gold-tables-0012</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/london-tables-0011</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/lewis-gold-tables-0010</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/lewis-tables-0009</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/jessica-gold-tables-0008</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/jessica-black-tables-0007</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/gs-madrid-tables-0006</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/gs-lucy-tables-0005</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/cheshire-tables-0004</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/chelsea-gold-tables-0003</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/chelsea-tables-0002</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thebritishmanor.co.uk/products/bentley-tables-0001</loc>
-    <lastmod>2026-07-02</lastmod>
+    <loc>https://thebritishmanor.co.uk/products/wall-panels-acoustic-01a-natural-oak-0001</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

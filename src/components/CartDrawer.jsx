@@ -3,19 +3,27 @@ import { useApp } from "../context/AppContext.jsx";
 import { CloseIcon } from "./Icons.jsx";
 
 export default function CartDrawer() {
-  const { cart, cartOpen, setCartOpen, updateQty, removeFromCart, subtotal } = useApp();
+  const { cart, cartOpen, setCartOpen, updateQty, removeFromCart, subtotal, lineUnitPrice } =
+    useApp();
   return (
     <>
-      <div className={`cart-backdrop ${cartOpen ? "open" : ""}`} onClick={() => setCartOpen(false)} />
+      <div
+        className={`cart-backdrop ${cartOpen ? "open" : ""}`}
+        onClick={() => setCartOpen(false)}
+      />
       <aside className={`cart-drawer ${cartOpen ? "open" : ""}`}>
         <div className="cart-header">
           <h3>Your Cart ({cart.length})</h3>
-          <button className="icon-btn" onClick={() => setCartOpen(false)}><CloseIcon /></button>
+          <button className="icon-btn" onClick={() => setCartOpen(false)}>
+            <CloseIcon />
+          </button>
         </div>
         {cart.length === 0 ? (
           <div className="cart-empty">
             <p style={{ marginBottom: 24 }}>Your cart is empty.</p>
-            <Link to="/collections/all-panels" className="btn" onClick={() => setCartOpen(false)}>Shop Panels</Link>
+            <Link to="/collections/all-panels" className="btn" onClick={() => setCartOpen(false)}>
+              Shop Panels
+            </Link>
           </div>
         ) : (
           <>
@@ -25,24 +33,40 @@ export default function CartDrawer() {
                   <img src={it.product.image} alt="" />
                   <div>
                     <div className="title">{it.product.title}</div>
-                    <div className="meta">{Object.entries(it.variant).map(([k, v]) => `${k}: ${v}`).join(" · ")}</div>
+                    <div className="meta">Variant: {it.variant?.name || "Default"}</div>
                     <div className="row">
                       <div className="qty">
                         <button onClick={() => updateQty(it.key, it.qty - 1)}>−</button>
                         <span>{it.qty}</span>
                         <button onClick={() => updateQty(it.key, it.qty + 1)}>+</button>
                       </div>
-                      <button className="remove" onClick={() => removeFromCart(it.key)}>Remove</button>
+                      <button className="remove" onClick={() => removeFromCart(it.key)}>
+                        Remove
+                      </button>
                     </div>
                   </div>
-                  <div style={{ fontSize: 13, fontWeight: 500 }}>£{(it.product.price * it.qty).toFixed(2)}</div>
+                  <div style={{ fontSize: 13, fontWeight: 500 }}>
+                    £{(lineUnitPrice(it) * it.qty).toFixed(2)}
+                  </div>
                 </div>
               ))}
             </div>
             <div className="cart-footer">
-              <div className="cart-total"><span>Subtotal</span><span>£{subtotal.toFixed(2)}</span></div>
-              <Link to="/checkout" onClick={() => setCartOpen(false)} className="btn btn-full">Checkout</Link>
-              <Link to="/cart" onClick={() => setCartOpen(false)} className="btn btn-outline btn-full" style={{ marginTop: 10 }}>View Cart</Link>
+              <div className="cart-total">
+                <span>Subtotal</span>
+                <span>£{subtotal.toFixed(2)}</span>
+              </div>
+              <Link to="/checkout" onClick={() => setCartOpen(false)} className="btn btn-full">
+                Checkout
+              </Link>
+              <Link
+                to="/cart"
+                onClick={() => setCartOpen(false)}
+                className="btn btn-outline btn-full"
+                style={{ marginTop: 10 }}
+              >
+                View Cart
+              </Link>
             </div>
           </>
         )}

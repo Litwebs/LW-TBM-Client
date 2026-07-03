@@ -5,6 +5,7 @@ import { HelmetProvider } from "react-helmet-async";
 import App from "./App.jsx";
 import { AppProvider } from "./context/AppContext.jsx";
 import { ProductsProvider } from "./context/ProductsContext.jsx";
+import { StorefrontProvider } from "./context/StorefrontContext.jsx";
 import "./styles/global.css";
 
 const redirect = sessionStorage.getItem("redirect");
@@ -18,11 +19,13 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <HelmetProvider>
       <BrowserRouter>
-        <ProductsProvider>
-          <AppProvider>
-            <App />
-          </AppProvider>
-        </ProductsProvider>
+        <StorefrontProvider>
+          <ProductsProvider>
+            <AppProvider>
+              <App />
+            </AppProvider>
+          </ProductsProvider>
+        </StorefrontProvider>
       </BrowserRouter>
     </HelmetProvider>
   </React.StrictMode>,

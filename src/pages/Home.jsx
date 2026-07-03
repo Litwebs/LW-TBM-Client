@@ -17,9 +17,33 @@ import { SITE_BASE } from "../lib/api.js";
 
 const HERO_BG = "/images/hero-bg.jpg";
 
+function formatDiscountDescription(offer) {
+  const kind = String(offer?.kind || "").toLowerCase();
+  const percentOff = Number(offer?.percentOff || 0);
+  const amountOff = Number(offer?.amountOff || 0);
+
+  let amountText = "Special offer";
+  if (kind === "percent" && percentOff > 0) {
+    amountText = `${percentOff}% off`;
+  } else if (kind === "amount" && amountOff > 0) {
+    amountText = `GBP ${amountOff.toFixed(2)} off`;
+  }
+
+  const variantsCount = Array.isArray(offer?.variants) ? offer.variants.length : 0;
+  const scope = String(offer?.scope || "global").toLowerCase();
+
+  if (scope === "variant" && variantsCount > 0) {
+    return `${amountText} on selected items`;
+  }
+  if (scope === "category") {
+    return `${amountText} on selected category`;
+  }
+  return `${amountText} sitewide`;
+}
+
 export default function Home() {
   const [quickView, setQuickView] = useState(null);
-  const { products: liveProducts, isLive } = useProducts();
+  const { products: liveProducts, isLive, discounts } = useProducts();
   const featured = isLive ? liveProducts.slice(0, 4) : bestSellers();
   const jsonLd = [
     {
@@ -59,8 +83,12 @@ export default function Home() {
             Curated British <em>elegance</em> for refined living spaces.
           </h1>
           <div className="hero-cta-row">
-            <Link to="/collections/wall-panels" className="btn btn-light btn-lg">Wall Panels</Link>
-            <Link to="/collections/outdoor-panels" className="btn btn-ghost btn-lg">Outdoor Panels</Link>
+            <Link to="/collections/wall-panels" className="btn btn-light btn-lg">
+              Wall Panels
+            </Link>
+            <Link to="/collections/outdoor-panels" className="btn btn-ghost btn-lg">
+              Outdoor Panels
+            </Link>
           </div>
         </div>
         <div className="editorial-hero-meta">
@@ -72,10 +100,12 @@ export default function Home() {
       <section className="tight">
         <div className="container-narrow">
           <div className="section-eyebrow">Turn your space into luxury</div>
-          <h2 className="section-title" style={{ marginBottom: 16 }}>See the transformation.</h2>
+          <h2 className="section-title" style={{ marginBottom: 16 }}>
+            See the transformation.
+          </h2>
           <p className="intro-text" style={{ marginBottom: 40 }}>
-            Drag the slider to reveal how our slatted timber panels transform an ordinary wall
-            into a considered, architectural space.
+            Drag the slider to reveal how our slatted timber panels transform an ordinary wall into
+            a considered, architectural space.
           </p>
           <BeforeAfter
             beforeSrc="/images/ba-before.jpg"
@@ -155,6 +185,22 @@ export default function Home() {
       </section>
 
       <TrustTicker />
+
+      {discounts.length > 0 && (
+        <section style={{ paddingTop: 24, paddingBottom: 8 }}>
+          <div className="container">
+            <div className="section-eyebrow">Current Offers</div>
+            <div className="discount-offers-grid">
+              {discounts.slice(0, 4).map((offer, idx) => (
+                <article className="discount-offer-card" key={`${offer.code || idx}`}>
+                  <p className="discount-offer-title">{offer.code}</p>
+                  <p className="discount-offer-description">{formatDiscountDescription(offer)}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="benefits">
         <div className="container">

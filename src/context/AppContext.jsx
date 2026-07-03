@@ -7,10 +7,14 @@ const load = (key, fallback) => {
   try {
     const v = localStorage.getItem(key);
     return v ? JSON.parse(v) : fallback;
-  } catch { return fallback; }
+  } catch {
+    return fallback;
+  }
 };
 const save = (key, value) => {
-  try { localStorage.setItem(key, JSON.stringify(value)); } catch {}
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch {}
 };
 
 export function AppProvider({ children }) {
@@ -34,18 +38,47 @@ export function AppProvider({ children }) {
     setTimeout(() => setToasts((t) => t.filter((x) => x.id !== id)), 2800);
   }, []);
 
-  const addToCart = useCallback((product, qty = 1, variant = {}) => {
-    setCart((prev) => {
-      const key = product.id + JSON.stringify(variant);
-      const existing = prev.find((it) => it.key === key);
-      if (existing) return prev.map((it) => it.key === key ? { ...it, qty: it.qty + qty } : it);
-      return [...prev, { key, product, qty, variant }];
-    });
-    setCartOpen(true);
-    toast(`Added: ${product.title.slice(0, 40)}`);
-  }, [toast]);
+  const lineUnitPrice = useCallback(
+    (line) => Number(line?.variant?.price ?? line?.product?.price ?? 0),
+    [],
+  );
 
-  const updateQty = (key, qty) => setCart((prev) => prev.map((it) => it.key === key ? { ...it, qty: Math.max(1, qty) } : it));
+  const addToCart = useCallback(
+    (product, qty = 1, variant = {}) => {
+      const normalizedVariant = {
+        variantId:
+          variant?.variantId ||
+          variant?.id ||
+          product?.selectedVariantId ||
+          product?.variants?.[0]?.id,
+        name: variant?.name || variant?.label || "Default",
+        price: Number(variant?.price ?? product?.price ?? 0),
+        thumbnailImage: variant?.thumbnailImage || null,
+      };
+
+      if (!normalizedVariant.variantId) {
+        toast("This product has no selectable variant yet.");
+        return;
+      }
+
+      setCart((prev) => {
+        const key = `${product.id}:${normalizedVariant.variantId}`;
+        const existing = prev.find((it) => it.key === key);
+        if (existing) {
+          return prev.map((it) =>
+            it.key === key ? { ...it, qty: it.qty + qty, variant: normalizedVariant } : it,
+          );
+        }
+        return [...prev, { key, product, qty, variant: normalizedVariant }];
+      });
+      setCartOpen(true);
+      toast(`Added: ${product.title.slice(0, 40)}`);
+    },
+    [toast],
+  );
+
+  const updateQty = (key, qty) =>
+    setCart((prev) => prev.map((it) => (it.key === key ? { ...it, qty: Math.max(1, qty) } : it)));
   const removeFromCart = (key) => setCart((prev) => prev.filter((it) => it.key !== key));
   const clearCart = () => setCart([]);
 
@@ -53,26 +86,66 @@ export function AppProvider({ children }) {
     setRecentlyViewed((prev) => [productId, ...prev.filter((id) => id !== productId)].slice(0, 8));
   }, []);
 
-  const login = (email) => { setUser({ email, name: email.split("@")[0] }); toast("Welcome back"); };
-  const register = (email, name) => { setUser({ email, name }); toast("Account created"); };
-  const logout = () => { setUser(null); toast("Signed out"); };
+  const login = (email) => {
+    setUser({ email, name: email.split("@")[0] });
+    toast("Welcome back");
+  };
+  const register = (email, name) => {
+    setUser({ email, name });
+    toast("Account created");
+  };
+  const logout = () => {
+    setUser(null);
+    toast("Signed out");
+  };
 
   const placeOrder = (details, items, total) => {
-    const order = { id: "PL" + Date.now().toString().slice(-8), date: new Date().toISOString(), items, total, details, status: "Processing" };
+    const order = {
+      id: "PL" + Date.now().toString().slice(-8),
+      date: new Date().toISOString(),
+      items,
+      total,
+      details,
+      status: "Processing",
+    };
     setOrders((prev) => [order, ...prev]);
     clearCart();
     return order;
   };
 
-  const subtotal = cart.reduce((s, it) => s + it.product.price * it.qty, 0);
+  const subtotal = cart.reduce((s, it) => s + lineUnitPrice(it) * it.qty, 0);
   const cartCount = cart.reduce((s, it) => s + it.qty, 0);
 
   return (
-    <AppCtx.Provider value={{
-      cart, addToCart, updateQty, removeFromCart, clearCart, subtotal, cartCount,
-      user, login, register, logout,
-      cartOpen, setCartOpen, searchOpen, setSearchOpen, menuOpen, setMenuOpen,
-      toast, toasts, recentlyViewed, trackView, orders, placeOrder,
-    }}>{children}</AppCtx.Provider>
+    <AppCtx.Provider
+      value={{
+        cart,
+        addToCart,
+        updateQty,
+        removeFromCart,
+        clearCart,
+        subtotal,
+        cartCount,
+        lineUnitPrice,
+        user,
+        login,
+        register,
+        logout,
+        cartOpen,
+        setCartOpen,
+        searchOpen,
+        setSearchOpen,
+        menuOpen,
+        setMenuOpen,
+        toast,
+        toasts,
+        recentlyViewed,
+        trackView,
+        orders,
+        placeOrder,
+      }}
+    >
+      {children}
+    </AppCtx.Provider>
   );
 }
