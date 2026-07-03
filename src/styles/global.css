@@ -3755,7 +3755,7 @@ section .section-eyebrow,
   opacity: 1;
   white-space: nowrap;
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
   line-height: 1;
 }
 .contact-grid-elegant {
