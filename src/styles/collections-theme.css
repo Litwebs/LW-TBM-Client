@@ -35,6 +35,144 @@ body.collections-page-theme {
   animation: bgSilverShine 3s linear infinite;
 }
 
+body.product-page-silver-theme {
+  background:
+    linear-gradient(
+      115deg,
+      rgba(255, 255, 255, 0) 30%,
+      rgba(255, 255, 255, 0.85) 44%,
+      rgba(255, 255, 255, 1) 50%,
+      rgba(255, 255, 255, 0.85) 56%,
+      rgba(255, 255, 255, 0) 70%
+    ),
+    linear-gradient(
+      115deg,
+      #eef0f3 0%,
+      #ffffff 7%,
+      #b3b7bf 15%,
+      #ffffff 23%,
+      #979aa2 31%,
+      #ffffff 41%,
+      #c4c7cd 49%,
+      #ffffff 57%,
+      #93969d 65%,
+      #ffffff 75%,
+      #adb1b9 83%,
+      #ffffff 91%,
+      #d6d9de 97%,
+      #ffffff 100%
+    ) !important;
+  background-size: 200% 100%, 320% 100% !important;
+  background-repeat: no-repeat, repeat !important;
+  animation: bgSilverShine 3s linear infinite;
+}
+
+/* Keep the product purchase block on the established navy surface */
+body.product-page-silver-theme .pdp-info {
+  background: #0f2345;
+  border: 1px solid rgba(199, 203, 209, 0.24);
+  box-shadow: 0 24px 44px -30px rgba(5, 12, 28, 0.55);
+  padding: 22px;
+}
+
+body.product-page-silver-theme .pdp-info h1,
+body.product-page-silver-theme .pdp-info .prices .price-sale,
+body.product-page-silver-theme .pdp-info .variant-group .label,
+body.product-page-silver-theme .pdp-info .pdp-features h4,
+body.product-page-silver-theme .pdp-info .accordion-trigger,
+body.product-page-silver-theme .pdp-info .accordion-trigger span:first-child {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+body.product-page-silver-theme .pdp-info .pdp-features,
+body.product-page-silver-theme .pdp-info .pdp-rich-description,
+body.product-page-silver-theme .pdp-info .pdp-features li,
+body.product-page-silver-theme .pdp-info .accordion-content,
+body.product-page-silver-theme .pdp-info .accordion-content p {
+  color: #d7dce8 !important;
+  -webkit-text-fill-color: #d7dce8 !important;
+}
+
+/* Match Shop All frame style for You May Also Like cards only */
+body.product-page-silver-theme .pdp-related-section .product-card,
+body.product-page-silver-theme .pdp-recent-section .product-card {
+  background: transparent !important;
+  border: 4px solid transparent !important;
+  border-image-slice: 1 !important;
+  border-image-source: linear-gradient(
+    115deg,
+    #ffffff 0%,
+    #e4e7ec 10%,
+    #a5a8af 20%,
+    #ffffff 32%,
+    #c7cad0 44%,
+    #ffffff 56%,
+    #9fa2a9 68%,
+    #ffffff 80%,
+    #d9dde2 90%,
+    #ffffff 100%
+  ) !important;
+  padding: 8px 8px 14px !important;
+  border-radius: 0 !important;
+  box-shadow: 0 18px 40px -30px rgba(30, 41, 59, 0.35) !important;
+  animation: none !important;
+}
+
+body.product-page-silver-theme .pdp-related-section .product-card::before,
+body.product-page-silver-theme .pdp-recent-section .product-card::before {
+  background: radial-gradient(120% 60% at 50% -10%, rgba(20, 38, 74, 0.05), transparent 60%) !important;
+}
+
+body.product-page-silver-theme .pdp-related-section .product-card:hover,
+body.product-page-silver-theme .pdp-recent-section .product-card:hover {
+  transform: translateY(-6px) !important;
+  box-shadow: 0 26px 50px -28px rgba(20, 38, 74, 0.4) !important;
+}
+
+body.product-page-silver-theme .pdp-related-section .product-card .img-wrap,
+body.product-page-silver-theme .pdp-recent-section .product-card .img-wrap {
+  background: #eceef2 !important;
+  border-width: 0.5px !important;
+  border-color: rgba(123, 125, 132, 0.3) !important;
+}
+
+body.product-page-silver-theme .pdp-related-section .product-card .pc-eyebrow,
+body.product-page-silver-theme .pdp-related-section .product-card .prices,
+body.product-page-silver-theme .pdp-related-section .product-card .price-sale,
+body.product-page-silver-theme .pdp-recent-section .product-card .pc-eyebrow,
+body.product-page-silver-theme .pdp-recent-section .product-card .prices,
+body.product-page-silver-theme .pdp-recent-section .product-card .price-sale {
+  color: #33405c !important;
+  -webkit-text-fill-color: #33405c !important;
+}
+
+body.product-page-silver-theme .pdp-related-section .product-card .title,
+body.product-page-silver-theme .pdp-recent-section .product-card .title {
+  color: #14264a !important;
+  -webkit-text-fill-color: #14264a !important;
+}
+
+body.product-page-silver-theme .pdp-related-section .product-card .title:hover,
+body.product-page-silver-theme .pdp-recent-section .product-card .title:hover {
+  color: #2e5bba !important;
+  -webkit-text-fill-color: #2e5bba !important;
+}
+
+body.product-page-silver-theme .pdp-related-section .product-card .pc-corner,
+body.product-page-silver-theme .pdp-related-section .product-card .img-wrap::after,
+body.product-page-silver-theme .pdp-recent-section .product-card .pc-corner,
+body.product-page-silver-theme .pdp-recent-section .product-card .img-wrap::after {
+  border-width: 0.5px !important;
+  border-color: rgba(123, 125, 132, 0.65) !important;
+}
+
+@media (max-width: 900px) {
+  body.product-page-silver-theme .pdp-info {
+    padding: 16px;
+  }
+}
+
 /* Header / breadcrumbs / toolbar text -> navy on light */
 body.collections-page-theme .breadcrumbs,
 body.collections-page-theme .breadcrumbs a,
@@ -243,4 +381,58 @@ body.collections-page-theme .shop-page-btn:hover:not(:disabled) {
 
 body.collections-page-theme .shop-page-btn.active:hover:not(:disabled) {
   color: #ffffff !important;
+}
+
+@media (max-width: 900px) {
+  body.collections-page-theme .shop-toolbar,
+  body.collections-page-theme .shop-toolbar-sticky {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 12px !important;
+  }
+
+  body.collections-page-theme .shop-toolbar-count {
+    white-space: normal;
+    line-height: 1.35;
+  }
+
+  body.collections-page-theme .shop-toolbar-controls {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    justify-items: stretch;
+  }
+
+  body.collections-page-theme .shop-perpage {
+    justify-content: flex-end;
+  }
+
+  body.collections-page-theme .shop-toolbar-pagination {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 8px;
+  }
+
+  body.collections-page-theme .shop-toolbar-pagination .shop-page-numbers {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    gap: 6px;
+    padding-bottom: 2px;
+    scrollbar-width: thin;
+  }
+
+  body.collections-page-theme .shop-toolbar-pagination .shop-page-numbers .shop-page-btn {
+    flex: 0 0 auto;
+    min-width: 42px;
+  }
+
+  body.collections-page-theme .shop-toolbar-pagination .shop-page-btn {
+    min-height: 42px;
+  }
 }

@@ -131,6 +131,44 @@ export function normalizeCategory(raw) {
   };
 }
 
+export function normalizePortfolioType(raw) {
+  if (!raw || typeof raw !== "object") return null;
+  const title = String(raw?.title || "").trim();
+  if (!title) return null;
+  const slug = String(raw?.slug || slugify(title));
+  return {
+    id: String(raw?._id || raw?.id || slug),
+    title,
+    slug,
+    description: String(raw?.description || ""),
+    raw,
+  };
+}
+
+export function normalizePortfolioItem(raw) {
+  if (!raw || typeof raw !== "object") return null;
+
+  const name = String(raw?.name || raw?.title || "").trim();
+  if (!name) return null;
+
+  const type = raw?.type && typeof raw.type === "object" ? raw.type : null;
+  const typeSlug = String(type?.slug || raw?.typeSlug || "").trim();
+  const typeTitle = String(type?.title || raw?.typeTitle || "").trim();
+  const image = fileUrl(raw?.image);
+
+  if (!image) return null;
+
+  return {
+    id: String(raw?._id || raw?.id || raw?.slug || name),
+    title: name,
+    description: String(raw?.description || "").trim(),
+    image,
+    room: typeSlug || slugify(typeTitle),
+    roomLabel: typeTitle,
+    raw,
+  };
+}
+
 export function normalizeAnnouncement(raw) {
   if (!raw || typeof raw !== "object") return null;
   const title = String(raw.title || "").trim();
@@ -148,6 +186,17 @@ export function normalizeAnnouncement(raw) {
 export async function fetchPublicCategories() {
   const { data } = await api.get("/api/categories");
   return (data?.data?.categories || []).map(normalizeCategory).filter(Boolean);
+}
+
+export async function fetchPublicPortfolio() {
+  const { data } = await api.get("/api/portfolio");
+  const rawTypes = Array.isArray(data?.data?.types) ? data.data.types : [];
+  const rawItems = Array.isArray(data?.data?.items) ? data.data.items : [];
+
+  const types = rawTypes.map(normalizePortfolioType).filter(Boolean);
+  const items = rawItems.map(normalizePortfolioItem).filter(Boolean);
+
+  return { types, items };
 }
 
 export async function fetchActiveAnnouncement() {

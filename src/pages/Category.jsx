@@ -29,7 +29,7 @@ export default function Category() {
           "@type": "ListItem",
           position: 2,
           name: "Categories",
-          item: SITE_BASE + "/collections/all-panels",
+          item: SITE_BASE + "/collections/products",
         },
         { "@type": "ListItem", position: 3, name, item: url },
       ],
@@ -58,7 +58,7 @@ export default function Category() {
     <div className="container">
       <Seo title={title} description={description} path={path} jsonLd={jsonLd} />
       <nav className="breadcrumbs" aria-label="Breadcrumb">
-        <Link to="/">Home</Link> &nbsp;/&nbsp; <Link to="/collections/all-panels">Shop</Link>{" "}
+        <Link to="/">Home</Link> &nbsp;/&nbsp; <Link to="/collections/products">Shop</Link>{" "}
         &nbsp;/&nbsp; <span>{name}</span>
       </nav>
       <header className="shop-header">

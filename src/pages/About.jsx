@@ -27,7 +27,7 @@ export default function About() {
               <img src={c.img} alt="" />
               <h3>{c.title}</h3>
               <p>{c.body}</p>
-              <Link to="/collections/all-panels">Shop The Collection</Link>
+              <Link to="/collections/products">Shop The Collection</Link>
             </div>
           ))}
         </div>

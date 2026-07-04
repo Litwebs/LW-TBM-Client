@@ -106,7 +106,7 @@ function CheckoutConfirmationPending({ navigate }) {
       <section className="checkout-complete-meta">
         <div className="checkout-complete-actions">
           <button
-            onClick={() => navigate("/collections/all-panels")}
+            onClick={() => navigate("/collections/products")}
             className="btn checkout-complete-primary-btn"
           >
             Continue Shopping
@@ -445,7 +445,7 @@ export default function Checkout() {
           <p>{done.contactEmail || checkoutEmail || "your email"}</p>
           <div className="checkout-complete-actions">
             <button
-              onClick={() => navigate("/collections/all-panels")}
+              onClick={() => navigate("/collections/products")}
               className="btn checkout-complete-primary-btn"
             >
               Continue Shopping
@@ -465,7 +465,7 @@ export default function Checkout() {
     return (
       <div className="container" style={{ padding: "80px 0", textAlign: "center" }}>
         <h2>Your cart is empty.</h2>
-        <button onClick={() => navigate("/collections/all-panels")} className="btn mt-32">
+        <button onClick={() => navigate("/collections/products")} className="btn mt-32">
           Shop Panels
         </button>
       </div>

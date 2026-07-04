@@ -59,7 +59,7 @@ export default function Cart() {
           <p>Your cart is currently empty.</p>
         </div>
         <div style={{ textAlign: "center" }}>
-          <Link to="/collections/all-panels" className="btn">
+          <Link to="/collections/products" className="btn">
             Continue Shopping
           </Link>
         </div>

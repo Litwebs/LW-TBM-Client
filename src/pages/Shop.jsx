@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import ProductCard from "../components/ProductCard.jsx";
 import QuickViewModal from "../components/QuickViewModal.jsx";
 import BrandSpinner from "../components/BrandSpinner.jsx";
@@ -11,11 +11,18 @@ const PER_PAGE_OPTIONS = [20, 40, 60, 80];
 
 export default function Shop() {
   const { slug } = useParams();
+  if (slug === "all-panels") {
+    return <Navigate to="/collections/products" replace />;
+  }
+  if (slug === "best-sellers") {
+    return <Navigate to="/collections/products" replace />;
+  }
+
   const { categories, isLive, loading } = useProducts();
   const apiCat = categories.find((c) => c.slug === slug);
   const collection = apiCat
     ? { name: apiCat.name, description: `Shop our ${apiCat.name} collection.` }
-    : { name: "All Panels", description: "Our complete catalogue." };
+    : { name: "Products", description: "Our complete catalogue." };
 
   const [sort, setSort] = useState("featured");
   const [inStockOnly, setInStockOnly] = useState(false);
@@ -32,24 +39,16 @@ export default function Shop() {
   const toggle = (list, setList, val) =>
     setList(list.includes(val) ? list.filter((v) => v !== val) : [...list, val]);
 
-  const availableCats = useMemo(() => {
-    if (slug && slug !== "all-panels" && apiCat) {
-      return [{ slug: apiCat.slug, name: apiCat.name }];
-    }
-    return [...categories].sort((a, b) => a.name.localeCompare(b.name));
-  }, [slug, apiCat, categories]);
+  const availableCats = useMemo(
+    () => [...categories].sort((a, b) => a.name.localeCompare(b.name)),
+    [categories],
+  );
 
   const totalPages = Math.max(1, Number(serverMeta?.totalPages || 1));
   const safePage = Math.min(page, totalPages);
 
   useEffect(() => {
-    const isCategoryCollection = Boolean(slug && slug !== "all-panels");
-
-    if (isCategoryCollection) {
-      document.body.classList.add("collections-page-theme");
-    } else {
-      document.body.classList.remove("collections-page-theme");
-    }
+    document.body.classList.add("collections-page-theme");
 
     return () => document.body.classList.remove("collections-page-theme");
   }, [slug]);
@@ -59,10 +58,15 @@ export default function Shop() {
   }, [slug, sort, inStockOnly, activeCats, perPage]);
 
   useEffect(() => {
-    if (slug && slug !== "all-panels") {
-      setActiveCats([]);
+    if (slug && slug !== "products") {
+      const routeCategorySlug = apiCat?.slug || slug;
+      setActiveCats((prev) =>
+        prev.length === 1 && prev[0] === routeCategorySlug ? prev : [routeCategorySlug],
+      );
+      return;
     }
-  }, [slug]);
+    setActiveCats([]);
+  }, [slug, apiCat?.slug]);
 
   useEffect(() => {
     if (page > totalPages) setPage(totalPages);
@@ -78,16 +82,16 @@ export default function Shop() {
       title: "name_asc",
     };
 
-    const routeCategoryName = slug && slug !== "all-panels" && apiCat ? apiCat.name : null;
+    const routeCategoryName = slug && slug !== "products" && apiCat ? apiCat.name : null;
 
     const selectedCategoryNames = availableCats
       .filter((c) => activeCats.includes(c.slug))
       .map((c) => c.name);
 
-    const categoryNames = routeCategoryName
-      ? [routeCategoryName]
-      : selectedCategoryNames.length
-        ? selectedCategoryNames
+    const categoryNames = selectedCategoryNames.length
+      ? selectedCategoryNames
+      : routeCategoryName
+        ? [routeCategoryName]
         : [];
 
     setPageLoading(true);
@@ -129,10 +133,10 @@ export default function Shop() {
       <Seo
         title={collection.name}
         description={collection.description || "Shop premium wall panels."}
-        path={`/collections/${slug || "all-panels"}`}
+        path={`/collections/${slug || "products"}`}
       />
       <div className="breadcrumbs">
-        <Link to="/">Home</Link> &nbsp;/&nbsp; <Link to="/collections/all-panels">Shop</Link>{" "}
+        <Link to="/">Home</Link> &nbsp;/&nbsp; <Link to="/collections/products">Shop</Link>{" "}
         &nbsp;/&nbsp; <span>{collection.name}</span>
       </div>
       <div className="shop-header">
@@ -242,27 +246,25 @@ export default function Shop() {
               </div>
             )}
           </div>
-          {availableCats.length > 1 && (
-            <div className="filter-group">
-              <h4 onClick={() => setOpenFilter((o) => ({ ...o, category: !o.category }))}>
-                Category <span>{openFilter.category ? "−" : "+"}</span>
-              </h4>
-              {openFilter.category && (
-                <div className="options">
-                  {availableCats.map((c) => (
-                    <label key={c.slug}>
-                      <input
-                        type="checkbox"
-                        checked={activeCats.includes(c.slug)}
-                        onChange={() => toggle(activeCats, setActiveCats, c.slug)}
-                      />{" "}
-                      {c.name}
-                    </label>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
+          <div className="filter-group">
+            <h4 onClick={() => setOpenFilter((o) => ({ ...o, category: !o.category }))}>
+              Category <span>{openFilter.category ? "−" : "+"}</span>
+            </h4>
+            {openFilter.category && (
+              <div className="options">
+                {availableCats.map((c) => (
+                  <label key={c.slug}>
+                    <input
+                      type="checkbox"
+                      checked={activeCats.includes(c.slug)}
+                      onChange={() => toggle(activeCats, setActiveCats, c.slug)}
+                    />{" "}
+                    {c.name}
+                  </label>
+                ))}
+              </div>
+            )}
+          </div>
         </aside>
         <div>
           {loading || pageLoading ? (

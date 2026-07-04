@@ -3,10 +3,20 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { useApp } from "../context/AppContext.jsx";
 import { useProducts } from "../context/ProductsContext.jsx";
 import { SITE_BASE, CONTACT_EMAIL, slugify } from "../lib/api.js";
+import { sanitizeHtml, htmlToText } from "../lib/html.js";
 import Rating from "../components/Rating.jsx";
 import Accordion from "../components/Accordion.jsx";
 import ProductCard from "../components/ProductCard.jsx";
 import Seo from "../components/Seo.jsx";
+
+function toImageUrl(value) {
+  if (!value) return "";
+  if (typeof value === "string") return value.trim();
+  if (typeof value === "object") {
+    return String(value.fileUrl || value.url || value.src || "").trim();
+  }
+  return "";
+}
 
 export default function Product() {
   const { slug } = useParams();
@@ -16,19 +26,25 @@ export default function Product() {
   const { addToCart, trackView, recentlyViewed } = useApp();
   const [qty, setQty] = useState(1);
   const [selectedVariantId, setSelectedVariantId] = useState(product?.selectedVariantId || "");
-  const [mainImg, setMainImg] = useState(product?.image);
+  const [mainImg, setMainImg] = useState(toImageUrl(product?.image));
+  const [activeThumbIndex, setActiveThumbIndex] = useState(0);
 
   useEffect(() => {
     if (product) {
       trackView(product.id);
-      setMainImg(product.image);
+      setMainImg(toImageUrl(product.image));
       setSelectedVariantId(product.selectedVariantId || product.variants?.[0]?.id || "");
     }
   }, [product, trackView]);
 
+  useEffect(() => {
+    document.body.classList.add("product-page-silver-theme");
+    return () => document.body.classList.remove("product-page-silver-theme");
+  }, []);
+
   const related = useMemo(
     () =>
-      products.filter((p) => p.category === product?.category && p.id !== product?.id).slice(0, 4),
+      products.filter((p) => p.category === product?.category && p.id !== product?.id).slice(0, 6),
     [product, products],
   );
   const recents = useMemo(
@@ -37,27 +53,49 @@ export default function Product() {
         .map((id) => products.find((p) => p.id === id))
         .filter(Boolean)
         .filter((p) => p.id !== product?.id)
-        .slice(0, 4),
+        .slice(0, 6),
     [recentlyViewed, product],
   );
+
+  const selectedVariant = useMemo(
+    () =>
+      product?.variants?.find((v) => v.id === selectedVariantId) || product?.variants?.[0] || null,
+    [product, selectedVariantId],
+  );
+
+  const thumbs = useMemo(() => {
+    if (!product) return [];
+
+    const images = [
+      toImageUrl(product.image),
+      toImageUrl(selectedVariant?.thumbnailImage),
+      ...(product.galleryImages || []).map(toImageUrl),
+    ].filter(Boolean);
+
+    return [...new Set(images)];
+  }, [product, selectedVariant?.thumbnailImage]);
+
+  useEffect(() => {
+    if (!thumbs.length) return;
+    const currentIndex = thumbs.indexOf(mainImg);
+    if (currentIndex === -1) {
+      setMainImg(thumbs[0]);
+      setActiveThumbIndex(0);
+      return;
+    }
+    setActiveThumbIndex(currentIndex);
+  }, [thumbs, mainImg]);
 
   if (!product)
     return (
       <div className="container" style={{ padding: 80 }}>
         <h2>Product not found</h2>
-        <Link to="/collections/all-panels" className="btn mt-32">
+        <Link to="/collections/products" className="btn mt-32">
           Back to Shop
         </Link>
       </div>
     );
 
-  const thumbs = (
-    product.galleryImages && product.galleryImages.length
-      ? product.galleryImages
-      : [product.image, product.image, product.image]
-  ).slice(0, 6);
-  const selectedVariant =
-    product.variants?.find((v) => v.id === selectedVariantId) || product.variants?.[0] || null;
   const activePrice = Number(selectedVariant?.price ?? product.price ?? 0);
   const variantName = selectedVariant?.name || "Default";
   const priceOnRequest = !product.price || product.price <= 0;
@@ -91,11 +129,14 @@ export default function Product() {
     `Hello,\n\nI'd like to enquire about ${product.title} (${productUrl}).\n\nThanks,\n`,
   )}`;
 
+  const descriptionHtml = sanitizeHtml(product.description);
+  const descriptionText = htmlToText(product.description);
+
   const productJsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.title,
-    description: product.description || product.title,
+    description: descriptionText || product.title,
     sku: product.id,
     image: [product.image, ...(product.galleryImages || [])].filter(Boolean),
     brand: { "@type": "Brand", name: "The British Manor" },
@@ -135,7 +176,7 @@ export default function Product() {
       <Seo
         title={`${product.title} | ${categoryName}`}
         description={(
-          product.description ||
+          descriptionText ||
           `${product.title} — premium ${categoryName.toLowerCase()} by The British Manor.`
         ).slice(0, 158)}
         path={`/products/${slug}`}
@@ -161,11 +202,14 @@ export default function Product() {
           <div className="pdp-thumbs">
             {thumbs.map((t, i) => (
               <img
-                key={i}
+                key={`${t}-${i}`}
                 src={t}
-                alt={`${product.title} thumbnail ${i + 1}`}
-                className={t === mainImg ? "active" : ""}
-                onClick={() => setMainImg(t)}
+                alt={`${product.title} image ${i + 1}`}
+                className={i === activeThumbIndex ? "active" : ""}
+                onClick={() => {
+                  setMainImg(t);
+                  setActiveThumbIndex(i);
+                }}
               />
             ))}
           </div>
@@ -241,26 +285,16 @@ export default function Product() {
                 </button>
               </>
             )}
-            <a className="btn btn-outline btn-full" href={enquireHref} style={{ marginTop: 8 }}>
-              Enquire about this product
-            </a>
           </div>
-
-          <p className="pdp-desc">
-            {product.description
-              ? product.description
-              : "Crafted from premium materials, designed in Britain to add warmth, texture, and a contemporary edge to any room."}
-          </p>
 
           <div className="pdp-features">
             <h4>Specifications</h4>
-            <ul>
-              <li>Dimensions: {product.size}</li>
-              <li>Selected variant: {variantName}</li>
-              <li>Material: MDF slats on acoustic felt backing</li>
-              <li>Fire rating: Class B-s2,d0</li>
-              <li>Installation: Screw or adhesive fix</li>
-            </ul>
+            {descriptionHtml && (
+              <div
+                className="pdp-rich-description"
+                dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+              />
+            )}
           </div>
 
           <div style={{ marginTop: 32 }}>
@@ -285,7 +319,7 @@ export default function Product() {
       </div>
 
       {related.length > 0 && (
-        <section style={{ paddingTop: 40 }}>
+        <section className="pdp-related-section" style={{ paddingTop: 40 }}>
           <h2 className="section-title" style={{ marginBottom: 32 }}>
             You May Also Like
           </h2>
@@ -297,7 +331,7 @@ export default function Product() {
         </section>
       )}
       {recents.length > 0 && (
-        <section style={{ paddingTop: 24 }}>
+        <section className="pdp-recent-section" style={{ paddingTop: 24 }}>
           <h2 className="section-title" style={{ marginBottom: 32 }}>
             Recently Viewed
           </h2>

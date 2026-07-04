@@ -1,41 +1,122 @@
-import { useState } from "react";
-import { portfolio } from "../data/portfolio.js";
+import { useEffect, useMemo, useState } from "react";
 import { CloseIcon } from "../components/Icons.jsx";
 import Seo from "../components/Seo.jsx";
-
-const ROOMS = [
-  { v: "all", l: "All" }, { v: "living", l: "Living Room" }, { v: "bedroom", l: "Bedroom" },
-  { v: "bathroom", l: "Bathroom" }, { v: "office", l: "Office" },
-  { v: "commercial", l: "Commercial" }, { v: "outdoor", l: "Outdoor" },
-];
+import { fetchPublicPortfolio } from "../lib/api.js";
 
 export default function Portfolio() {
+  const [types, setTypes] = useState([]);
+  const [allItems, setAllItems] = useState([]);
   const [room, setRoom] = useState("all");
   const [active, setActive] = useState(null);
-  const items = room === "all" ? portfolio : portfolio.filter((p) => p.room === room);
+
+  useEffect(() => {
+    let activePage = true;
+
+    async function loadPortfolio() {
+      try {
+        const payload = await fetchPublicPortfolio();
+        if (!activePage) return;
+        setTypes(payload?.types || []);
+        setAllItems(payload?.items || []);
+      } catch {
+        if (!activePage) return;
+        setTypes([]);
+        setAllItems([]);
+      }
+    }
+
+    loadPortfolio();
+    return () => {
+      activePage = false;
+    };
+  }, []);
+
+  const rooms = useMemo(
+    () => [
+      { v: "all", l: "All" },
+      ...types.map((type) => ({
+        v: type.slug,
+        l: type.title,
+      })),
+    ],
+    [types],
+  );
+
+  const items = useMemo(
+    () => (room === "all" ? allItems : allItems.filter((item) => String(item.room || "") === room)),
+    [allItems, room],
+  );
+
   return (
     <div className="container">
-      <Seo title="Portfolio" description="Real installations of acoustic and decorative wall panels in UK homes and businesses." path="/portfolio" />
-      <div className="page-header"><h1>Portfolio</h1><p>Real installations from our customers and partner designers.</p></div>
+      <Seo
+        title="Portfolio"
+        description="Real installations of acoustic and decorative wall panels in UK homes and businesses."
+        path="/portfolio"
+      />
+      <div className="page-header">
+        <h1>Portfolio</h1>
+        <p>Real installations from our customers and partner designers.</p>
+      </div>
       <div className="portfolio-filters">
-        {ROOMS.map((r) => (<button key={r.v} className={room === r.v ? "active" : ""} onClick={() => setRoom(r.v)}>{r.l}</button>))}
+        {rooms.map((r) => (
+          <button key={r.v} className={room === r.v ? "active" : ""} onClick={() => setRoom(r.v)}>
+            {r.l}
+          </button>
+        ))}
       </div>
       <div className="portfolio-grid" style={{ paddingBottom: 80 }}>
         {items.map((p) => (
           <div key={p.id} className="portfolio-item" onClick={() => setActive(p)}>
             <img src={p.image} alt={p.title} loading="lazy" />
-            <div className="overlay"><h4>{p.title}</h4></div>
+            <div className="overlay">
+              <div className="overlay-content">
+                <h4>{p.title}</h4>
+                {p.description && <p>{p.description}</p>}
+              </div>
+            </div>
           </div>
         ))}
+        {items.length === 0 && <p className="muted">No portfolio items available yet.</p>}
       </div>
       {active && (
         <div className="modal-backdrop" onClick={() => setActive(null)}>
-          <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 1100 }}>
-            <button className="modal-close" aria-label="Close" onClick={() => setActive(null)}><CloseIcon /></button>
-            <img src={active.image} alt={active.title} style={{ width: "100%", maxHeight: "70vh", objectFit: "cover" }} />
-            <div style={{ padding: 32 }}>
-              <h2 style={{ fontFamily: "var(--font-serif)", fontWeight: 400, fontSize: 28, textTransform: "none", letterSpacing: "0.04em", marginBottom: 12 }}>{active.title}</h2>
-              <p className="muted">{ROOMS.find((r) => r.v === active.room)?.l}</p>
+          <div
+            className="modal portfolio-modal"
+            onClick={(e) => e.stopPropagation()}
+            style={{ maxWidth: 1100 }}
+          >
+            <button className="modal-close" aria-label="Close" onClick={() => setActive(null)}>
+              <CloseIcon />
+            </button>
+            <img
+              src={active.image}
+              alt={active.title}
+              className="portfolio-modal-image"
+              style={{ width: "100%", maxHeight: "70vh", objectFit: "cover" }}
+            />
+            <div className="portfolio-modal-content" style={{ padding: 32 }}>
+              <h2
+                className="portfolio-modal-title"
+                style={{
+                  fontFamily: "var(--font-serif)",
+                  fontWeight: 400,
+                  fontSize: 28,
+                  textTransform: "none",
+                  letterSpacing: "0.04em",
+                  marginBottom: 12,
+                }}
+              >
+                {active.title}
+              </h2>
+              <p className="portfolio-modal-type">
+                {active.roomLabel || rooms.find((r) => r.v === active.room)?.l || "Portfolio"}
+              </p>
+              {active.description && (
+                <p className="portfolio-modal-description" style={{ marginTop: 10 }}>
+                  {active.description}
+                </p>
+              )}
             </div>
           </div>
         </div>

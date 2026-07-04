@@ -21,7 +21,7 @@ export default function CartDrawer() {
         {cart.length === 0 ? (
           <div className="cart-empty">
             <p style={{ marginBottom: 24 }}>Your cart is empty.</p>
-            <Link to="/collections/all-panels" className="btn" onClick={() => setCartOpen(false)}>
+            <Link to="/collections/products" className="btn" onClick={() => setCartOpen(false)}>
               Shop Panels
             </Link>
           </div>

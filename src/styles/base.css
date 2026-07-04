@@ -855,11 +855,55 @@ section.tight { padding: 64px 0; }
 .portfolio-item:hover img { transform: scale(1.06); }
 .portfolio-item .overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.7));
+  background: linear-gradient(180deg, rgba(7,12,24,0.06) 18%, rgba(7,12,24,0.3) 58%, rgba(7,12,24,0.44) 100%);
   display: flex; align-items: flex-end; padding: 24px;
   color: #fff;
+  transition: background 0.35s var(--ease);
 }
-.portfolio-item .overlay h4 { font-size: 13px; letter-spacing: var(--track-wide); }
+.portfolio-item .overlay-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.portfolio-item .overlay h4,
+.portfolio-item .overlay p {
+  margin: 0;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.35s var(--ease), transform 0.4s var(--ease);
+}
+.portfolio-item .overlay h4 {
+  font-size: clamp(18px, 1.9vw, 24px);
+  letter-spacing: var(--track-wide);
+  color: #c7cbd3;
+  transition-delay: 0.04s;
+}
+.portfolio-item .overlay p {
+  font-size: 12px;
+  line-height: 1.55;
+  color: rgba(255,255,255,0.9);
+  max-width: 42ch;
+  transition-delay: 0.1s;
+}
+.portfolio-item:hover .overlay,
+.portfolio-item:focus-within .overlay {
+  background: linear-gradient(180deg, rgba(7,12,24,0.14) 10%, rgba(7,12,24,0.42) 56%, rgba(7,12,24,0.58) 100%);
+}
+.portfolio-item:hover .overlay h4,
+.portfolio-item:hover .overlay p,
+.portfolio-item:focus-within .overlay h4,
+.portfolio-item:focus-within .overlay p {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (hover: none) {
+  .portfolio-item .overlay h4,
+  .portfolio-item .overlay p {
+    opacity: 1;
+    transform: none;
+  }
+}
 
 /* ===== Modal ===== */
 .modal-backdrop {

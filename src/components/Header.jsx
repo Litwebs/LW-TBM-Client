@@ -1,14 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useApp } from "../context/AppContext.jsx";
 import { useStorefront } from "../context/StorefrontContext.jsx";
 import { CartIcon, MenuIcon, UserIcon, CloseIcon } from "./Icons.jsx";
 
-const NAV = [
+const GENERAL_NAV = [
   { to: "/", label: "Home" },
-  { to: "/collections/wall-panels", label: "Wall Panels" },
-  { to: "/collections/outdoor-panels", label: "Outdoor Panels" },
-  { to: "/collections/best-sellers", label: "Best Sellers" },
+  { to: "/collections/products", label: "Shop All" },
   { to: "/portfolio", label: "Portfolio" },
   { to: "/reviews", label: "Reviews" },
   { to: "/faqs", label: "FAQs" },
@@ -42,10 +40,40 @@ function formatDiscountDescription(offer) {
 
 export default function Header() {
   const { cartCount, setCartOpen, menuOpen, setMenuOpen } = useApp();
-  const { announcement, discounts } = useStorefront();
+  const { announcement, discounts, categories } = useStorefront();
   const headerRef = useRef(null);
   const [isCondensed, setIsCondensed] = useState(false);
   const topDiscount = Array.isArray(discounts) && discounts.length > 0 ? discounts[0] : null;
+
+  const categoryNav = useMemo(
+    () =>
+      (categories || [])
+        .filter((c) => c?.slug && c?.name)
+        .filter(
+          (c) => c.slug !== "best-sellers" && c.slug !== "all-panels" && c.slug !== "products",
+        )
+        .map((c) => ({ to: `/collections/${c.slug}`, label: c.name })),
+    [categories],
+  );
+
+  const navItems = useMemo(() => {
+    const seen = new Set();
+    const items = [];
+    const [home, shopAll, ...generalRest] = GENERAL_NAV;
+
+    const pushUnique = (item) => {
+      if (!item?.to || seen.has(item.to)) return;
+      seen.add(item.to);
+      items.push(item);
+    };
+
+    pushUnique(home);
+    pushUnique(shopAll);
+    categoryNav.forEach(pushUnique);
+    generalRest.forEach(pushUnique);
+
+    return items;
+  }, [categoryNav]);
 
   useEffect(() => {
     const CONDENSE_AT = 140;
@@ -158,7 +186,7 @@ export default function Header() {
           </div>
         </div>
         <nav className="nav nav-row">
-          {NAV.map((n) => (
+          {navItems.map((n) => (
             <NavLink key={n.to} to={n.to} end={n.to === "/"}>
               {n.label}
             </NavLink>
@@ -175,7 +203,7 @@ export default function Header() {
           </button>
         </div>
         <nav>
-          {NAV.map((n) => (
+          {navItems.map((n) => (
             <Link key={n.to} to={n.to} onClick={() => setMenuOpen(false)}>
               {n.label}
             </Link>

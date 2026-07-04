@@ -25,34 +25,40 @@ const CATEGORY_FALLBACK_IMAGES = [
   "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=1400&q=80",
 ];
 
-function formatDiscountDescription(offer) {
-  const kind = String(offer?.kind || "").toLowerCase();
-  const percentOff = Number(offer?.percentOff || 0);
-  const amountOff = Number(offer?.amountOff || 0);
+function homeCategoryLink(category) {
+  const slug = String(category?.slug || "").toLowerCase();
+  const name = String(category?.name || "").toLowerCase();
 
-  let amountText = "Special offer";
-  if (kind === "percent" && percentOff > 0) {
-    amountText = `${percentOff}% off`;
-  } else if (kind === "amount" && amountOff > 0) {
-    amountText = `GBP ${amountOff.toFixed(2)} off`;
+  if (slug === "wall-panels" || slug === "panels" || name.includes("wall panel")) {
+    return "/collections/panels";
   }
 
-  const variantsCount = Array.isArray(offer?.variants) ? offer.variants.length : 0;
-  const scope = String(offer?.scope || "global").toLowerCase();
+  if (slug === "outdoor-panels" || slug === "fencing" || name.includes("outdoor panel")) {
+    return "/collections/fencing";
+  }
 
-  if (scope === "variant" && variantsCount > 0) {
-    return `${amountText} on selected items`;
-  }
-  if (scope === "category") {
-    return `${amountText} on selected category`;
-  }
-  return `${amountText} sitewide`;
+  return `/collections/${slug}`;
 }
 
 export default function Home() {
   const [quickView, setQuickView] = useState(null);
-  const { products: liveProducts, isLive, discounts, categories } = useProducts();
-  const featured = isLive ? liveProducts.slice(0, 4) : bestSellers();
+  const { products: liveProducts, isLive, categories } = useProducts();
+  const productPool = isLive ? liveProducts : bestSellers();
+  const featured = (() => {
+    const seen = new Set();
+    const items = [];
+
+    for (const product of productPool) {
+      const key = String(
+        product?.categorySlug || product?.category || "uncategorised",
+      ).toLowerCase();
+      if (seen.has(key)) continue;
+      seen.add(key);
+      items.push(product);
+    }
+
+    return items;
+  })();
   const apiCategories = (categories || [])
     .filter((c) => c?.name)
     .filter((c) => c.slug !== "uncategorised")
@@ -74,7 +80,7 @@ export default function Home() {
       url: SITE_BASE,
       potentialAction: {
         "@type": "SearchAction",
-        target: `${SITE_BASE}/collections/all-panels?q={search_term_string}`,
+        target: `${SITE_BASE}/collections/products?q={search_term_string}`,
         "query-input": "required name=search_term_string",
       },
     },
@@ -95,10 +101,10 @@ export default function Home() {
             Curated British <em>elegance</em> for refined living spaces.
           </h1>
           <div className="hero-cta-row">
-            <Link to="/collections/wall-panels" className="btn btn-light btn-lg">
+            <Link to="/collections/panels" className="btn btn-light btn-lg">
               Wall Panels
             </Link>
-            <Link to="/collections/outdoor-panels" className="btn btn-ghost btn-lg">
+            <Link to="/collections/fencing" className="btn btn-ghost btn-lg">
               Outdoor Panels
             </Link>
           </div>
@@ -143,7 +149,7 @@ export default function Home() {
                 return (
                   <Link
                     key={category.slug}
-                    to={`/collections/${category.slug}`}
+                    to={homeCategoryLink(category)}
                     className="api-category-card"
                   >
                     <img src={image} alt={category.name} loading="lazy" />
@@ -165,7 +171,7 @@ export default function Home() {
           <h2 className="section-title">Two ranges. One standard.</h2>
           <div className="cat-grid cat-grid-2">
             {homeCategories.map((c) => (
-              <Link key={c.slug} to={`/collections/${c.slug}`} className="cat-card">
+              <Link key={c.slug} to={homeCategoryLink(c)} className="cat-card">
                 <img src={c.image} alt={c.name} />
                 <div className="cat-overlay">
                   <h3>{c.name}</h3>
@@ -228,22 +234,6 @@ export default function Home() {
       </section>
 
       <TrustTicker />
-
-      {discounts.length > 0 && (
-        <section style={{ paddingTop: 24, paddingBottom: 8 }}>
-          <div className="container">
-            <div className="section-eyebrow">Current Offers</div>
-            <div className="discount-offers-grid">
-              {discounts.slice(0, 4).map((offer, idx) => (
-                <article className="discount-offer-card" key={`${offer.code || idx}`}>
-                  <p className="discount-offer-title">{offer.code}</p>
-                  <p className="discount-offer-description">{formatDiscountDescription(offer)}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
       <section className="benefits">
         <div className="container">
@@ -337,7 +327,7 @@ export default function Home() {
             ))}
           </div>
           <div style={{ textAlign: "center", marginTop: 72 }}>
-            <Link to="/collections/best-sellers" className="btn btn-full-edit">
+            <Link to="/collections/products" className="btn btn-full-edit">
               View the Full Edit
             </Link>
           </div>
