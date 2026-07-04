@@ -3,7 +3,7 @@ import axios from "axios";
 // (import.meta.env.PROD ? "https://api.thebritishmanor.co.uk" : "");
 
 export const SITE_BASE = import.meta.env.PROD
-  ? "https://thebritishmanor.co.uk"
+  ? "https://api.thebritishmanor.co.uk"
   : "http://localhost:5001";
 export const API_BASE = SITE_BASE;
 export const CONTACT_EMAIL = "hello@thebritishmanor.co.uk";
