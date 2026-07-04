@@ -1,0 +1,246 @@
+/* =========================================================
+   Category collections retheme (/collections/{slug})
+   Light canvas · navy accents · deep-blue filter rail ·
+   silver shine on each product card
+   ========================================================= */
+body.collections-page-theme {
+  background:
+    linear-gradient(
+      115deg,
+      rgba(255, 255, 255, 0) 30%,
+      rgba(255, 255, 255, 0.85) 44%,
+      rgba(255, 255, 255, 1) 50%,
+      rgba(255, 255, 255, 0.85) 56%,
+      rgba(255, 255, 255, 0) 70%
+    ),
+    linear-gradient(
+      115deg,
+      #eef0f3 0%,
+      #ffffff 7%,
+      #b3b7bf 15%,
+      #ffffff 23%,
+      #979aa2 31%,
+      #ffffff 41%,
+      #c4c7cd 49%,
+      #ffffff 57%,
+      #93969d 65%,
+      #ffffff 75%,
+      #adb1b9 83%,
+      #ffffff 91%,
+      #d6d9de 97%,
+      #ffffff 100%
+    ) !important;
+  background-size: 200% 100%, 320% 100% !important;
+  background-repeat: no-repeat, repeat !important;
+  animation: bgSilverShine 3s linear infinite;
+}
+
+/* Header / breadcrumbs / toolbar text -> navy on light */
+body.collections-page-theme .breadcrumbs,
+body.collections-page-theme .breadcrumbs a,
+body.collections-page-theme .breadcrumbs span,
+body.collections-page-theme .shop-header .muted,
+body.collections-page-theme .shop-toolbar,
+body.collections-page-theme .shop-toolbar span {
+  color: #33405c !important;
+  -webkit-text-fill-color: #33405c !important;
+}
+
+body.collections-page-theme .breadcrumbs a:hover,
+body.collections-page-theme .shop-header h1 {
+  color: #14264a !important;
+  -webkit-text-fill-color: #14264a !important;
+}
+
+body.collections-page-theme .shop-toolbar,
+body.collections-page-theme .shop-toolbar-sticky {
+  background:
+    linear-gradient(rgba(201, 204, 210, 0.94), rgba(201, 204, 210, 0.94)) padding-box,
+    linear-gradient(
+      115deg,
+      #ffffff 0%,
+      #e4e7ec 10%,
+      #a5a8af 20%,
+      #ffffff 32%,
+      #c7cad0 44%,
+      #ffffff 56%,
+      #9fa2a9 68%,
+      #ffffff 80%,
+      #d9dde2 90%,
+      #ffffff 100%
+    ) border-box !important;
+  background-size: 100% 100%, 260% 100% !important;
+  border: 2px solid transparent !important;
+  border-radius: 0 !important;
+  box-shadow: 0 18px 40px -30px rgba(30, 41, 59, 0.35) !important;
+  animation: containerSilverShine 4s linear infinite;
+  padding: 12px 20px !important;
+  color: #14264a !important;
+}
+
+body.collections-page-theme .shop-toolbar-count,
+body.collections-page-theme .shop-perpage {
+  color: #14264a !important;
+  -webkit-text-fill-color: #14264a !important;
+}
+
+body.collections-page-theme .shop-perpage-select {
+  background:
+    linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(115deg, #b7bac1 0%, #ffffff 22%, #9a9ca3 46%, #ffffff 68%, #bfc3c9 100%) border-box !important;
+  border: 1px solid transparent !important;
+  color: #14264a !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* Deep-blue filter rail (like the reference sidebar) */
+body.collections-page-theme .shop-sidebar-sticky {
+  background: #14264a !important;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 0;
+  padding: 22px 20px 26px !important;
+  box-shadow: 0 22px 46px -30px rgba(9, 18, 56, 0.6);
+}
+
+body.collections-page-theme .sidebar h4,
+body.collections-page-theme .filter-group label,
+body.collections-page-theme .filter-group label:hover,
+body.collections-page-theme .shop-sidebar-sticky .muted {
+  color: #f4f6fb !important;
+  -webkit-text-fill-color: #f4f6fb !important;
+}
+
+body.collections-page-theme .sidebar h4,
+body.collections-page-theme .filter-group {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+body.collections-page-theme .filter-group input[type="checkbox"] {
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+body.collections-page-theme .filter-group input[type="checkbox"]:checked {
+  background: #ffffff !important;
+  border-color: #ffffff !important;
+}
+
+body.collections-page-theme .filter-group input[type="checkbox"]:checked::after {
+  border-left-color: #14264a !important;
+  border-bottom-color: #14264a !important;
+}
+
+body.collections-page-theme .shop-side-select {
+  background:
+    linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(115deg, #b7bac1 0%, #ffffff 22%, #9a9ca3 46%, #ffffff 68%, #bfc3c9 100%) border-box !important;
+  border: 1px solid transparent !important;
+  color: #14264a !important;
+  border-radius: 0;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* Products container blends into the light canvas (shine moves to cards) */
+body.collections-page-theme .collections-products-container {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  animation: none !important;
+}
+
+/* Silver shine on each product card */
+body.collections-page-theme .product-card {
+  background: transparent !important;
+  border: 4px solid transparent !important;
+  border-image-slice: 1 !important;
+  border-image-source: linear-gradient(
+    115deg,
+    #ffffff 0%,
+    #e4e7ec 10%,
+    #a5a8af 20%,
+    #ffffff 32%,
+    #c7cad0 44%,
+    #ffffff 56%,
+    #9fa2a9 68%,
+    #ffffff 80%,
+    #d9dde2 90%,
+    #ffffff 100%
+  ) !important;
+  padding: 8px 8px 14px !important;
+  border-radius: 0 !important;
+  box-shadow:
+    0 18px 40px -30px rgba(30, 41, 59, 0.35) !important;
+  animation: none !important;
+}
+
+body.collections-page-theme .product-card::before {
+  background: radial-gradient(120% 60% at 50% -10%, rgba(20, 38, 74, 0.05), transparent 60%) !important;
+}
+
+body.collections-page-theme .product-card:hover {
+  transform: translateY(-6px) !important;
+  box-shadow:
+    0 26px 50px -28px rgba(20, 38, 74, 0.4) !important;
+}
+
+body.collections-page-theme .product-card .img-wrap {
+  background: #eceef2 !important;
+  border-width: 0.5px !important;
+  border-color: rgba(123, 125, 132, 0.3) !important;
+}
+
+body.collections-page-theme .product-card .pc-eyebrow,
+body.collections-page-theme .product-card .prices,
+body.collections-page-theme .product-card .price-sale {
+  color: #33405c !important;
+  -webkit-text-fill-color: #33405c !important;
+}
+
+body.collections-page-theme .product-card .title {
+  color: #14264a !important;
+  -webkit-text-fill-color: #14264a !important;
+}
+
+body.collections-page-theme .product-card .title:hover {
+  color: #2e5bba !important;
+  -webkit-text-fill-color: #2e5bba !important;
+}
+
+body.collections-page-theme .product-card .pc-corner,
+body.collections-page-theme .product-card .img-wrap::after {
+  border-width: 0.5px !important;
+  border-color: rgba(123, 125, 132, 0.65) !important;
+}
+
+/* Pagination on light canvas */
+body.collections-page-theme .shop-pagination {
+  border-top-color: rgba(20, 38, 74, 0.16) !important;
+}
+
+body.collections-page-theme .shop-page-btn {
+  background: #ffffff;
+  color: #1d2432;
+  border-color: rgba(123, 125, 132, 0.42) !important;
+  border-radius: 0;
+}
+
+body.collections-page-theme .shop-page-btn.active {
+  background: linear-gradient(150deg, #d9dce1 0%, #b3b7bf 45%, #d9dce1 100%) !important;
+  color: #14264a !important;
+  border-color: #8b8f98 !important;
+  box-shadow:
+    0 0 0 2px #ffffff,
+    0 0 0 3px #8b8f98,
+    0 6px 16px -6px rgba(20, 38, 74, 0.45) !important;
+}
+
+body.collections-page-theme .shop-page-btn:hover:not(:disabled) {
+  border-color: #14264a !important;
+  color: #14264a !important;
+}
+
+body.collections-page-theme .shop-page-btn.active:hover:not(:disabled) {
+  color: #ffffff !important;
+}

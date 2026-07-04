@@ -7,7 +7,7 @@ import { useProducts } from "../context/ProductsContext.jsx";
 import { fetchProductsPage } from "../lib/api.js";
 import Seo from "../components/Seo.jsx";
 
-const PAGE_SIZE = 12;
+const PER_PAGE_OPTIONS = [20, 40, 60, 80];
 
 export default function Shop() {
   const { slug } = useParams();
@@ -22,6 +22,7 @@ export default function Shop() {
   const [activeCats, setActiveCats] = useState([]);
   const [quickView, setQuickView] = useState(null);
   const [openFilter, setOpenFilter] = useState({ availability: true, sort: true, category: true });
+  const [perPage, setPerPage] = useState(20);
   const [page, setPage] = useState(1);
   const [pageLoading, setPageLoading] = useState(false);
   const [pageError, setPageError] = useState(null);
@@ -42,8 +43,20 @@ export default function Shop() {
   const safePage = Math.min(page, totalPages);
 
   useEffect(() => {
+    const isCategoryCollection = Boolean(slug && slug !== "all-panels");
+
+    if (isCategoryCollection) {
+      document.body.classList.add("collections-page-theme");
+    } else {
+      document.body.classList.remove("collections-page-theme");
+    }
+
+    return () => document.body.classList.remove("collections-page-theme");
+  }, [slug]);
+
+  useEffect(() => {
     setPage(1);
-  }, [slug, sort, inStockOnly, activeCats]);
+  }, [slug, sort, inStockOnly, activeCats, perPage]);
 
   useEffect(() => {
     if (slug && slug !== "all-panels") {
@@ -82,7 +95,7 @@ export default function Shop() {
 
     fetchProductsPage({
       page: safePage,
-      pageSize: PAGE_SIZE,
+      pageSize: perPage,
       sort: sortMap[sort] || "newest",
       category: categoryNames.length ? categoryNames.join(",") : undefined,
       inStock: inStockOnly,
@@ -109,7 +122,7 @@ export default function Shop() {
     return () => {
       cancelled = true;
     };
-  }, [safePage, sort, inStockOnly, activeCats, slug, apiCat, availableCats]);
+  }, [safePage, perPage, sort, inStockOnly, activeCats, slug, apiCat, availableCats]);
 
   return (
     <div className="container">
@@ -139,11 +152,57 @@ export default function Shop() {
         )}
       </div>
       <div className="shop-toolbar shop-toolbar-sticky">
-        <span>
+        <span className="shop-toolbar-count">
           {loading || pageLoading
             ? "Loading…"
             : `${serverItems.length} of ${serverMeta.total} Products`}
         </span>
+        <div className="shop-toolbar-controls">
+          <label className="shop-perpage">
+            <span>View</span>
+            <select
+              className="shop-perpage-select"
+              value={perPage}
+              onChange={(e) => setPerPage(Number(e.target.value))}
+            >
+              {PER_PAGE_OPTIONS.map((n) => (
+                <option key={n} value={n}>
+                  {n}
+                </option>
+              ))}
+            </select>
+          </label>
+          {!loading && !pageLoading && totalPages > 1 && (
+            <nav className="shop-toolbar-pagination" aria-label="Product pagination">
+              <button
+                className="shop-page-btn"
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                disabled={safePage === 1}
+              >
+                Prev
+              </button>
+              <div className="shop-page-numbers">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                  <button
+                    key={p}
+                    className={`shop-page-btn ${p === safePage ? "active" : ""}`}
+                    onClick={() => setPage(p)}
+                    aria-current={p === safePage ? "page" : undefined}
+                  >
+                    {p}
+                  </button>
+                ))}
+              </div>
+              <button
+                className="shop-page-btn"
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                disabled={safePage === totalPages}
+              >
+                Next
+              </button>
+            </nav>
+          )}
+        </div>
       </div>
       <div className="shop-layout">
         <aside className="sidebar shop-sidebar-sticky">
@@ -224,37 +283,6 @@ export default function Shop() {
                 <ProductCard key={p.id} product={p} onQuickView={setQuickView} />
               ))}
             </div>
-          )}
-
-          {!loading && !pageLoading && totalPages > 1 && (
-            <nav className="shop-pagination" aria-label="Product pagination">
-              <button
-                className="shop-page-btn"
-                onClick={() => setPage((p) => Math.max(1, p - 1))}
-                disabled={safePage === 1}
-              >
-                Previous
-              </button>
-              <div className="shop-page-numbers">
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-                  <button
-                    key={p}
-                    className={`shop-page-btn ${p === safePage ? "active" : ""}`}
-                    onClick={() => setPage(p)}
-                    aria-current={p === safePage ? "page" : undefined}
-                  >
-                    {p}
-                  </button>
-                ))}
-              </div>
-              <button
-                className="shop-page-btn"
-                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                disabled={safePage === totalPages}
-              >
-                Next
-              </button>
-            </nav>
           )}
         </div>
       </div>

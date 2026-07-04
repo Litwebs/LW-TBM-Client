@@ -195,4 +195,35 @@ export async function submitPublicOrder(payload) {
   }
 }
 
+export async function fetchPublicDeliveryFee() {
+  try {
+    const response = await api.get("/api/orders/delivery-fee");
+    const payload = unwrapData(response);
+    const fee = Number(payload?.deliveryFee);
+    return Number.isFinite(fee) && fee >= 0 ? fee : 1;
+  } catch (error) {
+    const message = requestMessage(error?.response || error) || "Could not load delivery fee";
+    throw new Error(message);
+  }
+}
+
+export async function fetchPublicOrderByCheckoutSession(sessionId) {
+  try {
+    const response = await api.get(
+      `/api/orders/checkout-session/${encodeURIComponent(String(sessionId || ""))}`,
+      {
+        params: { _: Date.now() },
+        headers: {
+          "Cache-Control": "no-cache",
+          Pragma: "no-cache",
+        },
+      },
+    );
+    return unwrapData(response);
+  } catch (error) {
+    const message = requestMessage(error?.response || error) || "Could not load checkout status";
+    throw new Error(message);
+  }
+}
+
 export { slugify };

@@ -1,40 +1,303 @@
-import { useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { ShieldIcon, ToolIcon, TruckIcon } from "../components/Icons.jsx";
 import { useApp } from "../context/AppContext.jsx";
 import { useStorefront } from "../context/StorefrontContext.jsx";
+import { fetchPublicDeliveryFee, fetchPublicOrderByCheckoutSession } from "../lib/api.js";
 import Seo from "../components/Seo.jsx";
 
+function toUiStatus(apiStatus) {
+  if (apiStatus === "refunded" || apiStatus === "partially_refunded") return "Refunded";
+  if (apiStatus === "failed" || apiStatus === "cancelled") return "Cancelled";
+  if (apiStatus === "paid" || apiStatus === "partially_paid" || apiStatus === "pending") {
+    return "Processing";
+  }
+  return "Processing";
+}
+
+function toUiDeliveryStatus(apiDeliveryStatus) {
+  if (!apiDeliveryStatus) return "Ordered";
+  return String(apiDeliveryStatus)
+    .split("_")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
+const CHECKOUT_STAGES = ["Ordered", "Paid", "Dispatched", "In transit", "Delivered"];
+const CHECKOUT_CONFIRMATION_STEPS = [
+  {
+    key: "confirmed",
+    title: "Payment Confirmed",
+    description: "Your payment has been processed successfully.",
+    Icon: ShieldIcon,
+  },
+  {
+    key: "prepared",
+    title: "Being Prepared",
+    description: "Your items will be carefully packed.",
+    Icon: ToolIcon,
+  },
+  {
+    key: "delivery",
+    title: "Out for Delivery",
+    description: "Your order will be delivered to your door.",
+    Icon: TruckIcon,
+  },
+];
+
+function getCheckoutStageIndex(order) {
+  const deliveryStatus = String(order?.deliveryStatus || "").toLowerCase();
+  if (deliveryStatus === "delivered") return 4;
+  if (deliveryStatus === "in transit" || deliveryStatus === "in_transit") return 3;
+  if (deliveryStatus === "dispatched") return 2;
+  if (String(order?.status || "").toLowerCase() === "processing") return 1;
+  return 0;
+}
+
+function getConfirmationStepState(doneStageIndex, index) {
+  if (doneStageIndex >= 4) return "done";
+  if (index === 0) return "done";
+  if (doneStageIndex >= 3) return index <= 2 ? (index < 2 ? "done" : "active") : "pending";
+  if (doneStageIndex >= 1) return index <= 1 ? (index < 1 ? "done" : "active") : "pending";
+  return index === 0 ? "active" : "pending";
+}
+
+function CheckoutConfirmationPending({ navigate }) {
+  return (
+    <div className="container checkout-complete-shell">
+      <Seo
+        title="Order Confirmation"
+        description="Your payment was successful and your order is being prepared."
+        path="/checkout/success"
+      />
+      <section className="checkout-complete-hero">
+        <div className="checkout-complete-badge" aria-hidden="true">
+          <ShieldIcon />
+        </div>
+        <h1 className="checkout-complete-title">Thank You for Your Order!</h1>
+        <p className="checkout-complete-subtitle">
+          Your payment was successful and your order is being prepared.
+        </p>
+      </section>
+
+      <section className="checkout-complete-panel">
+        <div className="checkout-progress-list">
+          {CHECKOUT_CONFIRMATION_STEPS.map(({ key, title, description, Icon }, index) => {
+            const state = index === 0 ? "done" : index === 1 ? "active" : "pending";
+            return (
+              <div className={`checkout-progress-item is-${state}`} key={key}>
+                <div className="checkout-progress-icon">
+                  <Icon />
+                </div>
+                <div>
+                  <h2>{title}</h2>
+                  <p>{description}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="checkout-confirmation-note">
+        A confirmation email has been sent with your order details and tracking information.
+      </section>
+
+      <section className="checkout-complete-meta">
+        <div className="checkout-complete-actions">
+          <button
+            onClick={() => navigate("/collections/all-panels")}
+            className="btn checkout-complete-primary-btn"
+          >
+            Continue Shopping
+          </button>
+        </div>
+      </section>
+    </div>
+  );
+}
+
 export default function Checkout() {
-  const { cart, subtotal, placeOrder, user, toast, lineUnitPrice } = useApp();
+  const { cart, subtotal, clearCart, upsertOrder, updateQty, user, toast, lineUnitPrice } =
+    useApp();
   const { createCheckoutOrder } = useStorefront();
   const navigate = useNavigate();
+  const location = useLocation();
   const [searchParams] = useSearchParams();
   const discountCode = searchParams.get("discount") || "";
+  const sessionId = searchParams.get("session_id") || "";
+  const isSuccessView = location.pathname === "/checkout/success";
+  const isCancelView = location.pathname === "/checkout/cancel";
   const [form, setForm] = useState({
     email: user?.email || "",
     firstName: user?.name || "",
     lastName: "",
+    phone: "",
     address: "",
+    address2: "",
     city: "",
     postcode: "",
     country: "United Kingdom",
-    delivery: "standard",
     notes: "",
   });
   const [errors, setErrors] = useState({});
   const [done, setDone] = useState(null);
+  const [deliveryFee, setDeliveryFee] = useState(1);
+  const [deliveryFeeLoading, setDeliveryFeeLoading] = useState(true);
+  const [statusLoading, setStatusLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const loadedSessionRef = useRef("");
+  const checkoutEmail =
+    sessionStorage.getItem("tbm_checkout_email") || form.email || user?.email || "";
 
-  const delivery = form.delivery === "express" ? 12.99 : 4.99;
-  const total = subtotal + delivery;
+  const total = subtotal + deliveryFee;
 
   const update = (k, v) => setForm((f) => ({ ...f, [k]: v }));
+  const doneStageIndex = done ? getCheckoutStageIndex(done) : 0;
+
+  useEffect(() => {
+    if (isSuccessView || isCancelView) return;
+
+    let cancelled = false;
+    const loadDeliveryFee = async () => {
+      setDeliveryFeeLoading(true);
+      try {
+        const fee = await fetchPublicDeliveryFee();
+        if (!cancelled) setDeliveryFee(fee);
+      } catch {
+        if (!cancelled) setDeliveryFee(1);
+      } finally {
+        if (!cancelled) setDeliveryFeeLoading(false);
+      }
+    };
+
+    loadDeliveryFee();
+    return () => {
+      cancelled = true;
+    };
+  }, [isCancelView, isSuccessView]);
+
+  useEffect(() => {
+    if (!isSuccessView || !sessionId) return;
+    if (loadedSessionRef.current === sessionId) return;
+
+    loadedSessionRef.current = sessionId;
+
+    let cancelled = false;
+
+    const loadOrderFromSession = async () => {
+      setStatusLoading(true);
+      try {
+        const payload = await fetchPublicOrderByCheckoutSession(sessionId);
+        const apiOrder = payload?.order;
+        if (!apiOrder || cancelled) return;
+
+        const normalizedOrder = {
+          id: apiOrder.orderId,
+          contactEmail: checkoutEmail,
+          date: apiOrder.createdAt || new Date().toISOString(),
+          status: toUiStatus(apiOrder.status),
+          deliveryStatus: toUiDeliveryStatus(apiOrder.deliveryStatus),
+          subtotal: Number(apiOrder.subtotal || 0),
+          shipping_fee: Number(apiOrder.deliveryFee || 0),
+          tax: 0,
+          total: Number(apiOrder.total || 0),
+          shipping: {
+            name: [form.firstName, form.lastName].filter(Boolean).join(" ") || "Customer",
+            line1: apiOrder?.deliveryAddress?.line1 || "",
+            city: apiOrder?.deliveryAddress?.city || "",
+            postcode: apiOrder?.deliveryAddress?.postcode || "",
+            country: apiOrder?.deliveryAddress?.country || "United Kingdom",
+          },
+          paymentMethod: {
+            brand: "Stripe",
+            last4: "",
+            exp: "",
+          },
+          items: (apiOrder.items || []).map((item, idx) => ({
+            key: `${apiOrder.orderId}-${idx}`,
+            qty: Number(item.quantity || 1),
+            variant: {
+              name: item.name || "Variant",
+              sku: item.sku || "",
+            },
+            product: {
+              title: item.name || "Item",
+              image: "/images/hero-bg.jpg",
+              price: Number(item.price || 0),
+              slug: "",
+            },
+          })),
+        };
+
+        upsertOrder(normalizedOrder);
+        setDone(normalizedOrder);
+        clearCart();
+      } catch (err) {
+        if (!cancelled) {
+          toast(err?.message || "Could not verify checkout status yet.");
+        }
+      } finally {
+        if (!cancelled) setStatusLoading(false);
+      }
+    };
+
+    loadOrderFromSession();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [
+    clearCart,
+    checkoutEmail,
+    form.firstName,
+    form.lastName,
+    isSuccessView,
+    sessionId,
+    toast,
+    upsertOrder,
+  ]);
+
   const validate = () => {
     const e = {};
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = "Valid email required";
-    ["firstName", "lastName", "address", "city", "postcode"].forEach((f) => {
-      if (!form[f].trim()) e[f] = "Required";
+    const required = ["firstName", "lastName", "address", "city", "postcode", "country"];
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      e.email = "Enter a valid email address";
+    }
+
+    required.forEach((f) => {
+      if (!String(form[f] || "").trim()) e[f] = "This field is required";
     });
+
+    if (form.firstName.trim() && form.firstName.trim().length > 100) {
+      e.firstName = "First name must be 100 characters or less";
+    }
+
+    if (form.lastName.trim() && form.lastName.trim().length > 100) {
+      e.lastName = "Last name must be 100 characters or less";
+    }
+
+    if (form.phone.trim() && !/^\+?[0-9()\-\s]{7,20}$/.test(form.phone.trim())) {
+      e.phone = "Enter a valid phone number";
+    }
+
+    if (form.address.trim() && form.address.trim().length < 3) {
+      e.address = "Address must be at least 3 characters";
+    }
+
+    if (form.city.trim() && form.city.trim().length < 2) {
+      e.city = "City must be at least 2 characters";
+    }
+
+    if (form.postcode.trim() && form.postcode.trim().length < 3) {
+      e.postcode = "Postcode must be at least 3 characters";
+    }
+
+    if (form.notes.trim().length > 1000) {
+      e.notes = "Order notes must be 1000 characters or less";
+    }
+
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -45,7 +308,7 @@ export default function Checkout() {
     try {
       const address = {
         line1: form.address,
-        line2: "",
+        line2: form.address2,
         city: form.city,
         postcode: form.postcode,
         country: form.country,
@@ -56,6 +319,7 @@ export default function Checkout() {
           email: form.email,
           firstName: form.firstName,
           lastName: form.lastName,
+          phone: form.phone,
           address,
         },
         cartItems: cart,
@@ -65,12 +329,12 @@ export default function Checkout() {
       });
 
       if (created?.checkoutUrl) {
+        sessionStorage.setItem("tbm_checkout_email", form.email);
         window.location.assign(created.checkoutUrl);
         return;
       }
 
-      const localOrder = placeOrder(form, cart, total);
-      setDone(localOrder);
+      throw new Error("Could not start secure checkout.");
     } catch (err) {
       toast(err?.message || "Checkout failed. Please try again.");
     } finally {
@@ -78,13 +342,23 @@ export default function Checkout() {
     }
   };
 
-  if (done)
+  if (isCancelView) {
     return (
-      <div className="container" style={{ padding: "80px 0", textAlign: "center" }}>
+      <div
+        className="container"
+        style={{
+          padding: "80px 0",
+          textAlign: "center",
+          minHeight: "52vh",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
         <Seo
-          title="Checkout"
-          description="Complete your wall panel order with fast UK delivery."
-          path="/checkout"
+          title="Checkout Cancelled"
+          description="Your checkout was cancelled. Your basket has been kept so you can try again."
+          path="/checkout/cancel"
         />
         <h1
           style={{
@@ -93,17 +367,97 @@ export default function Checkout() {
             fontWeight: 400,
             letterSpacing: "0.05em",
             marginBottom: 16,
+            color: "#fff",
           }}
         >
-          Thank You!
+          Checkout Cancelled
         </h1>
-        <p className="muted" style={{ marginBottom: 8 }}>
-          Order {done.id} placed successfully.
+        <p className="muted" style={{ marginBottom: 28, color: "var(--dm-ink-soft)" }}>
+          No payment was taken. Your cart is still saved.
         </p>
-        <p style={{ marginBottom: 32 }}>A confirmation has been sent to {form.email}.</p>
-        <button onClick={() => navigate(`/account/orders/${done.id}`)} className="btn">
-          View Order
-        </button>
+        <div
+          style={{ display: "inline-flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}
+        >
+          <button onClick={() => navigate("/checkout")} className="btn checkout-submit-btn">
+            Return to Checkout
+          </button>
+          <button onClick={() => navigate("/cart")} className="btn btn-outline">
+            View Cart
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (isSuccessView && statusLoading) {
+    return <CheckoutConfirmationPending navigate={navigate} />;
+  }
+
+  if (isSuccessView && !done) {
+    return <CheckoutConfirmationPending navigate={navigate} />;
+  }
+
+  if (done)
+    return (
+      <div className="container checkout-complete-shell">
+        <Seo
+          title="Checkout"
+          description="Complete your wall panel order with fast UK delivery."
+          path="/checkout"
+        />
+        <section className="checkout-complete-hero">
+          <div className="checkout-complete-badge" aria-hidden="true">
+            <ShieldIcon />
+          </div>
+          <h1 className="checkout-complete-title">Thank You for Your Order!</h1>
+          <p className="checkout-complete-subtitle">
+            Your payment was successful and your order is being prepared.
+          </p>
+        </section>
+
+        <section className="checkout-complete-panel">
+          <div className="checkout-progress-list">
+            {CHECKOUT_CONFIRMATION_STEPS.map(({ key, title, description, Icon }, index) => {
+              const state = getConfirmationStepState(doneStageIndex, index);
+              return (
+                <div className={`checkout-progress-item is-${state}`} key={key}>
+                  <div className="checkout-progress-icon">
+                    <Icon />
+                  </div>
+                  <div>
+                    <h2>{title}</h2>
+                    <p>{description}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        <section className="checkout-confirmation-note">
+          A confirmation email has been sent with your order details and tracking information.
+        </section>
+
+        <section className="checkout-complete-meta">
+          <p>
+            Order <strong>{done.id}</strong>
+          </p>
+          <p>{done.contactEmail || checkoutEmail || "your email"}</p>
+          <div className="checkout-complete-actions">
+            <button
+              onClick={() => navigate("/collections/all-panels")}
+              className="btn checkout-complete-primary-btn"
+            >
+              Continue Shopping
+            </button>
+            <button
+              onClick={() => navigate(`/account/orders/${done.id}`)}
+              className="btn btn-outline checkout-complete-secondary-btn"
+            >
+              View Order
+            </button>
+          </div>
+        </section>
       </div>
     );
 
@@ -127,8 +481,21 @@ export default function Checkout() {
           <h3 style={{ fontSize: 13, letterSpacing: "0.18em", marginBottom: 20 }}>Contact</h3>
           <div className="form-row">
             <label>Email</label>
-            <input value={form.email} onChange={(e) => update("email", e.target.value)} />
+            <input
+              className={errors.email ? "is-invalid" : ""}
+              value={form.email}
+              onChange={(e) => update("email", e.target.value)}
+            />
             {errors.email && <div className="form-error">{errors.email}</div>}
+          </div>
+          <div className="form-row">
+            <label>Phone (optional)</label>
+            <input
+              className={errors.phone ? "is-invalid" : ""}
+              value={form.phone}
+              onChange={(e) => update("phone", e.target.value)}
+            />
+            {errors.phone && <div className="form-error">{errors.phone}</div>}
           </div>
 
           <h3 style={{ fontSize: 13, letterSpacing: "0.18em", margin: "32px 0 20px" }}>
@@ -137,75 +504,65 @@ export default function Checkout() {
           <div className="form-row cols-2">
             <div>
               <label>First Name</label>
-              <input value={form.firstName} onChange={(e) => update("firstName", e.target.value)} />
+              <input
+                className={errors.firstName ? "is-invalid" : ""}
+                value={form.firstName}
+                onChange={(e) => update("firstName", e.target.value)}
+              />
               {errors.firstName && <div className="form-error">{errors.firstName}</div>}
             </div>
             <div>
               <label>Last Name</label>
-              <input value={form.lastName} onChange={(e) => update("lastName", e.target.value)} />
+              <input
+                className={errors.lastName ? "is-invalid" : ""}
+                value={form.lastName}
+                onChange={(e) => update("lastName", e.target.value)}
+              />
               {errors.lastName && <div className="form-error">{errors.lastName}</div>}
             </div>
           </div>
           <div className="form-row">
-            <label>Address</label>
-            <input value={form.address} onChange={(e) => update("address", e.target.value)} />
+            <label>Address line 1</label>
+            <input
+              className={errors.address ? "is-invalid" : ""}
+              value={form.address}
+              onChange={(e) => update("address", e.target.value)}
+            />
             {errors.address && <div className="form-error">{errors.address}</div>}
+          </div>
+          <div className="form-row">
+            <label>Address line 2 (optional)</label>
+            <input value={form.address2} onChange={(e) => update("address2", e.target.value)} />
           </div>
           <div className="form-row cols-2">
             <div>
               <label>City</label>
-              <input value={form.city} onChange={(e) => update("city", e.target.value)} />
+              <input
+                className={errors.city ? "is-invalid" : ""}
+                value={form.city}
+                onChange={(e) => update("city", e.target.value)}
+              />
               {errors.city && <div className="form-error">{errors.city}</div>}
             </div>
             <div>
               <label>Postcode</label>
-              <input value={form.postcode} onChange={(e) => update("postcode", e.target.value)} />
+              <input
+                className={errors.postcode ? "is-invalid" : ""}
+                value={form.postcode}
+                onChange={(e) => update("postcode", e.target.value)}
+              />
               {errors.postcode && <div className="form-error">{errors.postcode}</div>}
             </div>
           </div>
 
-          <h3 style={{ fontSize: 13, letterSpacing: "0.18em", margin: "32px 0 20px" }}>
-            Delivery Method
-          </h3>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            <label
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                padding: 14,
-                border: "1px solid var(--border-dark)",
-              }}
-            >
-              <span>
-                <input
-                  type="radio"
-                  name="d"
-                  checked={form.delivery === "standard"}
-                  onChange={() => update("delivery", "standard")}
-                />{" "}
-                Standard (2–4 days)
-              </span>
-              <span>£4.99</span>
-            </label>
-            <label
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                padding: 14,
-                border: "1px solid var(--border-dark)",
-              }}
-            >
-              <span>
-                <input
-                  type="radio"
-                  name="d"
-                  checked={form.delivery === "express"}
-                  onChange={() => update("delivery", "express")}
-                />{" "}
-                Express (Next day)
-              </span>
-              <span>£12.99</span>
-            </label>
+          <div className="form-row">
+            <label>Country</label>
+            <input
+              className={errors.country ? "is-invalid" : ""}
+              value={form.country}
+              onChange={(e) => update("country", e.target.value)}
+            />
+            {errors.country && <div className="form-error">{errors.country}</div>}
           </div>
 
           <h3 style={{ fontSize: 13, letterSpacing: "0.18em", margin: "32px 0 20px" }}>Payment</h3>
@@ -218,11 +575,13 @@ export default function Checkout() {
           </h3>
           <div className="form-row">
             <textarea
+              className={errors.notes ? "is-invalid" : ""}
               rows={3}
               value={form.notes}
               onChange={(e) => update("notes", e.target.value)}
               placeholder="Delivery instructions, etc."
             />
+            {errors.notes && <div className="form-error">{errors.notes}</div>}
           </div>
         </div>
         <div className="summary">
@@ -235,9 +594,44 @@ export default function Checkout() {
                 alt=""
               />
               <div style={{ flex: 1 }}>
-                <div>{it.product.title.slice(0, 36)}…</div>
-                <div className="muted">
-                  {it.variant?.name || "Default"} · Qty {it.qty}
+                <div>{it.product.title}</div>
+                <div className="muted">{it.variant?.name || "Default"}</div>
+                <div
+                  style={{
+                    display: "inline-flex",
+                    border: "1px solid var(--dm-silver-line-strong)",
+                    marginTop: 8,
+                  }}
+                >
+                  <button
+                    type="button"
+                    onClick={() => updateQty(it.key, it.qty - 1)}
+                    style={{
+                      width: 26,
+                      height: 26,
+                      borderRight: "1px solid var(--dm-silver-line-strong)",
+                    }}
+                    aria-label="Decrease quantity"
+                  >
+                    −
+                  </button>
+                  <span
+                    style={{ minWidth: 30, display: "grid", placeItems: "center", fontSize: 12 }}
+                  >
+                    {it.qty}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => updateQty(it.key, it.qty + 1)}
+                    style={{
+                      width: 26,
+                      height: 26,
+                      borderLeft: "1px solid var(--dm-silver-line-strong)",
+                    }}
+                    aria-label="Increase quantity"
+                  >
+                    +
+                  </button>
                 </div>
               </div>
               <div>£{(lineUnitPrice(it) * it.qty).toFixed(2)}</div>
@@ -250,7 +644,7 @@ export default function Checkout() {
             </div>
             <div className="summary-row">
               <span>Delivery</span>
-              <span>£{delivery.toFixed(2)}</span>
+              <span>{deliveryFeeLoading ? "Loading..." : `£${deliveryFee.toFixed(2)}`}</span>
             </div>
             {discountCode && (
               <div className="summary-row">
@@ -260,12 +654,12 @@ export default function Checkout() {
             )}
             <div className="summary-row total">
               <span>Total</span>
-              <span>£{total.toFixed(2)}</span>
+              <span>{deliveryFeeLoading ? "Calculating..." : `£${total.toFixed(2)}`}</span>
             </div>
           </div>
           <button
             type="submit"
-            className="btn btn-full btn-lg mt-32"
+            className="btn btn-full btn-lg mt-32 checkout-submit-btn"
             style={{ marginTop: 24 }}
             disabled={submitting}
           >

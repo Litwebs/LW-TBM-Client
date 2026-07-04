@@ -178,7 +178,14 @@ export function StorefrontProvider({ children }) {
   );
 
   const createCheckoutOrder = useCallback(
-    async ({ customer, cartItems, deliveryAddress, customerInstructions, discountCode }) => {
+    async ({
+      customer,
+      cartItems,
+      deliveryAddress,
+      customerInstructions,
+      discountCode,
+      deliveryDate,
+    }) => {
       const items = buildCartOrderItems(cartItems);
       if (!items.length) throw new Error("Your cart has no checkout-ready items");
 
@@ -193,6 +200,7 @@ export function StorefrontProvider({ children }) {
         discountCode,
         deliveryAddress,
         customerInstructions,
+        deliveryDate,
       });
     },
     [ensureGuestCustomer],

@@ -1,0 +1,286 @@
+/* =============================================
+   v4 — Blue accents, silver hairlines, centered logo
+   ============================================= */
+:root {
+  --manor-blue: #1F3A68;
+  --manor-blue-deep: #14264A;
+  --royal-blue: #2E5BBA;
+  --silver: #7B7D84;
+  --silver-soft: #7B7D84;
+  --silver-deep: #7B7D84;
+}
+
+/* Unify all blue accents to the deep navy used by the announcement bar */
+:root {
+  --manor-blue: #14264A;
+  --royal-blue: #14264A;
+}
+
+/* Silver hairlines replace soft brass borders site-wide */
+:root {
+  --border: rgba(31,58,104,0.14);
+  --border-dark: rgba(31,58,104,0.28);
+  --hairline: rgba(31,58,104,0.20);
+}
+
+/* Wider, more elegant serif tracking */
+h1, h2, h3 { letter-spacing: 0.005em; }
+h4, h5, h6 { letter-spacing: 0.14em; text-transform: uppercase; font-size: 12px; }
+.section-title { letter-spacing: 0.01em; }
+.section-eyebrow,
+.eyebrow {
+  letter-spacing: 0.44em !important;
+  color: var(--manor-blue) !important;
+  font-weight: 500;
+}
+
+/* Subtle blue link/selection accents */
+a:hover { color: var(--royal-blue); }
+::selection { background: var(--manor-blue); color: #fff; }
+.nav a::after { background: var(--royal-blue); }
+.nav a:hover, .nav a.active { color: var(--manor-blue); }
+
+/* Buttons — keep dark, but with a blue underline shine */
+.btn-outline { border-color: var(--silver); color: var(--manor-blue); }
+.btn-outline:hover { border-color: var(--manor-blue); color: var(--manor-blue); background: rgba(31,58,104,0.04); }
+.link { color: var(--manor-blue); border-bottom-color: var(--royal-blue); }
+.link:hover { color: var(--royal-blue); }
+
+/* Price + small accent surfaces */
+.product-card .price-sale,
+.pdp-info .prices .price-sale { color: var(--royal-blue); }
+.review-stars, .reviews-grid .review-card h5 { color: var(--manor-blue); }
+.benefit-icon { border-color: var(--silver); color: var(--manor-blue); }
+.benefit-icon svg { color: var(--manor-blue); }
+.cart-count { background: var(--manor-blue); color: #fff; }
+
+/* ===== Centered logo header — two-row layout ===== */
+.header {
+  background: rgba(246,241,232,0.92);
+  border-bottom: 1px solid var(--silver);
+}
+.header-top {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 20px 48px 14px;
+  gap: 24px;
+  border-bottom: 1px solid var(--silver-soft);
+}
+.header-side { display: flex; align-items: center; gap: 14px; }
+.header-side-left { justify-content: flex-start; }
+.header-side-right { justify-content: flex-end; }
+.header-side .hamburger { display: none; }
+
+.brand-center {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  justify-self: center;
+  text-align: center;
+}
+.brand-center .brand-mark {
+  height: 110px;
+  width: auto;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+  border-radius: 0;
+}
+.brand-center .brand-word {
+  font-size: 30px;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  color: var(--manor-blue);
+}
+.brand-center .brand-word small {
+  font-size: 9px;
+  letter-spacing: 0.5em;
+  color: var(--silver-deep);
+  margin-top: 8px;
+}
+
+/* Bottom centered nav row */
+.nav-row {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  padding: 14px 48px 16px;
+  flex-wrap: wrap;
+}
+.nav-row a {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--manor-blue);
+  font-weight: 500;
+  opacity: 0.85;
+}
+.nav-row a:hover, .nav-row a.active { opacity: 1; color: var(--royal-blue); }
+
+/* Header icons take blue ink */
+.icon-btn { color: var(--manor-blue); }
+.icon-btn:hover { background: rgba(31,58,104,0.06); color: var(--manor-blue-deep); }
+
+/* Footer accents */
+.footer { border-top: 1px solid var(--silver); }
+.footer a:hover { color: var(--silver-soft); }
+.footer-brand-col .logo small { color: var(--silver); }
+
+/* Mobile — collapse to single row */
+@media (max-width: 900px) {
+  .header-top { grid-template-columns: auto 1fr auto; padding: 12px 18px; gap: 12px; position: relative; }
+  .header-side .hamburger { display: inline-flex; }
+  .brand-center { position: absolute; left: 50%; transform: translateX(-50%); gap: 10px; }
+  .brand-center .brand-mark { height: 48px; }
+  .brand-center .brand-word { font-size: 18px; letter-spacing: 0.06em; }
+  .brand-center .brand-word small { display: none; }
+  .nav-row { display: none; }
+}
+
+/* =============================================
+   v5 — Broaden blue accents (~30% surface presence)
+   ============================================= */
+
+/* Top announcement strip in royal blue */
+.announcement {
+  background: var(--manor-blue-deep);
+  color: #fff;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  font-size: 11px;
+  border-bottom: 1px solid var(--royal-blue);
+}
+
+/* Marquee + trust ticker in blue ink */
+.marquee {
+  background: var(--manor-blue);
+  color: #fff;
+  border-top: 1px solid var(--royal-blue);
+  border-bottom: 1px solid var(--royal-blue);
+}
+.marquee-track span { color: #F6F1E8 !important; letter-spacing: 0.32em; }
+.marquee-track span::after { color: var(--brass-soft) !important; }
+
+.trust-ticker {
+  background: var(--silver-soft);
+  color: var(--manor-blue-deep);
+  border-top: 1px solid var(--silver);
+  border-bottom: 1px solid var(--silver);
+}
+.ticker-track span { color: var(--manor-blue-deep); letter-spacing: 0.28em; }
+
+/* Sale / Best Seller badges */
+.product-card .badge,
+.badge {
+  background: var(--manor-blue) !important;
+  color: #fff !important;
+  border: 1px solid var(--royal-blue) !important;
+  letter-spacing: 0.28em;
+}
+
+/* Section eyebrows get a thin blue rule on either side */
+.section-eyebrow::before,
+.section-eyebrow::after { background: var(--manor-blue) !important; opacity: 0.55; }
+
+/* Hero overlay sits on a dark image — keep eyebrow legible */
+.hero-overlay .eyebrow { color: var(--silver-deep) !important; }
+.hero-overlay h1 { color: #F6F1E8; }
+
+/* Atelier "The Craft" section — navy block, cream text */
+.atelier { background: var(--manor-blue-deep) !important; color: #F6F1E8; }
+.atelier .section-eyebrow { color: var(--brass-soft) !important; }
+.atelier .section-eyebrow::before,
+.atelier .section-eyebrow::after { background: var(--brass-soft) !important; opacity: 0.6; }
+.atelier .atelier-quote { color: #F6F1E8; }
+.atelier .atelier-quote::before { color: var(--brass-soft); }
+.atelier .atelier-signature { color: var(--brass-soft) !important; }
+
+/* Atelier + split content */
+.atelier-signature { color: var(--manor-blue); }
+.split-content .link { color: var(--manor-blue); }
+.split-content .link::after,
+.split-content .link { border-bottom-color: var(--royal-blue); }
+
+/* Craft stats — blue numerals */
+.craft-stat .num { color: var(--manor-blue); }
+.craft-stat .num em { color: var(--royal-blue); }
+.craft-stat .lbl { color: var(--silver-deep); }
+
+/* Accordion + breadcrumbs */
+.accordion-icon::before, .accordion-icon::after { background: var(--manor-blue) !important; }
+.breadcrumbs a { color: var(--manor-blue); }
+.breadcrumbs a:hover { color: var(--royal-blue); }
+
+/* Reviews stars */
+.review-stars { color: var(--royal-blue) !important; }
+
+/* Lifestyle gallery tags */
+.lifestyle-gallery .ls-tag {
+  background: var(--manor-blue);
+  color: #fff;
+  letter-spacing: 0.24em;
+  border: 1px solid var(--royal-blue);
+}
+
+/* Category card overlay tint */
+.cat-card .cat-overlay {
+  background: linear-gradient(180deg, rgba(20,38,74,0) 40%, rgba(20,38,74,0.78) 100%);
+}
+.cat-card .cat-overlay .view { color: var(--silver-soft); border-bottom: 1px solid var(--silver); }
+
+/* Product card quick-view in blue */
+.product-card .quick-view {
+  background: var(--manor-blue) !important;
+  color: #fff !important;
+  letter-spacing: 0.26em;
+}
+.product-card .quick-view:hover { background: var(--royal-blue) !important; }
+.product-card .title:hover { color: var(--royal-blue); }
+
+/* Newsletter — blue submit */
+.newsletter { background: var(--silver-soft); border-top: 1px solid var(--silver); border-bottom: 1px solid var(--silver); }
+.newsletter h2 { color: var(--manor-blue-deep); }
+.newsletter button {
+  background: var(--manor-blue) !important;
+  color: #fff !important;
+  letter-spacing: 0.28em;
+}
+.newsletter button:hover { background: var(--royal-blue) !important; }
+.newsletter input { border-color: var(--silver); }
+.newsletter input:focus { border-color: var(--manor-blue); outline: none; }
+.newsletter p { color: var(--manor-blue-deep); opacity: 0.78; }
+.newsletter input { background: #fff; color: var(--manor-blue-deep); }
+.newsletter input::placeholder { color: rgba(17, 36, 58, 0.5); }
+
+/* Footer — manor-navy backdrop with blue brand line */
+.footer { background: var(--manor-blue-deep); color: var(--silver-soft); }
+.footer h4, .footer h5 { color: #fff; }
+.footer a { color: var(--silver-soft); }
+.footer a:hover { color: #fff; }
+.footer-brand-col .logo { color: #fff; }
+.footer-brand-col .logo small { color: var(--silver); }
+.footer-submit { background: var(--royal-blue) !important; color: #fff !important; }
+.footer-submit:hover { background: var(--manor-blue) !important; }
+
+/* Cart drawer header + checkout button */
+.cart-header { border-bottom: 1px solid var(--silver); }
+.cart-header h3 { color: var(--manor-blue-deep); }
+.cart-total { color: var(--manor-blue-deep); }
+.cart-drawer .btn:not(.btn-outline) { background: var(--manor-blue); color: #fff; }
+.cart-drawer .btn:not(.btn-outline):hover { background: var(--royal-blue); }
+
+/* Account status pills + timeline */
+.status-pill { border-color: var(--silver); color: var(--manor-blue); }
+.status-pill.delivered { background: rgba(31,58,104,0.08); color: var(--manor-blue-deep); border-color: var(--manor-blue); }
+.timeline li.done::before { background: var(--royal-blue) !important; box-shadow: 0 0 0 4px rgba(46,91,186,0.18) !important; }
+.stat-card .num { color: var(--manor-blue); }
+
+/* Focus ring in blue */
+:focus-visible { outline-color: var(--royal-blue) !important; }
+@media (max-width: 480px) {
+  .brand-center .brand-mark { height: 42px; }
+  .brand-center .brand-word { font-size: 15px; }
+}
+

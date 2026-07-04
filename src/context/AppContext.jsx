@@ -80,7 +80,7 @@ export function AppProvider({ children }) {
   const updateQty = (key, qty) =>
     setCart((prev) => prev.map((it) => (it.key === key ? { ...it, qty: Math.max(1, qty) } : it)));
   const removeFromCart = (key) => setCart((prev) => prev.filter((it) => it.key !== key));
-  const clearCart = () => setCart([]);
+  const clearCart = useCallback(() => setCart([]), []);
 
   const trackView = useCallback((productId) => {
     setRecentlyViewed((prev) => [productId, ...prev.filter((id) => id !== productId)].slice(0, 8));
@@ -113,6 +113,20 @@ export function AppProvider({ children }) {
     return order;
   };
 
+  const upsertOrder = useCallback((orderLike) => {
+    if (!orderLike?.id) return;
+    setOrders((prev) => {
+      const next = [...prev];
+      const idx = next.findIndex((o) => o.id === orderLike.id);
+      if (idx >= 0) {
+        next[idx] = { ...next[idx], ...orderLike };
+      } else {
+        next.unshift(orderLike);
+      }
+      return next;
+    });
+  }, []);
+
   const subtotal = cart.reduce((s, it) => s + lineUnitPrice(it) * it.qty, 0);
   const cartCount = cart.reduce((s, it) => s + it.qty, 0);
 
@@ -143,6 +157,7 @@ export function AppProvider({ children }) {
         trackView,
         orders,
         placeOrder,
+        upsertOrder,
       }}
     >
       {children}
