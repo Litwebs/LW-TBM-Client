@@ -74,6 +74,18 @@ export default function ProductCard({ product, onQuickView }) {
       : `£${comparePriceText}`
     : "";
   const hasComparePrice = Number(product.compareAt || 0) > Number(product.price || 0);
+  const stockVariant = useMemo(
+    () =>
+      (product.variants || []).find((variant) => Number(variant?.stockQuantity || 0) <= 0) ||
+      (product.variants || []).find((variant) => Boolean(variant?.lowStock)) ||
+      null,
+    [product.variants],
+  );
+  const stockBadge = stockVariant
+    ? Number(stockVariant?.stockQuantity || 0) <= 0
+      ? "Out of stock"
+      : "Low stock"
+    : "";
 
   return (
     <div className="product-card">
@@ -99,6 +111,7 @@ export default function ProductCard({ product, onQuickView }) {
         }}
         style={{ position: "relative", display: "block", overflow: "hidden" }}
       >
+        {stockBadge && <span className="stock-badge">{stockBadge}</span>}
         <span className="pc-corner" aria-hidden="true" />
         <img
           className="product-card-main-image"

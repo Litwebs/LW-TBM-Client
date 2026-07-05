@@ -44,6 +44,7 @@ export function normalizeProduct(raw) {
         price: Number(variant?.price) || 0,
         previousPriceText: String(variant?.previousPriceText || "").trim(),
         stockQuantity: Number(variant?.stockQuantity) || 0,
+        lowStock: Boolean(variant?.lowStock),
         thumbnailImage: fileUrl(variant?.thumbnailImage),
       }))
     : [];

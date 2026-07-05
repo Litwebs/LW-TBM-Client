@@ -686,6 +686,34 @@ section .section-eyebrow,
   font-size: 20px !important;
   line-height: 1.2;
 }
+.product-card .stock-badge,
+.pdp-info .stock-badge {
+  display: inline-flex !important;
+  align-items: center;
+  width: fit-content;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border: 1px solid currentColor;
+}
+.product-card .stock-badge { margin-top: 2px; }
+.product-card .stock-badge.in,
+.pdp-info .stock-badge.in {
+  color: #9fe3b8 !important;
+  background: rgba(159, 227, 184, 0.12) !important;
+}
+.product-card .stock-badge.low,
+.pdp-info .stock-badge.low {
+  color: #ffd57a !important;
+  background: rgba(255, 213, 122, 0.12) !important;
+}
+.product-card .stock-badge.out,
+.pdp-info .stock-badge.out {
+  color: #ff9b9b !important;
+  background: rgba(255, 155, 155, 0.12) !important;
+}
 .product-card .rating,
 .product-card .badge,
 .product-card .sale-badge,

@@ -105,6 +105,10 @@ export default function Product() {
     : "";
   const variantName = selectedVariant?.name || "Default";
   const priceOnRequest = !product.price || product.price <= 0;
+  const stockQuantity = Number(selectedVariant?.stockQuantity || 0);
+  const isOutOfStock = stockQuantity <= 0;
+  const isLowStock = !isOutOfStock && Boolean(selectedVariant?.lowStock);
+  const stockLabel = isOutOfStock ? "Out of stock" : isLowStock ? "Low stock" : "In stock";
   const categoryName = product.category || "Collection";
   const categorySlug = product.categorySlug || slugify(categoryName);
   const productUrl = `${SITE_BASE}/products/${product.slug}`;
@@ -237,6 +241,9 @@ export default function Product() {
                 )}
               </>
             )}
+          </div>
+          <div className={`stock-badge ${isOutOfStock ? "out" : isLowStock ? "low" : "in"}`}>
+            {stockLabel}
           </div>
           {product.rating > 0 && (
             <div className="rating-row">
