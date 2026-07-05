@@ -16,6 +16,12 @@ export default function QuickViewModal({ product, onClose }) {
   );
 
   const activePrice = Number(selectedVariant?.price ?? product.price ?? 0);
+  const comparePriceText = String(selectedVariant?.previousPriceText || "").trim();
+  const displayComparePrice = comparePriceText
+    ? comparePriceText.startsWith("£")
+      ? comparePriceText
+      : `£${comparePriceText}`
+    : "";
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
@@ -46,17 +52,32 @@ export default function QuickViewModal({ product, onClose }) {
               <span style={{ color: "var(--accent)", fontWeight: 500 }}>
                 £{activePrice.toFixed(2)}
               </span>
-              {product.compareAt > activePrice && (
+              {comparePriceText ? (
                 <span
                   style={{
                     color: "#888",
                     textDecoration: "line-through",
                     marginLeft: 8,
-                    fontSize: 16,
+                    fontSize: 15,
+                    fontWeight: 400,
                   }}
                 >
-                  £{product.compareAt.toFixed(2)}
+                  {displayComparePrice}
                 </span>
+              ) : (
+                product.compareAt > activePrice && (
+                  <span
+                    style={{
+                      color: "#888",
+                      textDecoration: "line-through",
+                      marginLeft: 8,
+                      fontSize: 15,
+                      fontWeight: 400,
+                    }}
+                  >
+                    £{product.compareAt.toFixed(2)}
+                  </span>
+                )
               )}
             </div>
             <Rating value={product.rating} count={product.reviews} />

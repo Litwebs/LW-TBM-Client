@@ -530,7 +530,13 @@ section.tight { padding: 64px 0; }
   display: flex; gap: 8px; justify-content: center;
 }
 .product-card .price-sale { color: var(--accent); }
-.product-card .price-compare { color: #888; text-decoration: line-through; }
+.product-card .price-compare {
+  color: #888;
+  text-decoration: line-through;
+  font-size: 13px;
+  vertical-align: middle;
+  line-height: 1.2;
+}
 .product-card .rating { margin-top: 8px; font-size: 12px; color: var(--ink); }
 .product-card .badge {
   position: absolute; top: 12px; left: 12px;
@@ -607,7 +613,13 @@ section.tight { padding: 64px 0; }
 }
 .pdp-info .prices { font-size: 22px; margin-bottom: 8px; display: flex; gap: 12px; align-items: baseline; }
 .pdp-info .prices .price-sale { color: var(--accent); font-weight: 500; }
-.pdp-info .prices .price-compare { color: #888; text-decoration: line-through; font-size: 18px; }
+.pdp-info .prices .price-compare {
+  color: #888;
+  text-decoration: line-through;
+  font-size: 16px;
+  vertical-align: baseline;
+  line-height: 1.2;
+}
 .pdp-info .rating-row { margin-bottom: 20px; font-size: 13px; color: var(--muted); }
 .variant-group { margin-top: 24px; }
 .variant-group .label {

@@ -668,14 +668,24 @@ section .section-eyebrow,
 .product-card .title:hover { color: var(--dm-silver) !important; }
 .product-card .prices {
   font-family: var(--font-serif) !important;
-  font-size: 17px !important;
+  font-size: 24px !important;
   letter-spacing: 0.01em;
   color: #fff !important;
   margin-top: 2px;
   display: flex; align-items: center; gap: 10px;
 }
-.product-card .price-sale { color: #fff !important; font-weight: 500 !important; }
-.product-card .price-compare { display: none !important; }
+.product-card .price-sale {
+  color: #fff !important;
+  font-weight: 500 !important;
+  font-size: 24px !important;
+}
+.product-card .price-compare {
+  display: inline-block !important;
+  color: rgba(255,255,255,0.55) !important;
+  text-decoration: line-through;
+  font-size: 20px !important;
+  line-height: 1.2;
+}
 .product-card .rating,
 .product-card .badge,
 .product-card .sale-badge,
@@ -806,7 +816,12 @@ section .section-eyebrow,
   color: var(--dm-ink-soft) !important;
 }
 .pdp-info .prices .price-sale { color: #fff !important; }
-.pdp-info .prices .price-compare,
+.pdp-info .prices .price-compare {
+  display: inline-block !important;
+  color: rgba(255,255,255,0.55) !important;
+  text-decoration: line-through;
+  font-size: 18px !important;
+}
 .pdp-info .rating-row { display: none !important; }
 .variant-pill,
 .qty-stepper {

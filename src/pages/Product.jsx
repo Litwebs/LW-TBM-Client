@@ -97,6 +97,12 @@ export default function Product() {
     );
 
   const activePrice = Number(selectedVariant?.price ?? product.price ?? 0);
+  const comparePriceText = String(selectedVariant?.previousPriceText || "").trim();
+  const displayComparePrice = comparePriceText
+    ? comparePriceText.startsWith("£")
+      ? comparePriceText
+      : `£${comparePriceText}`
+    : "";
   const variantName = selectedVariant?.name || "Default";
   const priceOnRequest = !product.price || product.price <= 0;
   const categoryName = product.category || "Collection";
@@ -222,8 +228,12 @@ export default function Product() {
             ) : (
               <>
                 <span className="price-sale">£{Number(activePrice).toFixed(2)}</span>
-                {product.compareAt > activePrice && (
-                  <span className="price-compare">£{Number(product.compareAt).toFixed(2)}</span>
+                {comparePriceText ? (
+                  <span className="price-compare">{displayComparePrice}</span>
+                ) : (
+                  product.compareAt > activePrice && (
+                    <span className="price-compare">£{Number(product.compareAt).toFixed(2)}</span>
+                  )
                 )}
               </>
             )}

@@ -42,6 +42,7 @@ export function normalizeProduct(raw) {
         id: String(variant?.id || variant?._id || ""),
         name: variant?.name || "Default",
         price: Number(variant?.price) || 0,
+        previousPriceText: String(variant?.previousPriceText || "").trim(),
         stockQuantity: Number(variant?.stockQuantity) || 0,
         thumbnailImage: fileUrl(variant?.thumbnailImage),
       }))

@@ -61,6 +61,19 @@ export default function ProductCard({ product, onQuickView }) {
   }, [activeImage, currentImage]);
 
   const priceOnRequest = !product.price || product.price <= 0;
+  const compareVariant = useMemo(
+    () =>
+      (product.variants || []).find((variant) => String(variant?.previousPriceText || "").trim()) ||
+      null,
+    [product.variants],
+  );
+  const comparePriceText = String(compareVariant?.previousPriceText || "").trim();
+  const displayComparePrice = comparePriceText
+    ? comparePriceText.startsWith("£")
+      ? comparePriceText
+      : `£${comparePriceText}`
+    : "";
+  const hasComparePrice = Number(product.compareAt || 0) > Number(product.price || 0);
 
   return (
     <div className="product-card">
@@ -126,7 +139,14 @@ export default function ProductCard({ product, onQuickView }) {
           {priceOnRequest ? (
             <span className="price-sale">Price on request</span>
           ) : (
-            <span className="price-sale">£{Number(product.price).toFixed(2)}</span>
+            <>
+              <span className="price-sale">£{Number(product.price).toFixed(2)}</span>
+              {comparePriceText ? (
+                <span className="price-compare">{displayComparePrice}</span>
+              ) : hasComparePrice ? (
+                <span className="price-compare">£{Number(product.compareAt).toFixed(2)}</span>
+              ) : null}
+            </>
           )}
         </div>
       </div>
