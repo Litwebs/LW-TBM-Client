@@ -1,23 +1,56 @@
 import { useState } from "react";
 import { useApp } from "../context/AppContext.jsx";
 import Seo from "../components/Seo.jsx";
+import { submitPublicEnquiry } from "../lib/api.js";
 
 export default function Contact() {
   const { toast } = useApp();
   const [form, setForm] = useState({ name: "", phone: "", email: "", subject: "", message: "" });
+  const [submitting, setSubmitting] = useState(false);
   const update = (k) => (e) => setForm({ ...form, [k]: e.target.value });
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    if (!form.name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) return toast("Please complete the form");
-    setForm({ name: "", phone: "", email: "", subject: "", message: "" });
-    toast("Message sent — we'll be in touch");
+    if (
+      !form.name ||
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email) ||
+      !String(form.message || "").trim()
+    ) {
+      return toast("Please complete the form");
+    }
+
+    try {
+      setSubmitting(true);
+      await submitPublicEnquiry({
+        name: form.name,
+        phone: form.phone,
+        email: form.email,
+        subject: form.subject,
+        message: form.message,
+      });
+      setForm({ name: "", phone: "", email: "", subject: "", message: "" });
+      toast("Message sent - we'll be in touch");
+    } catch (error) {
+      toast(error?.message || "Could not send your message");
+    } finally {
+      setSubmitting(false);
+    }
   };
   return (
     <div className="container">
-      <Seo title="Contact" description="Visit our showroom or contact The British Manor for help with your project." path="/contact" />
+      <Seo
+        title="Contact"
+        description="Visit our showroom or contact The British Manor for help with your project."
+        path="/contact"
+      />
       <div className="contact-hero">
-        <span className="contact-hero-script" aria-hidden="true">Contact us</span>
-        <h1 className="contact-hero-title">LET'S CREATE<br/>SOMETHING AMAZING</h1>
+        <span className="contact-hero-script" aria-hidden="true">
+          Contact us
+        </span>
+        <h1 className="contact-hero-title">
+          LET'S CREATE
+          <br />
+          SOMETHING AMAZING
+        </h1>
       </div>
       <div className="contact-grid contact-grid-elegant">
         <form className="contact-form-elegant" onSubmit={submit} noValidate>
@@ -30,26 +63,61 @@ export default function Contact() {
             <label htmlFor="cf-phone">Your contact number</label>
           </div>
           <div className="cf-field">
-            <input id="cf-email" type="email" value={form.email} onChange={update("email")} placeholder=" " />
+            <input
+              id="cf-email"
+              type="email"
+              value={form.email}
+              onChange={update("email")}
+              placeholder=" "
+            />
             <label htmlFor="cf-email">Your email</label>
           </div>
           <div className="cf-field">
-            <input id="cf-subject" value={form.subject} onChange={update("subject")} placeholder=" " />
+            <input
+              id="cf-subject"
+              value={form.subject}
+              onChange={update("subject")}
+              placeholder=" "
+            />
             <label htmlFor="cf-subject">Subject</label>
           </div>
           <div className="cf-field">
-            <textarea id="cf-message" rows={4} value={form.message} onChange={update("message")} placeholder=" " />
-            <label htmlFor="cf-message">Your message (optional)</label>
+            <textarea
+              id="cf-message"
+              rows={4}
+              value={form.message}
+              onChange={update("message")}
+              placeholder=" "
+            />
+            <label htmlFor="cf-message">Your message</label>
           </div>
-          <button className="btn cf-submit">Send Message</button>
+          <button className="btn cf-submit" disabled={submitting}>
+            {submitting ? "Sending..." : "Send Message"}
+          </button>
         </form>
         <div className="contact-info">
           <h3 style={{ fontSize: 12, letterSpacing: "0.18em", marginBottom: 20 }}>Showroom</h3>
-          <p>14 Heritage Lane<br/>Manchester, M1 4QR</p>
-          <h3 style={{ fontSize: 12, letterSpacing: "0.18em", margin: "28px 0 12px" }}>Opening Hours</h3>
-          <p>Mon–Fri: 9am – 6pm<br/>Sat–Sun: 10am – 5pm<br/><em>Open 7 days a week</em></p>
+          <p>
+            14 Heritage Lane
+            <br />
+            Manchester, M1 4QR
+          </p>
+          <h3 style={{ fontSize: 12, letterSpacing: "0.18em", margin: "28px 0 12px" }}>
+            Opening Hours
+          </h3>
+          <p>
+            Mon–Fri: 9am – 6pm
+            <br />
+            Sat–Sun: 10am – 5pm
+            <br />
+            <em>Open 7 days a week</em>
+          </p>
           <h3 style={{ fontSize: 12, letterSpacing: "0.18em", margin: "28px 0 12px" }}>Contact</h3>
-          <p>hello@thebritishmanor.co.uk<br/>0161 555 0199</p>
+          <p>
+            hello@thebritishmanor.co.uk
+            <br />
+            0161 555 0199
+          </p>
           <h3 style={{ fontSize: 12, letterSpacing: "0.18em", margin: "28px 0 12px" }}>Delivery</h3>
           <p>Express delivery available at checkout. Standard UK delivery: 2–4 working days.</p>
           <div className="map-placeholder">Map placeholder</div>

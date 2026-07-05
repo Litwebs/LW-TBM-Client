@@ -14,6 +14,7 @@ import { reviews } from "../data/reviews.js";
 import { useState } from "react";
 import Seo from "../components/Seo.jsx";
 import { SITE_BASE } from "../lib/api.js";
+import bedroom from "../assets/Images/bedroom.png";
 
 const HERO_BG = "/images/hero-bg.jpg";
 
@@ -185,11 +186,7 @@ export default function Home() {
       </section>
 
       <div className="split">
-        <img
-          className="split-img"
-          src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1400&q=80"
-          alt="Bedroom feature wall"
-        />
+        <img className="split-img" src={bedroom} alt="Bedroom feature wall" />
         <div className="split-content">
           <div className="eyebrow">House Philosophy</div>
           <h2>An interior should whisper, never shout.</h2>

@@ -258,6 +258,16 @@ export async function fetchPublicDeliveryFee() {
   }
 }
 
+export async function submitPublicEnquiry(payload) {
+  try {
+    const response = await api.post("/api/enquiries", payload || {});
+    return unwrapData(response);
+  } catch (error) {
+    const message = requestMessage(error?.response || error) || "Unable to submit enquiry";
+    throw new Error(message);
+  }
+}
+
 export async function fetchPublicOrderByCheckoutSession(sessionId) {
   try {
     const response = await api.get(

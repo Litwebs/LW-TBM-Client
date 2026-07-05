@@ -1,14 +1,16 @@
+import image from "../assets/Images/sofa.png";
+import outdoor from "../assets/Images/outdoor.png";
 export const homeCategories = [
   {
     slug: "wall-panels",
     name: "Interior Wall Panels",
-    image: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1400&q=80",
+    image: image,
     tagline: "Acoustic slatted timber for living, dining & bedroom walls.",
   },
   {
     slug: "outdoor-panels",
     name: "Outdoor Panels",
-    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1400&q=80",
+    image: outdoor,
     tagline: "Weatherproof composite cladding for gardens & façades.",
   },
 ];

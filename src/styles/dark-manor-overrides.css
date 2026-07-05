@@ -92,7 +92,10 @@ section a.link:hover { color: #fff; border-bottom-color: #fff; }
 .split-content .eyebrow { color: #62646B !important; }
 .split-content h2 { color: #62646B !important; }
 .split-content p { color: var(--dm-ink-soft) !important; }
-.atelier { background: var(--dm-navy-2) !important; }
+.atelier {
+  background: var(--dm-navy-2) !important;
+  border-top: 1px solid var(--dm-silver-line-strong) !important;
+}
 .atelier * { color: var(--dm-ink) !important; }
 .atelier .section-eyebrow { color: #62646B !important; }
 .atelier-quote { color: #62646B !important; }
