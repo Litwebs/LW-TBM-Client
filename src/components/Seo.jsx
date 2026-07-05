@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 
 const BASE = "https://thebritishmanor.co.uk";
-const DEFAULT_IMAGE = `${BASE}/images/hero-bg.jpg`;
+const DEFAULT_IMAGE = `${BASE}/images/tbm-logo.png?v=1`;
 
 export default function Seo({
   title,
@@ -13,7 +13,9 @@ export default function Seo({
   jsonLd,
 }) {
   const url = BASE + path;
-  const fullTitle = title ? `${title} — The British Manor` : "The British Manor — Premium Wall Panels";
+  const fullTitle = title
+    ? `${title} — The British Manor`
+    : "The British Manor — Premium Wall Panels";
   const desc =
     description ||
     "Luxury furniture, wall panels, lighting and clocks for British interiors. Fast UK delivery from The British Manor.";
