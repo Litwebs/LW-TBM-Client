@@ -115,7 +115,7 @@ export default function Product() {
   const altText = `${product.title} luxury ${categoryName} by The British Manor`;
 
   const handleAdd = () => {
-    if (!selectedVariant?.id) return;
+    if (!selectedVariant?.id || isOutOfStock) return;
     addToCart(product, qty, {
       variantId: selectedVariant.id,
       name: selectedVariant.name,
@@ -124,7 +124,7 @@ export default function Product() {
     });
   };
   const handleBuy = () => {
-    if (!selectedVariant?.id) return;
+    if (!selectedVariant?.id || isOutOfStock) return;
     addToCart(product, qty, {
       variantId: selectedVariant.id,
       name: selectedVariant.name,
@@ -273,16 +273,22 @@ export default function Product() {
             <div className="qty-stepper">
               <button
                 aria-label="Decrease quantity"
+                disabled={isOutOfStock}
                 onClick={() => setQty((q) => Math.max(1, q - 1))}
               >
                 −
               </button>
               <input
                 aria-label="Quantity"
+                disabled={isOutOfStock}
                 value={qty}
                 onChange={(e) => setQty(Math.max(1, parseInt(e.target.value) || 1))}
               />
-              <button aria-label="Increase quantity" onClick={() => setQty((q) => q + 1)}>
+              <button
+                aria-label="Increase quantity"
+                disabled={isOutOfStock}
+                onClick={() => setQty((q) => q + 1)}
+              >
                 +
               </button>
             </div>
@@ -294,10 +300,14 @@ export default function Product() {
               </a>
             ) : (
               <>
-                <button className="btn btn-full" onClick={handleAdd}>
-                  Add to Cart
+                <button className="btn btn-full" onClick={handleAdd} disabled={isOutOfStock}>
+                  {isOutOfStock ? "Out of stock" : "Add to Cart"}
                 </button>
-                <button className="btn btn-outline btn-full" onClick={handleBuy}>
+                <button
+                  className="btn btn-outline btn-full"
+                  onClick={handleBuy}
+                  disabled={isOutOfStock}
+                >
                   Buy It Now
                 </button>
               </>

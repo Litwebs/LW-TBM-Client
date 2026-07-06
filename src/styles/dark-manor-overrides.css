@@ -42,6 +42,20 @@ section a.link:hover { color: #fff; border-bottom-color: #fff; }
 /* Buttons — luxury silver-outlined pill */
 .btn { transition: background .35s var(--ease), color .35s var(--ease), border-color .35s var(--ease), transform .35s var(--ease); }
 .btn:hover { transform: translateY(-1px); }
+.btn:not(.btn-outline) {
+  background: linear-gradient(180deg, #f1f3f6 0%, #ccd1d8 52%, #abb1bb 100%) !important;
+  border: 1px solid #b9c0c9 !important;
+  color: var(--dm-navy) !important;
+  -webkit-text-fill-color: var(--dm-navy) !important;
+}
+
+.btn:not(.btn-outline):hover {
+  background: linear-gradient(180deg, #ffffff 0%, #d8dde4 50%, #b7bdc7 100%) !important;
+  border-color: #d0d6de !important;
+  color: var(--dm-navy) !important;
+  -webkit-text-fill-color: var(--dm-navy) !important;
+}
+
 .btn-light { background: #fff; color: var(--dm-navy) !important; border: 1px solid #fff !important; }
 .btn-light:hover { background: transparent; color: #fff !important; border-color: #fff !important; }
 .btn-ghost {
@@ -355,9 +369,10 @@ section .section-eyebrow,
   background: transparent !important;
 }
 .btn-outline:hover {
-  background: rgba(255,255,255,0.08) !important;
-  border-color: #fff !important;
-  color: #fff !important;
+  background: linear-gradient(180deg, #f1f3f6 0%, #ccd1d8 52%, #abb1bb 100%) !important;
+  border-color: #c6ccd5 !important;
+  color: var(--dm-navy) !important;
+  -webkit-text-fill-color: var(--dm-navy) !important;
 }
 
 /* Benefit / craft eyebrows brighter */
@@ -695,13 +710,23 @@ section .section-eyebrow,
   align-items: center;
   width: fit-content;
   padding: 5px 10px;
-  border-radius: 999px;
+  border-radius: 0;
   font-size: 10px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   border: 1px solid currentColor;
 }
-.product-card .stock-badge { margin-top: 2px; }
+.product-card .stock-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 4;
+  margin-top: 0;
+  padding: 4px 8px;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  pointer-events: none;
+}
 .product-card .stock-badge.in,
 .pdp-info .stock-badge.in {
   color: #9fe3b8 !important;
@@ -714,8 +739,20 @@ section .section-eyebrow,
 }
 .product-card .stock-badge.out,
 .pdp-info .stock-badge.out {
-  color: #ff9b9b !important;
-  background: rgba(255, 155, 155, 0.12) !important;
+  color: #fff !important;
+  border-color: #8f1f1f !important;
+  background: rgba(143, 31, 31, 0.92) !important;
+}
+
+.pdp-actions .btn:disabled,
+.pdp-actions .btn[disabled],
+.qty-stepper button:disabled,
+.qty-stepper input:disabled,
+.modal .btn:disabled,
+.modal .btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 .product-card .rating,
 .product-card .badge,
@@ -794,7 +831,10 @@ section .section-eyebrow,
 .cart-total { color: var(--ink) !important; }
 .cart-empty { color: var(--muted) !important; }
 .cart-drawer .btn:not(.btn-outline) { background: var(--dm-navy) !important; color: #fff !important; }
-.cart-drawer .btn:not(.btn-outline):hover { background: var(--dm-navy-2) !important; }
+.cart-drawer .btn:not(.btn-outline):hover {
+  background: linear-gradient(180deg, #ffffff 0%, #d8dde4 50%, #b7bdc7 100%) !important;
+  color: var(--dm-navy) !important;
+}
 .cart-drawer .btn-outline { color: var(--ink) !important; border-color: var(--ink) !important; background: transparent !important; }
 .cart-drawer .btn-outline:hover { background: var(--ink) !important; color: #fff !important; }
 
@@ -1055,6 +1095,10 @@ section .section-eyebrow,
 .checkout-layout .summary-row.total {
   border-top-color: var(--dm-silver-line-strong) !important;
 }
+.checkout-address-card.is-selected {
+  border-color: var(--dm-silver-line-strong) !important;
+  background: rgba(255,255,255,0.085) !important;
+}
 
 /* Customer portal: dark navy cards instead of white/ivory components */
 .account-sidebar,
@@ -1133,9 +1177,9 @@ section .section-eyebrow,
 }
 .account-main .btn:not(.btn-outline),
 .account-section .btn:not(.btn-outline) {
-  background: #fff !important;
+  background: linear-gradient(180deg, #f1f3f6 0%, #ccd1d8 52%, #abb1bb 100%) !important;
   color: var(--dm-navy) !important;
-  border-color: #fff !important;
+  border-color: #b9c0c9 !important;
 }
 .account-main .status-pill,
 .account-section .status-pill {

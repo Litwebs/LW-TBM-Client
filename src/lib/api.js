@@ -12,6 +12,7 @@ export const api = axios.create({
   baseURL: API_BASE,
   timeout: 15000,
   headers: { Accept: "application/json" },
+  withCredentials: true,
 });
 
 const slugify = (s) =>
@@ -283,6 +284,98 @@ export async function fetchPublicOrderByCheckoutSession(sessionId) {
     return unwrapData(response);
   } catch (error) {
     const message = requestMessage(error?.response || error) || "Could not load checkout status";
+    throw new Error(message);
+  }
+}
+
+export async function requestCustomerPortalCode(email) {
+  try {
+    const response = await api.post("/api/customer/auth/request-code", { email });
+    return unwrapData(response) || response?.data || null;
+  } catch (error) {
+    const message = requestMessage(error?.response || error) || "Unable to request login code";
+    throw new Error(message);
+  }
+}
+
+export async function verifyCustomerPortalCode({ email, code }) {
+  try {
+    const response = await api.post("/api/customer/auth/verify-code", { email, code });
+    return unwrapData(response);
+  } catch (error) {
+    const message = requestMessage(error?.response || error) || "Unable to verify login code";
+    throw new Error(message);
+  }
+}
+
+export async function logoutCustomerPortal() {
+  try {
+    const response = await api.post("/api/customer/auth/logout");
+    return unwrapData(response) || null;
+  } catch (error) {
+    const message = requestMessage(error?.response || error) || "Unable to log out";
+    throw new Error(message);
+  }
+}
+
+export async function fetchCustomerPortalMe() {
+  try {
+    const response = await api.get("/api/customer/portal/me");
+    return unwrapData(response);
+  } catch (error) {
+    const message = requestMessage(error?.response || error) || "Unable to load profile";
+    throw new Error(message);
+  }
+}
+
+export async function fetchCustomerPortalOrders() {
+  try {
+    const response = await api.get("/api/customer/portal/orders");
+    return unwrapData(response);
+  } catch (error) {
+    const message = requestMessage(error?.response || error) || "Unable to load orders";
+    throw new Error(message);
+  }
+}
+
+export async function fetchCustomerPortalOrderById(id) {
+  try {
+    const response = await api.get(
+      `/api/customer/portal/orders/${encodeURIComponent(String(id || ""))}`,
+    );
+    return unwrapData(response);
+  } catch (error) {
+    const message = requestMessage(error?.response || error) || "Unable to load order";
+    throw new Error(message);
+  }
+}
+
+export async function fetchCustomerPortalPayments() {
+  try {
+    const response = await api.get("/api/customer/portal/payments");
+    return unwrapData(response);
+  } catch (error) {
+    const message = requestMessage(error?.response || error) || "Unable to load payments";
+    throw new Error(message);
+  }
+}
+
+export async function updateCustomerPortalProfile(payload) {
+  try {
+    const response = await api.patch("/api/customer/portal/profile", payload || {});
+    return unwrapData(response);
+  } catch (error) {
+    const message = requestMessage(error?.response || error) || "Unable to update profile";
+    throw new Error(message);
+  }
+}
+
+export async function updateCustomerPortalAddresses(addresses) {
+  try {
+    const response = await api.patch("/api/customer/portal/addresses", { addresses });
+    return unwrapData(response);
+  } catch (error) {
+    const message = requestMessage(error?.response || error) || "Unable to update addresses";
     throw new Error(message);
   }
 }

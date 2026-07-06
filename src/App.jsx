@@ -21,6 +21,13 @@ import Orders from "./pages/Orders.jsx";
 import OrderDetail from "./pages/OrderDetail.jsx";
 import Addresses from "./pages/Addresses.jsx";
 import PaymentMethods from "./pages/PaymentMethods.jsx";
+import PortalLogin from "./pages/portal/PortalLogin.jsx";
+import PortalDashboard from "./pages/portal/PortalDashboard.jsx";
+import PortalOrders from "./pages/portal/PortalOrders.jsx";
+import PortalOrderDetails from "./pages/portal/PortalOrderDetails.jsx";
+import PortalPayments from "./pages/portal/PortalPayments.jsx";
+import PortalAddresses from "./pages/portal/PortalAddresses.jsx";
+import PortalProfile from "./pages/portal/PortalProfile.jsx";
 import Portfolio from "./pages/Portfolio.jsx";
 import Reviews from "./pages/Reviews.jsx";
 import FAQs from "./pages/FAQs.jsx";
@@ -43,6 +50,7 @@ export default function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/checkout/success" element={<Checkout />} />
           <Route path="/checkout/cancel" element={<Checkout />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/account/login" element={<Login />} />
           <Route path="/account/register" element={<Register />} />
           <Route path="/account/forgot" element={<ForgotPassword />} />
@@ -51,6 +59,15 @@ export default function App() {
           <Route path="/account/orders/:id" element={<OrderDetail />} />
           <Route path="/account/addresses" element={<Addresses />} />
           <Route path="/account/payments" element={<PaymentMethods />} />
+
+          <Route path="/portal/login" element={<PortalLogin />} />
+          <Route path="/portal" element={<PortalDashboard />} />
+          <Route path="/portal/orders" element={<PortalOrders />} />
+          <Route path="/portal/orders/:id" element={<PortalOrderDetails />} />
+          <Route path="/portal/payments" element={<PortalPayments />} />
+          <Route path="/portal/addresses" element={<PortalAddresses />} />
+          <Route path="/portal/profile" element={<PortalProfile />} />
+
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/reviews" element={<Reviews />} />
           <Route path="/faqs" element={<FAQs />} />

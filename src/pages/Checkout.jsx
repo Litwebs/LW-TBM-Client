@@ -1,9 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { ShieldIcon, ToolIcon, TruckIcon } from "../components/Icons.jsx";
 import { useApp } from "../context/AppContext.jsx";
 import { useStorefront } from "../context/StorefrontContext.jsx";
-import { fetchPublicDeliveryFee, fetchPublicOrderByCheckoutSession } from "../lib/api.js";
+import {
+  fetchCustomerPortalMe,
+  fetchPublicDeliveryFee,
+  fetchPublicOrderByCheckoutSession,
+} from "../lib/api.js";
 import Seo from "../components/Seo.jsx";
 
 function toUiStatus(apiStatus) {
@@ -146,9 +150,23 @@ export default function Checkout() {
   const [deliveryFeeLoading, setDeliveryFeeLoading] = useState(true);
   const [statusLoading, setStatusLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [portalCustomer, setPortalCustomer] = useState(null);
+  const [selectedAddressIndex, setSelectedAddressIndex] = useState(-1);
+  const [isEditingDetails, setIsEditingDetails] = useState(false);
   const loadedSessionRef = useRef("");
   const checkoutEmail =
     sessionStorage.getItem("tbm_checkout_email") || form.email || user?.email || "";
+  const savedAddresses = useMemo(
+    () =>
+      (portalCustomer?.addresses || []).filter(
+        (address) =>
+          String(address?.line1 || "").trim() &&
+          String(address?.city || "").trim() &&
+          String(address?.postcode || "").trim(),
+      ),
+    [portalCustomer?.addresses],
+  );
+  const hasSavedAddresses = savedAddresses.length > 0;
 
   const total = subtotal + deliveryFee;
 
@@ -258,9 +276,68 @@ export default function Checkout() {
     upsertOrder,
   ]);
 
+  useEffect(() => {
+    if (isSuccessView || isCancelView) return;
+
+    let cancelled = false;
+
+    const loadPortalCustomer = async () => {
+      try {
+        const payload = await fetchCustomerPortalMe();
+        const customer = payload?.customer || null;
+        if (cancelled || !customer) return;
+
+        setPortalCustomer(customer);
+        setForm((prev) => ({
+          ...prev,
+          email: customer?.email || prev.email,
+          firstName: customer?.firstName || prev.firstName,
+          lastName: customer?.lastName || prev.lastName,
+          phone: customer?.phone || prev.phone,
+        }));
+      } catch {
+        if (!cancelled) setPortalCustomer(null);
+      }
+    };
+
+    loadPortalCustomer();
+    return () => {
+      cancelled = true;
+    };
+  }, [isCancelView, isSuccessView]);
+
+  useEffect(() => {
+    if (!hasSavedAddresses) {
+      setSelectedAddressIndex(-1);
+      return;
+    }
+
+    const defaultIndex = savedAddresses.findIndex((address) => Boolean(address?.isDefault));
+    setSelectedAddressIndex(defaultIndex >= 0 ? defaultIndex : 0);
+  }, [hasSavedAddresses, savedAddresses]);
+
+  useEffect(() => {
+    if (isEditingDetails) return;
+    if (!hasSavedAddresses || selectedAddressIndex < 0) return;
+    const selectedAddress = savedAddresses[selectedAddressIndex];
+    if (!selectedAddress) return;
+
+    setForm((prev) => ({
+      ...prev,
+      address: selectedAddress?.line1 || "",
+      address2: selectedAddress?.line2 || "",
+      city: selectedAddress?.city || "",
+      postcode: selectedAddress?.postcode || "",
+      country: selectedAddress?.country || "United Kingdom",
+    }));
+  }, [hasSavedAddresses, isEditingDetails, savedAddresses, selectedAddressIndex]);
+
   const validate = () => {
     const e = {};
-    const required = ["firstName", "lastName", "address", "city", "postcode", "country"];
+    const required =
+      hasSavedAddresses && !isEditingDetails
+        ? []
+        : ["firstName", "lastName", "address", "city", "postcode", "country"];
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
       e.email = "Enter a valid email address";
@@ -278,8 +355,14 @@ export default function Checkout() {
       e.lastName = "Last name must be 100 characters or less";
     }
 
-    if (form.phone.trim() && !/^\+?[0-9()\-\s]{7,20}$/.test(form.phone.trim())) {
+    if (!form.phone.trim()) {
+      e.phone = "Phone is required";
+    } else if (!/^\+?[0-9()\-\s]{7,20}$/.test(form.phone.trim())) {
       e.phone = "Enter a valid phone number";
+    }
+
+    if (hasSavedAddresses && !isEditingDetails && selectedAddressIndex < 0) {
+      e.selectedAddress = "Select a delivery address";
     }
 
     if (form.address.trim() && form.address.trim().length < 3) {
@@ -304,21 +387,32 @@ export default function Checkout() {
   const submit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
+
+    const selectedAddress =
+      hasSavedAddresses && !isEditingDetails && selectedAddressIndex >= 0
+        ? savedAddresses[selectedAddressIndex]
+        : null;
+
+    if (hasSavedAddresses && !isEditingDetails && !selectedAddress) {
+      setErrors((prev) => ({ ...prev, selectedAddress: "Select a delivery address" }));
+      return;
+    }
+
     setSubmitting(true);
     try {
       const address = {
-        line1: form.address,
-        line2: form.address2,
-        city: form.city,
-        postcode: form.postcode,
-        country: form.country,
+        line1: selectedAddress?.line1 || form.address,
+        line2: selectedAddress?.line2 || form.address2,
+        city: selectedAddress?.city || form.city,
+        postcode: selectedAddress?.postcode || form.postcode,
+        country: selectedAddress?.country || form.country,
       };
 
       const created = await createCheckoutOrder({
         customer: {
           email: form.email,
-          firstName: form.firstName,
-          lastName: form.lastName,
+          firstName: form.firstName || portalCustomer?.firstName || "",
+          lastName: form.lastName || portalCustomer?.lastName || "",
           phone: form.phone,
           address,
         },
@@ -484,12 +578,13 @@ export default function Checkout() {
             <input
               className={errors.email ? "is-invalid" : ""}
               value={form.email}
+              readOnly={Boolean(portalCustomer?.email) && !isEditingDetails}
               onChange={(e) => update("email", e.target.value)}
             />
             {errors.email && <div className="form-error">{errors.email}</div>}
           </div>
           <div className="form-row">
-            <label>Phone (optional)</label>
+            <label>Phone</label>
             <input
               className={errors.phone ? "is-invalid" : ""}
               value={form.phone}
@@ -501,69 +596,164 @@ export default function Checkout() {
           <h3 style={{ fontSize: 13, letterSpacing: "0.18em", margin: "32px 0 20px" }}>
             Delivery Address
           </h3>
-          <div className="form-row cols-2">
-            <div>
-              <label>First Name</label>
-              <input
-                className={errors.firstName ? "is-invalid" : ""}
-                value={form.firstName}
-                onChange={(e) => update("firstName", e.target.value)}
-              />
-              {errors.firstName && <div className="form-error">{errors.firstName}</div>}
-            </div>
-            <div>
-              <label>Last Name</label>
-              <input
-                className={errors.lastName ? "is-invalid" : ""}
-                value={form.lastName}
-                onChange={(e) => update("lastName", e.target.value)}
-              />
-              {errors.lastName && <div className="form-error">{errors.lastName}</div>}
-            </div>
-          </div>
-          <div className="form-row">
-            <label>Address line 1</label>
-            <input
-              className={errors.address ? "is-invalid" : ""}
-              value={form.address}
-              onChange={(e) => update("address", e.target.value)}
-            />
-            {errors.address && <div className="form-error">{errors.address}</div>}
-          </div>
-          <div className="form-row">
-            <label>Address line 2 (optional)</label>
-            <input value={form.address2} onChange={(e) => update("address2", e.target.value)} />
-          </div>
-          <div className="form-row cols-2">
-            <div>
-              <label>City</label>
-              <input
-                className={errors.city ? "is-invalid" : ""}
-                value={form.city}
-                onChange={(e) => update("city", e.target.value)}
-              />
-              {errors.city && <div className="form-error">{errors.city}</div>}
-            </div>
-            <div>
-              <label>Postcode</label>
-              <input
-                className={errors.postcode ? "is-invalid" : ""}
-                value={form.postcode}
-                onChange={(e) => update("postcode", e.target.value)}
-              />
-              {errors.postcode && <div className="form-error">{errors.postcode}</div>}
-            </div>
-          </div>
+          {hasSavedAddresses && !isEditingDetails ? (
+            <>
+              <p className="muted" style={{ marginBottom: 16 }}>
+                Select one of your saved addresses.
+              </p>
+              <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 14 }}>
+                <button
+                  type="button"
+                  className="btn btn-outline btn-compact"
+                  onClick={() => {
+                    setIsEditingDetails(true);
+                    setErrors((prev) => {
+                      const next = { ...prev };
+                      delete next.selectedAddress;
+                      return next;
+                    });
+                  }}
+                >
+                  Edit details
+                </button>
+              </div>
+              <div className="address-grid checkout-address-grid">
+                {savedAddresses.map((address, index) => {
+                  const isSelected = index === selectedAddressIndex;
+                  return (
+                    <label
+                      key={`${address.line1}-${address.postcode}-${index}`}
+                      className={`address-card checkout-address-card ${isSelected ? "is-selected" : ""}`}
+                    >
+                      <div className="address-label" style={{ marginBottom: 12 }}>
+                        <input
+                          type="radio"
+                          name="checkout-address"
+                          checked={isSelected}
+                          onChange={() => setSelectedAddressIndex(index)}
+                          style={{ marginRight: 8 }}
+                        />
+                        {address?.isDefault ? "Default address" : `Address ${index + 1}`}
+                      </div>
+                      <div className="address-body">
+                        {address?.line1}
+                        {address?.line2 ? (
+                          <>
+                            <br />
+                            {address.line2}
+                          </>
+                        ) : null}
+                        <br />
+                        {address?.city}, {address?.postcode}
+                        <br />
+                        {address?.country || "United Kingdom"}
+                      </div>
+                    </label>
+                  );
+                })}
+              </div>
+              {errors.selectedAddress ? (
+                <div className="form-error">{errors.selectedAddress}</div>
+              ) : null}
+            </>
+          ) : (
+            <>
+              {portalCustomer?.email && hasSavedAddresses ? (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    gap: 12,
+                    marginBottom: 16,
+                    flexWrap: "wrap",
+                  }}
+                >
+                  <p className="muted" style={{ marginBottom: 0 }}>
+                    Editing details manually for this order.
+                  </p>
+                  <button
+                    type="button"
+                    className="btn btn-outline btn-compact"
+                    onClick={() => {
+                      setIsEditingDetails(false);
+                    }}
+                  >
+                    Use saved addresses
+                  </button>
+                </div>
+              ) : null}
+              {portalCustomer?.email && !hasSavedAddresses ? (
+                <p className="muted" style={{ marginBottom: 16 }}>
+                  No saved addresses found in your account. Add one now or continue by entering a
+                  delivery address below.
+                </p>
+              ) : null}
+              <div className="form-row cols-2">
+                <div>
+                  <label>First Name</label>
+                  <input
+                    className={errors.firstName ? "is-invalid" : ""}
+                    value={form.firstName}
+                    onChange={(e) => update("firstName", e.target.value)}
+                  />
+                  {errors.firstName && <div className="form-error">{errors.firstName}</div>}
+                </div>
+                <div>
+                  <label>Last Name</label>
+                  <input
+                    className={errors.lastName ? "is-invalid" : ""}
+                    value={form.lastName}
+                    onChange={(e) => update("lastName", e.target.value)}
+                  />
+                  {errors.lastName && <div className="form-error">{errors.lastName}</div>}
+                </div>
+              </div>
+              <div className="form-row">
+                <label>Address line 1</label>
+                <input
+                  className={errors.address ? "is-invalid" : ""}
+                  value={form.address}
+                  onChange={(e) => update("address", e.target.value)}
+                />
+                {errors.address && <div className="form-error">{errors.address}</div>}
+              </div>
+              <div className="form-row">
+                <label>Address line 2 (optional)</label>
+                <input value={form.address2} onChange={(e) => update("address2", e.target.value)} />
+              </div>
+              <div className="form-row cols-2">
+                <div>
+                  <label>City</label>
+                  <input
+                    className={errors.city ? "is-invalid" : ""}
+                    value={form.city}
+                    onChange={(e) => update("city", e.target.value)}
+                  />
+                  {errors.city && <div className="form-error">{errors.city}</div>}
+                </div>
+                <div>
+                  <label>Postcode</label>
+                  <input
+                    className={errors.postcode ? "is-invalid" : ""}
+                    value={form.postcode}
+                    onChange={(e) => update("postcode", e.target.value)}
+                  />
+                  {errors.postcode && <div className="form-error">{errors.postcode}</div>}
+                </div>
+              </div>
 
-          <div className="form-row">
-            <label>Country</label>
-            <input
-              className={errors.country ? "is-invalid" : ""}
-              value={form.country}
-              onChange={(e) => update("country", e.target.value)}
-            />
-            {errors.country && <div className="form-error">{errors.country}</div>}
-          </div>
+              <div className="form-row">
+                <label>Country</label>
+                <input
+                  className={errors.country ? "is-invalid" : ""}
+                  value={form.country}
+                  onChange={(e) => update("country", e.target.value)}
+                />
+                {errors.country && <div className="form-error">{errors.country}</div>}
+              </div>
+            </>
+          )}
 
           <h3 style={{ fontSize: 13, letterSpacing: "0.18em", margin: "32px 0 20px" }}>Payment</h3>
           <p className="muted" style={{ marginBottom: 8 }}>

@@ -22,6 +22,8 @@ export default function QuickViewModal({ product, onClose }) {
       ? comparePriceText
       : `£${comparePriceText}`
     : "";
+  const stockQuantity = Number(selectedVariant?.stockQuantity || 0);
+  const isOutOfStock = stockQuantity <= 0;
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
@@ -111,15 +113,19 @@ export default function QuickViewModal({ product, onClose }) {
               <div className="qty-stepper">
                 <button onClick={() => setQty((q) => Math.max(1, q - 1))}>−</button>
                 <input
+                  disabled={isOutOfStock}
                   value={qty}
                   onChange={(e) => setQty(Math.max(1, parseInt(e.target.value) || 1))}
                 />
-                <button onClick={() => setQty((q) => q + 1)}>+</button>
+                <button disabled={isOutOfStock} onClick={() => setQty((q) => q + 1)}>
+                  +
+                </button>
               </div>
               <button
                 className="btn"
+                disabled={isOutOfStock}
                 onClick={() => {
-                  if (!selectedVariant?.id) return;
+                  if (!selectedVariant?.id || isOutOfStock) return;
                   addToCart(product, qty, {
                     variantId: selectedVariant.id,
                     name: selectedVariant.name,
@@ -129,7 +135,7 @@ export default function QuickViewModal({ product, onClose }) {
                   onClose();
                 }}
               >
-                Add to Cart
+                {isOutOfStock ? "Out of Stock" : "Add to Cart"}
               </button>
             </div>
           </div>

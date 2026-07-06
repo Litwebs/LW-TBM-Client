@@ -74,18 +74,24 @@ export default function ProductCard({ product, onQuickView }) {
       : `£${comparePriceText}`
     : "";
   const hasComparePrice = Number(product.compareAt || 0) > Number(product.price || 0);
-  const stockVariant = useMemo(
-    () =>
-      (product.variants || []).find((variant) => Number(variant?.stockQuantity || 0) <= 0) ||
-      (product.variants || []).find((variant) => Boolean(variant?.lowStock)) ||
-      null,
-    [product.variants],
-  );
-  const stockBadge = stockVariant
-    ? Number(stockVariant?.stockQuantity || 0) <= 0
-      ? "Out of stock"
-      : "Low stock"
-    : "";
+  const stockState = useMemo(() => {
+    const variants = Array.isArray(product?.variants) ? product.variants : [];
+
+    if (variants.length === 0) {
+      return product?.stock === false ? "out" : "";
+    }
+
+    const hasAnyInStock = variants.some((variant) => Number(variant?.stockQuantity || 0) > 0);
+    if (!hasAnyInStock) return "out";
+
+    const hasLowStock = variants.some(
+      (variant) => Number(variant?.stockQuantity || 0) > 0 && Boolean(variant?.lowStock),
+    );
+    return hasLowStock ? "low" : "";
+  }, [product?.stock, product?.variants]);
+
+  const stockBadge =
+    stockState === "out" ? "Out of stock" : stockState === "low" ? "Low stock" : "";
 
   return (
     <div className="product-card">
@@ -111,7 +117,7 @@ export default function ProductCard({ product, onQuickView }) {
         }}
         style={{ position: "relative", display: "block", overflow: "hidden" }}
       >
-        {stockBadge && <span className="stock-badge">{stockBadge}</span>}
+        {stockBadge && <span className={`stock-badge ${stockState}`}>{stockBadge}</span>}
         <span className="pc-corner" aria-hidden="true" />
         <img
           className="product-card-main-image"
