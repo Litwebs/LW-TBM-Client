@@ -246,6 +246,7 @@ export function StorefrontProvider({ children }) {
       error,
       isLive,
       products: allProducts,
+      apiCategories: (apiCategories || []).map(normalizeCategory).filter(Boolean),
       categories,
       announcement,
       discounts,
