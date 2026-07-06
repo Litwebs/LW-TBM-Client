@@ -40,20 +40,20 @@ function formatDiscountDescription(offer) {
 
 export default function Header() {
   const { cartCount, setCartOpen, menuOpen, setMenuOpen } = useApp();
-  const { announcement, discounts, categories } = useStorefront();
+  const { announcement, discounts, apiCategories } = useStorefront();
   const headerRef = useRef(null);
   const [isCondensed, setIsCondensed] = useState(false);
   const topDiscount = Array.isArray(discounts) && discounts.length > 0 ? discounts[0] : null;
 
   const categoryNav = useMemo(
     () =>
-      (categories || [])
+      (apiCategories || [])
         .filter((c) => c?.slug && c?.name)
         .filter(
           (c) => c.slug !== "best-sellers" && c.slug !== "all-panels" && c.slug !== "products",
         )
         .map((c) => ({ to: `/collections/${c.slug}`, label: c.name })),
-    [categories],
+    [apiCategories],
   );
 
   const navItems = useMemo(() => {

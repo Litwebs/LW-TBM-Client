@@ -565,6 +565,32 @@ section .section-eyebrow,
 }
 
 /* ===== Portfolio filters — dark theme contrast ===== */
+.portfolio-hero-copy h1 {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+
+.portfolio-hero-copy p,
+.portfolio-results,
+.portfolio-empty-state p {
+  color: var(--dm-ink-soft) !important;
+}
+
+.portfolio-empty-state {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.portfolio-empty-label {
+  color: var(--dm-silver) !important;
+}
+
+.portfolio-empty-state h2 {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+
 .portfolio-filters button {
   background: rgba(255,255,255,0.04) !important;
   color: var(--dm-ink-soft) !important;
