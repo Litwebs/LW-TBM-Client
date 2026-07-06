@@ -149,8 +149,8 @@ body.product-page-silver-theme .pdp-recent-section .product-card .price-sale {
 
 body.product-page-silver-theme .pdp-related-section .product-card .title,
 body.product-page-silver-theme .pdp-recent-section .product-card .title {
-  color: #14264a !important;
-  -webkit-text-fill-color: #14264a !important;
+  color: #1b355f !important;
+  -webkit-text-fill-color: #1b355f !important;
 }
 
 body.product-page-silver-theme .pdp-related-section .product-card .title:hover,
@@ -186,8 +186,8 @@ body.collections-page-theme .shop-toolbar span {
 
 body.collections-page-theme .breadcrumbs a:hover,
 body.collections-page-theme .shop-header h1 {
-  color: #14264a !important;
-  -webkit-text-fill-color: #14264a !important;
+  color: #1b355f !important;
+  -webkit-text-fill-color: #1b355f !important;
 }
 
 body.collections-page-theme .shop-toolbar,
@@ -213,13 +213,24 @@ body.collections-page-theme .shop-toolbar-sticky {
   box-shadow: 0 18px 40px -30px rgba(30, 41, 59, 0.35) !important;
   animation: containerSilverShine 4s linear infinite;
   padding: 12px 20px !important;
-  color: #14264a !important;
+  color: #1b355f !important;
 }
 
 body.collections-page-theme .shop-toolbar-count,
 body.collections-page-theme .shop-perpage {
-  color: #14264a !important;
-  -webkit-text-fill-color: #14264a !important;
+  color: #1b355f !important;
+  -webkit-text-fill-color: #1b355f !important;
+}
+
+body.collections-page-theme .collections-empty-message,
+body.collections-page-theme .collections-empty-message a {
+  color: #1b355f !important;
+  -webkit-text-fill-color: #1b355f !important;
+}
+
+body.collections-page-theme .collections-empty-message a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 body.collections-page-theme .shop-perpage-select {
@@ -227,7 +238,7 @@ body.collections-page-theme .shop-perpage-select {
     linear-gradient(#ffffff, #ffffff) padding-box,
     linear-gradient(115deg, #b7bac1 0%, #ffffff 22%, #9a9ca3 46%, #ffffff 68%, #bfc3c9 100%) border-box !important;
   border: 1px solid transparent !important;
-  color: #14264a !important;
+  color: #1b355f !important;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
@@ -264,8 +275,8 @@ body.collections-page-theme .filter-group input[type="checkbox"]:checked {
 }
 
 body.collections-page-theme .filter-group input[type="checkbox"]:checked::after {
-  border-left-color: #14264a !important;
-  border-bottom-color: #14264a !important;
+  border-left-color: #1b355f !important;
+  border-bottom-color: #1b355f !important;
 }
 
 body.collections-page-theme .shop-side-select {
@@ -273,7 +284,7 @@ body.collections-page-theme .shop-side-select {
     linear-gradient(#ffffff, #ffffff) padding-box,
     linear-gradient(115deg, #b7bac1 0%, #ffffff 22%, #9a9ca3 46%, #ffffff 68%, #bfc3c9 100%) border-box !important;
   border: 1px solid transparent !important;
-  color: #14264a !important;
+  color: #1b355f !important;
   border-radius: 0;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
@@ -337,8 +348,8 @@ body.collections-page-theme .product-card .price-sale {
 }
 
 body.collections-page-theme .product-card .title {
-  color: #14264a !important;
-  -webkit-text-fill-color: #14264a !important;
+  color: #1b355f !important;
+  -webkit-text-fill-color: #1b355f !important;
 }
 
 body.collections-page-theme .product-card .title:hover {
@@ -366,7 +377,7 @@ body.collections-page-theme .shop-page-btn {
 
 body.collections-page-theme .shop-page-btn.active {
   background: linear-gradient(150deg, #d9dce1 0%, #b3b7bf 45%, #d9dce1 100%) !important;
-  color: #14264a !important;
+  color: #1b355f !important;
   border-color: #8b8f98 !important;
   box-shadow:
     0 0 0 2px #ffffff,
@@ -375,8 +386,8 @@ body.collections-page-theme .shop-page-btn.active {
 }
 
 body.collections-page-theme .shop-page-btn:hover:not(:disabled) {
-  border-color: #14264a !important;
-  color: #14264a !important;
+  border-color: #1b355f !important;
+  color: #1b355f !important;
 }
 
 body.collections-page-theme .shop-page-btn.active:hover:not(:disabled) {

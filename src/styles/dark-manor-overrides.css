@@ -23,6 +23,16 @@ body {
   color: var(--dm-ink);
 }
 
+/* Keep text links high contrast on dark surfaces. */
+body a,
+body a:visited {
+  color: var(--dm-ink) !important;
+}
+
+body a:hover {
+  color: #ffffff !important;
+}
+
 /* Default section text on dark canvas */
 section { color: var(--dm-ink); }
 section .section-eyebrow { color: var(--dm-silver); opacity: 0.75; }

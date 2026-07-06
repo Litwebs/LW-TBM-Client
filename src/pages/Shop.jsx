@@ -8,6 +8,13 @@ import { fetchProductsPage } from "../lib/api.js";
 import Seo from "../components/Seo.jsx";
 
 const PER_PAGE_OPTIONS = [20, 40, 60, 80];
+const SORT_OPTIONS = [
+  { value: "newest", label: "Newest" },
+  { value: "price_asc", label: "Price: Low to High" },
+  { value: "price_desc", label: "Price: High to Low" },
+  { value: "name_asc", label: "Name: A to Z" },
+  { value: "name_desc", label: "Name: Z to A" },
+];
 
 export default function Shop() {
   const { slug } = useParams();
@@ -24,7 +31,7 @@ export default function Shop() {
     ? { name: apiCat.name, description: `Shop our ${apiCat.name} collection.` }
     : { name: "Products", description: "Our complete catalogue." };
 
-  const [sort, setSort] = useState("featured");
+  const [sort, setSort] = useState("newest");
   const [inStockOnly, setInStockOnly] = useState(false);
   const [activeCats, setActiveCats] = useState([]);
   const [quickView, setQuickView] = useState(null);
@@ -75,13 +82,6 @@ export default function Shop() {
   useEffect(() => {
     let cancelled = false;
 
-    const sortMap = {
-      featured: "newest",
-      "price-asc": "price_asc",
-      "price-desc": "price_desc",
-      title: "name_asc",
-    };
-
     const routeCategoryName = slug && slug !== "products" && apiCat ? apiCat.name : null;
 
     const selectedCategoryNames = availableCats
@@ -100,7 +100,7 @@ export default function Shop() {
     fetchProductsPage({
       page: safePage,
       pageSize: perPage,
-      sort: sortMap[sort] || "newest",
+      sort,
       category: categoryNames.length ? categoryNames.join(",") : undefined,
       inStock: inStockOnly,
     })
@@ -238,10 +238,11 @@ export default function Shop() {
                   value={sort}
                   onChange={(e) => setSort(e.target.value)}
                 >
-                  <option value="featured">Featured</option>
-                  <option value="price-asc">Price: Low to High</option>
-                  <option value="price-desc">Price: High to Low</option>
-                  <option value="title">Title A-Z</option>
+                  {SORT_OPTIONS.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
                 </select>
               </div>
             )}
@@ -276,7 +277,10 @@ export default function Shop() {
               Could not load products right now.
             </p>
           ) : serverItems.length === 0 ? (
-            <p className="muted" style={{ textAlign: "center", padding: 60 }}>
+            <p
+              className="muted collections-empty-message"
+              style={{ textAlign: "center", padding: 60 }}
+            >
               No products match your filters.
             </p>
           ) : (

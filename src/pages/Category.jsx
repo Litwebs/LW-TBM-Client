@@ -73,7 +73,7 @@ export default function Category() {
           <BrandSpinner label="Loading products..." />
         </div>
       ) : items.length === 0 ? (
-        <p className="muted" style={{ textAlign: "center", padding: 60 }}>
+        <p className="muted collections-empty-message" style={{ textAlign: "center", padding: 60 }}>
           No products available in this category yet. <Link to="/contact">Contact us</Link> for a
           bespoke enquiry.
         </p>

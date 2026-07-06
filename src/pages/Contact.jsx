@@ -98,9 +98,9 @@ export default function Contact() {
         <div className="contact-info">
           <h3 style={{ fontSize: 12, letterSpacing: "0.18em", marginBottom: 20 }}>Showroom</h3>
           <p>
-            14 Heritage Lane
+            Unit 2 Cleaver Street
             <br />
-            Manchester, M1 4QR
+            Blackburn, Lancashire (BB1 5DG)
           </p>
           <h3 style={{ fontSize: 12, letterSpacing: "0.18em", margin: "28px 0 12px" }}>
             Opening Hours
@@ -114,13 +114,20 @@ export default function Contact() {
           </p>
           <h3 style={{ fontSize: 12, letterSpacing: "0.18em", margin: "28px 0 12px" }}>Contact</h3>
           <p>
-            hello@thebritishmanor.co.uk
+            <a href="mailto:hello@thebritishmanor.co.uk">hello@thebritishmanor.co.uk</a>
             <br />
-            0161 555 0199
+            <a href="tel:+441615550199">0161 555 0199</a>
           </p>
           <h3 style={{ fontSize: 12, letterSpacing: "0.18em", margin: "28px 0 12px" }}>Delivery</h3>
           <p>Express delivery available at checkout. Standard UK delivery: 2–4 working days.</p>
-          <div className="map-placeholder">Map placeholder</div>
+          <iframe
+            className="map-embed"
+            title="The British Manor showroom map"
+            loading="lazy"
+            allowFullScreen
+            referrerPolicy="no-referrer-when-downgrade"
+            src="https://maps.google.com/maps?q=Unit%202%20Cleaver%20Street%2C%20Blackburn%2C%20Lancashire%2C%20BB1%205DG&z=15&output=embed"
+          />
         </div>
       </div>
     </div>

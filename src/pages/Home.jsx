@@ -105,7 +105,7 @@ export default function Home() {
             <Link to="/collections/panels" className="btn btn-light btn-lg">
               Wall Panels
             </Link>
-            <Link to="/collections/fencing" className="btn btn-ghost btn-lg">
+            <Link to="/collections/fencing" className="btn btn-outline btn-lg">
               Outdoor Panels
             </Link>
           </div>

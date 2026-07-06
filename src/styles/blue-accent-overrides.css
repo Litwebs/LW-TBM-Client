@@ -3,7 +3,7 @@
    ============================================= */
 :root {
   --manor-blue: #1F3A68;
-  --manor-blue-deep: #14264A;
+  --manor-blue-deep: #2E5BBA;
   --royal-blue: #2E5BBA;
   --silver: #7B7D84;
   --silver-soft: #7B7D84;
@@ -12,8 +12,8 @@
 
 /* Unify all blue accents to the deep navy used by the announcement bar */
 :root {
-  --manor-blue: #14264A;
-  --royal-blue: #14264A;
+  --manor-blue: #2E5BBA;
+  --royal-blue: #2E5BBA;
 }
 
 /* Silver hairlines replace soft brass borders site-wide */

@@ -1,5 +1,9 @@
 import { Link } from "react-router-dom";
 import Seo from "../components/Seo.jsx";
+import livingRoomImage from "../assets/Images/living room.png";
+import officeImage from "../assets/Images/office.png";
+import mediaWallImage from "../assets/Images/media wall.png";
+import hallwayImage from "../assets/Images/hall way.png";
 
 export default function About() {
   return (
@@ -10,13 +14,10 @@ export default function About() {
         path="/about"
       />
       <div className="about-hero">
-        <img
-          src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=2000&q=80"
-          alt=""
-        />
+        <img src={livingRoomImage} alt="Feature wall panel installation in a styled interior" />
       </div>
       <div className="container">
-        <div className="page-header">
+        <div className="page-header about-page-header">
           <h1>About The British Manor</h1>
         </div>
         <div className="container-narrow">
@@ -34,17 +35,17 @@ export default function About() {
             {
               title: "Add Texture",
               body: "From adding texture to creating focal points, our panels elevate your home while offering practical benefits.",
-              img: "https://panel-hub.co.uk/cdn/shop/files/240_smoke.jpg?v=1774026282&width=1024",
+              img: officeImage,
             },
             {
               title: "No Matter The Space",
               body: "Suit every style and budget — whether you're after acoustic solutions or a sleek finish.",
-              img: "https://panel-hub.co.uk/cdn/shop/files/slimlineoak.png?v=1776272501&width=1024",
+              img: mediaWallImage,
             },
             {
               title: "Expertly Crafted",
               body: "Built on a decade of expertise — premium materials, modern finishes, and effortless installation.",
-              img: "https://panel-hub.co.uk/cdn/shop/files/240_Dark_Grey.png?v=1774026351&width=1000",
+              img: hallwayImage,
             },
           ].map((c) => (
             <div key={c.title} className="about-feature-card">

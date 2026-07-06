@@ -100,14 +100,14 @@
   font-size: 11px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  background: var(--dm-navy-2) !important;
+  background: #ffffff !important;
   border: 1px solid var(--dm-silver-line-strong) !important;
-  color: #fff !important;
+  color: #1a3458 !important;
 }
 
 .contact-form-elegant .cf-submit:hover {
-  background: var(--dm-silver) !important;
-  border-color: var(--dm-silver) !important;
+  background: #f4f6fb !important;
+  border-color: #f4f6fb !important;
 }
 
 @media (max-width: 900px) {

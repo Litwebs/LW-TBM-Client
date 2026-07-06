@@ -9,12 +9,12 @@
   --bg: #F6F1E8;            /* warm ivory page */
   --bg-2: #FBF8F2;           /* soft surface */
   --bg-3: #EFE7D6;           /* aged paper */
-  --bg-ink: #11243A;         /* manor navy */
+  --bg-ink: #1A3458;         /* manor navy */
   --bg-ink-2: #0B1A2B;       /* deepest navy */
 
   /* Ink */
-  --ink: #11243A;
-  --ink-soft: #1B3450;
+  --ink: #1A3458;
+  --ink-soft: #27476F;
   --muted: #6B7686;
   --muted-2: #98A1AD;
 
@@ -27,7 +27,7 @@
   --brass: #A8884E;
   --brass-deep: #8B6E3D;
   --brass-soft: #C9AE74;
-  --accent: #11243A;          /* primary ink-as-accent */
+  --accent: #1A3458;          /* primary ink-as-accent */
 
   /* Misc */
   --black: #0B1A2B;
