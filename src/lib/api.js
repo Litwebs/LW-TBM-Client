@@ -47,6 +47,8 @@ export function normalizeProduct(raw) {
         stockQuantity: Number(variant?.stockQuantity) || 0,
         lowStock: Boolean(variant?.lowStock),
         thumbnailImage: fileUrl(variant?.thumbnailImage),
+        // Support new images array (up to 5 per variant)
+        images: Array.isArray(variant?.images) ? variant.images.map(fileUrl).filter(Boolean) : [],
       }))
     : [];
   const price =
@@ -72,6 +74,10 @@ export function normalizeProduct(raw) {
     galleryImages: gallery,
     variants: normalizedVariants,
     selectedVariantId: raw?.selectedVariantId || normalizedVariants?.[0]?.id || undefined,
+    // Support selectedImages from the selected variant (for displaying multiple images on product page)
+    selectedImages: Array.isArray(raw?.selectedImages)
+      ? raw.selectedImages.map(fileUrl).filter(Boolean)
+      : [],
     pricing: raw.pricing || null,
     price: Number(price) || 0,
     compareAt: Number(compareAt) || 0,
