@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState, useCallback } from "react";
+import { trackAddToCart } from "../lib/analytics.js";
 
 const AppCtx = createContext(null);
 export const useApp = () => useContext(AppCtx);
@@ -71,6 +72,13 @@ export function AppProvider({ children }) {
         }
         return [...prev, { key, product, qty, variant: normalizedVariant }];
       });
+
+      trackAddToCart({
+        product,
+        variant: normalizedVariant,
+        quantity: qty,
+      });
+
       setCartOpen(true);
       toast(`Added: ${product.title.slice(0, 40)}`);
     },

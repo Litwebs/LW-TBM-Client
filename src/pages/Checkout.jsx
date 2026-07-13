@@ -8,6 +8,7 @@ import {
   fetchPublicDeliveryFee,
   fetchPublicOrderByCheckoutSession,
 } from "../lib/api.js";
+import { trackBeginCheckout, trackPurchase } from "../lib/analytics.js";
 import Seo from "../components/Seo.jsx";
 
 function toUiStatus(apiStatus) {
@@ -154,6 +155,7 @@ export default function Checkout() {
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(-1);
   const [isEditingDetails, setIsEditingDetails] = useState(false);
   const loadedSessionRef = useRef("");
+  const checkoutTrackedRef = useRef("");
   const checkoutEmail =
     sessionStorage.getItem("tbm_checkout_email") || form.email || user?.email || "";
   const savedAddresses = useMemo(
@@ -172,6 +174,21 @@ export default function Checkout() {
 
   const update = (k, v) => setForm((f) => ({ ...f, [k]: v }));
   const doneStageIndex = done ? getCheckoutStageIndex(done) : 0;
+
+  useEffect(() => {
+    if (isSuccessView || isCancelView) return;
+    if (!cart.length) return;
+
+    const signature = cart.map((line) => `${line.key}:${line.qty}`).join("|");
+    if (!signature || checkoutTrackedRef.current === signature) return;
+
+    checkoutTrackedRef.current = signature;
+    trackBeginCheckout({
+      cart,
+      lineUnitPrice,
+      coupon: discountCode || undefined,
+    });
+  }, [cart, discountCode, isCancelView, isSuccessView, lineUnitPrice]);
 
   useEffect(() => {
     if (isSuccessView || isCancelView) return;
@@ -251,6 +268,12 @@ export default function Checkout() {
         upsertOrder(normalizedOrder);
         setDone(normalizedOrder);
         clearCart();
+
+        const purchaseKey = `tbm_ga4_purchase_${apiOrder.orderId || sessionId}`;
+        if (!sessionStorage.getItem(purchaseKey)) {
+          trackPurchase({ order: apiOrder });
+          sessionStorage.setItem(purchaseKey, "1");
+        }
       } catch (err) {
         if (!cancelled) {
           toast(err?.message || "Could not verify checkout status yet.");

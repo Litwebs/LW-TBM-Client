@@ -6,6 +6,7 @@ import CartDrawer from "./components/CartDrawer.jsx";
 import ToastHost from "./components/ToastHost.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import ScrollTopButton from "./components/ScrollTopButton.jsx";
+import GaPageTracker from "./components/GaPageTracker.jsx";
 
 import Home from "./pages/Home.jsx";
 import Shop from "./pages/Shop.jsx";
@@ -38,6 +39,7 @@ import NotFound from "./pages/NotFound.jsx";
 export default function App() {
   return (
     <>
+      <GaPageTracker />
       <ScrollToTop />
       <Header />
       <main>

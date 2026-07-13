@@ -4,6 +4,7 @@ import { useApp } from "../context/AppContext.jsx";
 import { useProducts } from "../context/ProductsContext.jsx";
 import { SITE_BASE, CONTACT_EMAIL, slugify } from "../lib/api.js";
 import { sanitizeHtml, htmlToText } from "../lib/html.js";
+import { trackViewItem } from "../lib/analytics.js";
 import Rating from "../components/Rating.jsx";
 import Accordion from "../components/Accordion.jsx";
 import ProductCard from "../components/ProductCard.jsx";
@@ -141,6 +142,18 @@ export default function Product() {
 
   const descriptionHtml = sanitizeHtml(product.description);
   const descriptionText = htmlToText(product.description);
+
+  useEffect(() => {
+    if (!product || !selectedVariant) return;
+    trackViewItem({
+      product,
+      variant: {
+        id: selectedVariant.id,
+        name: selectedVariant.name,
+        price: activePrice,
+      },
+    });
+  }, [activePrice, product, selectedVariant]);
 
   const productJsonLd = {
     "@context": "https://schema.org",

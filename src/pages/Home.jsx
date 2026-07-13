@@ -30,8 +30,12 @@ function homeCategoryLink(category) {
   const slug = String(category?.slug || "").toLowerCase();
   const name = String(category?.name || "").toLowerCase();
 
+  if (slug === "bathroom-wall-panels" || name.includes("bathroom wall panel")) {
+    return "/collections/bathroom-wall-panels";
+  }
+
   if (slug === "wall-panels" || slug === "panels" || name.includes("wall panel")) {
-    return "/collections/panels";
+    return "/collections/acoustic-wall-panels";
   }
 
   if (slug === "outdoor-panels" || slug === "fencing" || name.includes("outdoor panel")) {
@@ -102,7 +106,7 @@ export default function Home() {
             Curated British <em>elegance</em> for refined living spaces.
           </h1>
           <div className="hero-cta-row">
-            <Link to="/collections/panels" className="btn btn-light btn-lg">
+            <Link to="/collections/acoustic-wall-panels" className="btn btn-light btn-lg">
               Wall Panels
             </Link>
             <Link to="/collections/fencing" className="btn btn-outline btn-lg">
