@@ -3,8 +3,16 @@ import { useApp } from "../context/AppContext.jsx";
 import { CloseIcon } from "./Icons.jsx";
 
 export default function CartDrawer() {
-  const { cart, cartOpen, setCartOpen, updateQty, removeFromCart, subtotal, lineUnitPrice } =
-    useApp();
+  const {
+    cart,
+    cartOpen,
+    setCartOpen,
+    updateQty,
+    removeFromCart,
+    subtotal,
+    lineUnitPrice,
+    lineImageUrl,
+  } = useApp();
   return (
     <>
       <div
@@ -30,7 +38,7 @@ export default function CartDrawer() {
             <div className="cart-items">
               {cart.map((it) => (
                 <div key={it.key} className="cart-item">
-                  <img src={it.product.image} alt="" />
+                  <img src={lineImageUrl(it)} alt="" />
                   <div>
                     <div className="title">{it.product.title}</div>
                     <div className="meta">Variant: {it.variant?.name || "Default"}</div>

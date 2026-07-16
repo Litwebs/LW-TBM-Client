@@ -113,6 +113,14 @@ export async function fetchProductsPage({
   return { items, meta: data?.meta || {} };
 }
 
+export async function fetchPublicProduct(identifier) {
+  const value = String(identifier || "").trim();
+  if (!value) return null;
+
+  const { data } = await api.get(`/api/products/${encodeURIComponent(value)}`);
+  return normalizeProduct(data?.data);
+}
+
 export async function fetchAllProducts({ pageSize = 30 } = {}) {
   const first = await fetchProductsPage({ page: 1, pageSize });
   let items = first.items;
@@ -192,6 +200,27 @@ export function normalizeAnnouncement(raw) {
   };
 }
 
+export function normalizeReview(raw) {
+  if (!raw || typeof raw !== "object") return null;
+
+  const name = String(raw.customerName || raw.name || "").trim();
+  const body = String(raw.description || raw.body || "").trim();
+  const rating = Number(raw.rating) || 0;
+
+  if (!name && !body) return null;
+
+  return {
+    id: String(raw._id || raw.id || `${name}-${body.slice(0, 20)}`),
+    name: name || "Verified customer",
+    title: String(raw.title || raw.heading || "").trim(),
+    body,
+    rating,
+    date: raw.createdAt || raw.date || "",
+    imageUrl: fileUrl(raw.imageUrl),
+    raw,
+  };
+}
+
 export async function fetchPublicCategories() {
   const { data } = await api.get("/api/categories");
   return (data?.data?.categories || []).map(normalizeCategory).filter(Boolean);
@@ -219,6 +248,30 @@ export async function fetchActiveDiscounts({ page = 1, pageSize = 30 } = {}) {
     params: { page, pageSize },
   });
   return data?.data?.items || [];
+}
+
+export async function fetchPublicReviews({ page = 1, pageSize = 9 } = {}) {
+  const { data } = await api.get("/api/reviews", {
+    params: { page, pageSize },
+  });
+
+  const reviews = (data?.data?.reviews || []).map(normalizeReview).filter(Boolean);
+  return {
+    reviews,
+    meta: data?.meta || {},
+  };
+}
+
+export async function verifyPublicReviewOrder(orderId) {
+  const { data } = await api.get(`/api/reviews/verify/${encodeURIComponent(orderId)}`);
+  return data;
+}
+
+export async function submitPublicReview(formData) {
+  const { data } = await api.post("/api/reviews", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return data;
 }
 
 export async function upsertGuestCustomer(payload) {

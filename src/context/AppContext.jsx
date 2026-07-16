@@ -18,6 +18,12 @@ const save = (key, value) => {
   } catch {}
 };
 
+const imageUrl = (value) => {
+  if (!value) return "";
+  if (typeof value === "string") return value;
+  return value.url || value.fileUrl || value.secure_url || value.path || "";
+};
+
 export function AppProvider({ children }) {
   const [cart, setCart] = useState(() => load("pl_cart", []));
   const [user, setUser] = useState(() => load("pl_user", null));
@@ -43,6 +49,19 @@ export function AppProvider({ children }) {
     (line) => Number(line?.variant?.price ?? line?.product?.price ?? 0),
     [],
   );
+
+  const lineImageUrl = useCallback((line) => {
+    const selectedVariant = (line?.product?.variants || []).find(
+      (variant) => String(variant?.id || "") === String(line?.variant?.variantId || ""),
+    );
+
+    return (
+      imageUrl(line?.variant?.thumbnailImage) ||
+      imageUrl(selectedVariant?.thumbnailImage) ||
+      imageUrl(selectedVariant?.images?.[0]) ||
+      imageUrl(line?.product?.image)
+    );
+  }, []);
 
   const addToCart = useCallback(
     (product, qty = 1, variant = {}) => {
@@ -149,6 +168,7 @@ export function AppProvider({ children }) {
         subtotal,
         cartCount,
         lineUnitPrice,
+        lineImageUrl,
         user,
         login,
         register,

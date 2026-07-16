@@ -5,7 +5,8 @@ import { useStorefront } from "../context/StorefrontContext.jsx";
 import Seo from "../components/Seo.jsx";
 
 export default function Cart() {
-  const { cart, updateQty, removeFromCart, subtotal, toast, user, lineUnitPrice } = useApp();
+  const { cart, updateQty, removeFromCart, subtotal, toast, user, lineUnitPrice, lineImageUrl } =
+    useApp();
   const { validateDiscountForCart } = useStorefront();
   const [code, setCode] = useState("");
   const [discount, setDiscount] = useState(0);
@@ -85,7 +86,7 @@ export default function Cart() {
               }}
             >
               <img
-                src={it.product.image}
+                src={lineImageUrl(it)}
                 alt=""
                 style={{ width: 120, height: 120, objectFit: "cover" }}
               />

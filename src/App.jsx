@@ -1,6 +1,8 @@
+import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
+import BrandSpinner from "./components/BrandSpinner.jsx";
 
 import CartDrawer from "./components/CartDrawer.jsx";
 import ToastHost from "./components/ToastHost.jsx";
@@ -35,6 +37,8 @@ import FAQs from "./pages/FAQs.jsx";
 import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
 import NotFound from "./pages/NotFound.jsx";
+
+const Policies = lazy(() => import("./pages/Policies.jsx"));
 
 export default function App() {
   return (
@@ -75,6 +79,14 @@ export default function App() {
           <Route path="/faqs" element={<FAQs />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route
+            path="/policies"
+            element={
+              <Suspense fallback={<BrandSpinner label="Loading policies" />}>
+                <Policies />
+              </Suspense>
+            }
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

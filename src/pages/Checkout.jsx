@@ -123,8 +123,17 @@ function CheckoutConfirmationPending({ navigate }) {
 }
 
 export default function Checkout() {
-  const { cart, subtotal, clearCart, upsertOrder, updateQty, user, toast, lineUnitPrice } =
-    useApp();
+  const {
+    cart,
+    subtotal,
+    clearCart,
+    upsertOrder,
+    updateQty,
+    user,
+    toast,
+    lineUnitPrice,
+    lineImageUrl,
+  } = useApp();
   const { createCheckoutOrder } = useStorefront();
   const navigate = useNavigate();
   const location = useLocation();
@@ -802,7 +811,7 @@ export default function Checkout() {
           {cart.map((it) => (
             <div key={it.key} style={{ display: "flex", gap: 12, padding: "10px 0", fontSize: 13 }}>
               <img
-                src={it.product.image}
+                src={lineImageUrl(it)}
                 style={{ width: 50, height: 50, objectFit: "cover" }}
                 alt=""
               />

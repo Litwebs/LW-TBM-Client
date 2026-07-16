@@ -14,7 +14,7 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="container">
-        <div className="footer-grid">
+        <div className="footer-grid footer-grid-with-policies">
           <div className="footer-brand-col">
             <div className="logo brand" style={{ color: "#fff", marginBottom: 16 }}>
               <img src="/images/tbm-logo.png" alt="The British Manor" className="brand-mark" />
@@ -108,6 +108,23 @@ export default function Footer() {
               </li>
               <li>
                 <a href="#">Showroom</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h5>Policies</h5>
+            <ul>
+              <li>
+                <Link to="/policies#privacy">Privacy</Link>
+              </li>
+              <li>
+                <Link to="/policies#returns">Returns &amp; Refunds</Link>
+              </li>
+              <li>
+                <Link to="/policies#shipping">Shipping &amp; Delivery</Link>
+              </li>
+              <li>
+                <Link to="/policies#terms">Terms &amp; Conditions</Link>
               </li>
             </ul>
           </div>

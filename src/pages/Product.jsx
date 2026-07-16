@@ -2,11 +2,12 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useApp } from "../context/AppContext.jsx";
 import { useProducts } from "../context/ProductsContext.jsx";
-import { SITE_BASE, CONTACT_EMAIL, slugify } from "../lib/api.js";
+import { SITE_BASE, CONTACT_EMAIL, fetchPublicProduct, slugify } from "../lib/api.js";
 import { sanitizeHtml, htmlToText } from "../lib/html.js";
 import { trackViewItem } from "../lib/analytics.js";
 import Rating from "../components/Rating.jsx";
 import Accordion from "../components/Accordion.jsx";
+import BrandSpinner from "../components/BrandSpinner.jsx";
 import ProductCard from "../components/ProductCard.jsx";
 import Seo from "../components/Seo.jsx";
 
@@ -22,13 +23,51 @@ function toImageUrl(value) {
 export default function Product() {
   const { slug } = useParams();
   const { findBySlug, products } = useProducts();
-  const product = findBySlug(slug);
+  const contextProduct = findBySlug(slug);
+  const [fetchedProduct, setFetchedProduct] = useState(null);
+  const [detailLoading, setDetailLoading] = useState(!contextProduct);
+  const [detailError, setDetailError] = useState(null);
+  const product = contextProduct || fetchedProduct;
   const navigate = useNavigate();
   const { addToCart, trackView, recentlyViewed } = useApp();
   const [qty, setQty] = useState(1);
   const [selectedVariantId, setSelectedVariantId] = useState(product?.selectedVariantId || "");
   const [mainImg, setMainImg] = useState(toImageUrl(product?.image));
   const [activeThumbIndex, setActiveThumbIndex] = useState(0);
+
+  useEffect(() => {
+    let active = true;
+
+    if (contextProduct) {
+      setFetchedProduct(null);
+      setDetailError(null);
+      setDetailLoading(false);
+      return () => {
+        active = false;
+      };
+    }
+
+    setDetailLoading(true);
+    setDetailError(null);
+
+    fetchPublicProduct(slug)
+      .then((nextProduct) => {
+        if (!active) return;
+        setFetchedProduct(nextProduct);
+      })
+      .catch((error) => {
+        if (!active) return;
+        setFetchedProduct(null);
+        setDetailError(error);
+      })
+      .finally(() => {
+        if (active) setDetailLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [contextProduct, slug]);
 
   useEffect(() => {
     if (product) {
@@ -63,18 +102,33 @@ export default function Product() {
       product?.variants?.find((v) => v.id === selectedVariantId) || product?.variants?.[0] || null,
     [product, selectedVariantId],
   );
+  const activePrice = Number(selectedVariant?.price ?? product?.price ?? 0);
 
   const thumbs = useMemo(() => {
     if (!product) return [];
 
     const images = [
       toImageUrl(product.image),
-      toImageUrl(selectedVariant?.thumbnailImage),
       ...(product.galleryImages || []).map(toImageUrl),
+      ...(product.variants || []).flatMap((variant) => [
+        toImageUrl(variant.thumbnailImage),
+        ...(variant.images || []).map(toImageUrl),
+      ]),
     ].filter(Boolean);
 
     return [...new Set(images)];
-  }, [product, selectedVariant?.thumbnailImage]);
+  }, [product]);
+
+  useEffect(() => {
+    const variantImage = toImageUrl(
+      selectedVariant?.thumbnailImage || selectedVariant?.images?.[0],
+    );
+    if (!variantImage) return;
+
+    setMainImg(variantImage);
+    const variantThumbIndex = thumbs.indexOf(variantImage);
+    if (variantThumbIndex >= 0) setActiveThumbIndex(variantThumbIndex);
+  }, [selectedVariant?.id, selectedVariant?.thumbnailImage, selectedVariant?.images, thumbs]);
 
   useEffect(() => {
     if (!thumbs.length) return;
@@ -87,17 +141,33 @@ export default function Product() {
     setActiveThumbIndex(currentIndex);
   }, [thumbs, mainImg]);
 
+  useEffect(() => {
+    if (!product || !selectedVariant) return;
+    trackViewItem({
+      product,
+      variant: {
+        id: selectedVariant.id,
+        name: selectedVariant.name,
+        price: activePrice,
+      },
+    });
+  }, [activePrice, product, selectedVariant]);
+
+  if (detailLoading && !product) {
+    return <BrandSpinner label="Loading product" />;
+  }
+
   if (!product)
     return (
       <div className="container" style={{ padding: 80 }}>
         <h2>Product not found</h2>
+        {detailError && <p className="muted">This product may no longer be available.</p>}
         <Link to="/collections/products" className="btn mt-32">
           Back to Shop
         </Link>
       </div>
     );
 
-  const activePrice = Number(selectedVariant?.price ?? product.price ?? 0);
   const comparePriceText = String(selectedVariant?.previousPriceText || "").trim();
   const displayComparePrice = comparePriceText
     ? comparePriceText.startsWith("£")
@@ -142,18 +212,6 @@ export default function Product() {
 
   const descriptionHtml = sanitizeHtml(product.description);
   const descriptionText = htmlToText(product.description);
-
-  useEffect(() => {
-    if (!product || !selectedVariant) return;
-    trackViewItem({
-      product,
-      variant: {
-        id: selectedVariant.id,
-        name: selectedVariant.name,
-        price: activePrice,
-      },
-    });
-  }, [activePrice, product, selectedVariant]);
 
   const productJsonLd = {
     "@context": "https://schema.org",
