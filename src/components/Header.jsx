@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useApp } from "../context/AppContext.jsx";
 import { useStorefront } from "../context/StorefrontContext.jsx";
-import { CartIcon, MenuIcon, UserIcon, CloseIcon } from "./Icons.jsx";
+import { CartIcon, MenuIcon, UserIcon, CloseIcon, ChevronDownIcon } from "./Icons.jsx";
 import ProductSearch from "./ProductSearch.jsx";
 
 const GENERAL_NAV = [
@@ -46,6 +46,7 @@ export default function Header() {
   const shopMenuRef = useRef(null);
   const [isCondensed, setIsCondensed] = useState(false);
   const [shopMenuOpen, setShopMenuOpen] = useState(false);
+  const [mobileShopOpen, setMobileShopOpen] = useState(false);
   const topDiscount = Array.isArray(discounts) && discounts.length > 0 ? discounts[0] : null;
 
   const categoryNav = useMemo(
@@ -145,6 +146,10 @@ export default function Header() {
     topDiscount?.scope,
   ]);
 
+  useEffect(() => {
+    if (!menuOpen) setMobileShopOpen(false);
+  }, [menuOpen]);
+
   return (
     <>
       <header className={`header ${isCondensed ? "is-condensed" : "is-expanded"}`} ref={headerRef}>
@@ -197,10 +202,15 @@ export default function Header() {
                   aria-controls="header-shop-dropdown"
                   onClick={() => setShopMenuOpen((current) => !current)}
                 >
-                  Shop <span aria-hidden="true">⌄</span>
+                  Shop <ChevronDownIcon className="header-shop-chevron" aria-hidden="true" />
                 </button>
-                <div id="header-shop-dropdown" className={`header-shop-dropdown ${shopMenuOpen ? "open" : ""}`}>
-                  <Link to="/collections/products" onClick={() => setShopMenuOpen(false)}>Shop all</Link>
+                <div
+                  id="header-shop-dropdown"
+                  className={`header-shop-dropdown ${shopMenuOpen ? "open" : ""}`}
+                >
+                  <Link to="/collections/products" onClick={() => setShopMenuOpen(false)}>
+                    Shop all
+                  </Link>
                   {categoryNav.map((category) => (
                     <Link key={category.to} to={category.to} onClick={() => setShopMenuOpen(false)}>
                       {category.label}
@@ -228,12 +238,46 @@ export default function Header() {
         <nav>
           {navItems.map((n) => (
             <div key={n.to} className={n.isShop ? "mobile-shop-group" : undefined}>
-              <Link to={n.to} onClick={() => setMenuOpen(false)}>{n.label}</Link>
-              {n.isShop && categoryNav.map((category) => (
-                <Link className="mobile-shop-category" key={category.to} to={category.to} onClick={() => setMenuOpen(false)}>
-                  {category.label}
+              {n.isShop ? (
+                <>
+                  <button
+                    type="button"
+                    className={`mobile-shop-toggle ${mobileShopOpen ? "open" : ""}`}
+                    aria-expanded={mobileShopOpen}
+                    aria-controls="mobile-shop-links"
+                    onClick={() => setMobileShopOpen((open) => !open)}
+                  >
+                    {n.label}
+                    <ChevronDownIcon className="mobile-shop-chevron" aria-hidden="true" />
+                  </button>
+                  <div
+                    id="mobile-shop-links"
+                    className={`mobile-shop-children ${mobileShopOpen ? "open" : ""}`}
+                  >
+                    <Link
+                      className="mobile-shop-category"
+                      to={n.to}
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      Shop all
+                    </Link>
+                    {categoryNav.map((category) => (
+                      <Link
+                        className="mobile-shop-category"
+                        key={category.to}
+                        to={category.to}
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        {category.label}
+                      </Link>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <Link to={n.to} onClick={() => setMenuOpen(false)}>
+                  {n.label}
                 </Link>
-              ))}
+              )}
             </div>
           ))}
         </nav>

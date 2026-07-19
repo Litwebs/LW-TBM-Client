@@ -10,13 +10,21 @@
 /* Green-list storefront completion */
 .header-shop-menu { position: relative; display: flex; align-items: center; }
 .header-shop-trigger {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
   color: inherit;
   font: inherit;
   letter-spacing: inherit;
   text-transform: inherit;
   padding: 0;
 }
-.header-shop-trigger span { display: inline-block; margin-left: 4px; transform: translateY(-1px); }
+.header-shop-chevron {
+  display: inline-block;
+  margin-left: 6px;
+  transform: translateY(1px);
+}
 .header-shop-dropdown {
   position: absolute;
   top: calc(100% + 16px);
@@ -36,8 +44,123 @@
 .header-shop-dropdown a { padding: 12px 14px; white-space: nowrap; }
 .header-shop-dropdown a:hover,
 .header-shop-dropdown a:focus-visible { color: #fff; background: rgba(255,255,255,.08); }
+
+/* Keep dropdown visible over hero sections and match trigger color with other nav links. */
+.header { overflow: visible !important; }
+.header .nav .header-shop-trigger { color: var(--dm-ink-soft, #c6cfde); }
+.header .nav .header-shop-trigger:hover,
+.header .nav .header-shop-trigger:focus-visible,
+.header .nav .header-shop-menu:focus-within .header-shop-trigger {
+  color: #fff;
+}
+.header .header-shop-dropdown { z-index: 260; }
+
+/* Collections pages use a light background; enforce readable breadcrumb contrast. */
+body.collections-page-theme .breadcrumbs,
+body.collections-page-theme .breadcrumbs a,
+body.collections-page-theme .breadcrumbs span {
+  color: #2f3f5f !important;
+  -webkit-text-fill-color: #2f3f5f !important;
+}
+body.collections-page-theme .breadcrumbs a:hover {
+  color: #14294d !important;
+  -webkit-text-fill-color: #14294d !important;
+}
+
+body.product-page-silver-theme .breadcrumbs,
+body.product-page-silver-theme .breadcrumbs a,
+body.product-page-silver-theme .breadcrumbs span {
+  color: #3e4f6b !important;
+  -webkit-text-fill-color: #3e4f6b !important;
+}
+body.product-page-silver-theme .breadcrumbs a:hover {
+  color: #1b3358 !important;
+  -webkit-text-fill-color: #1b3358 !important;
+}
+
+body.collections-page-theme .shop-header .intro-text {
+  color: #2f3f5f !important;
+  -webkit-text-fill-color: #2f3f5f !important;
+  opacity: 1 !important;
+}
 .mobile-shop-group { display: grid; }
-.mobile-menu nav .mobile-shop-category { padding-left: 34px; font-size: .82em; opacity: .82; }
+.mobile-menu nav {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px 0 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mobile-menu nav > div {
+  padding-bottom: 2px;
+}
+
+.mobile-menu nav > div > a {
+  display: block;
+  width: 100%;
+  padding: 16px 0;
+}
+
+.mobile-menu nav .mobile-shop-group > a {
+  color: #f2f5fb;
+  border-bottom-color: rgba(255, 255, 255, 0.14);
+}
+
+.mobile-menu nav .mobile-shop-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  color: #f2f5fb;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  letter-spacing: var(--track);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.mobile-menu nav .mobile-shop-chevron {
+  transform: rotate(0deg);
+  transition: transform 0.2s ease;
+}
+
+.mobile-menu nav .mobile-shop-toggle.open .mobile-shop-chevron {
+  transform: rotate(180deg);
+}
+
+.mobile-menu nav .mobile-shop-children {
+  display: none;
+}
+
+.mobile-menu nav .mobile-shop-children.open {
+  display: block;
+  margin-top: 8px;
+}
+
+.mobile-menu nav .mobile-shop-category {
+  display: block;
+  margin-left: 10px;
+  padding: 14px 0 14px 18px;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: none;
+  color: rgba(219, 228, 243, 0.92);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.mobile-menu nav .mobile-shop-category:hover,
+.mobile-menu nav .mobile-shop-category:focus-visible {
+  color: #fff;
+  border-left-color: rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.03);
+}
 
 .shop-category-banner {
   width: 100%;

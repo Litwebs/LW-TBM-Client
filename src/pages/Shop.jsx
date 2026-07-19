@@ -155,7 +155,6 @@ export default function Shop() {
           />
         )}
         <h1>{collection.name}</h1>
-        {collection.description && <p className="intro-text">{collection.description}</p>}
         {isLive && (
           <p
             className="muted"

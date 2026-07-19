@@ -108,9 +108,10 @@
 }
 
 .policy-contents {
+  --policy-sticky-top: clamp(72px, calc(var(--header-offset, 120px) + 8px), 118px);
   position: sticky;
-  top: calc(var(--header-offset, 120px) + 32px);
-  max-height: calc(100vh - var(--header-offset, 120px) - 64px);
+  top: var(--policy-sticky-top);
+  max-height: calc(100vh - var(--policy-sticky-top) - 16px);
   padding: 22px 0;
   overflow-y: auto;
   border-top: 1px solid var(--dm-silver-line-strong);

@@ -438,7 +438,8 @@ export default function Checkout() {
       }
     }
 
-    if (!termsAccepted) e.termsAccepted = "You must accept the Terms & Conditions and Privacy Policy";
+    if (!termsAccepted)
+      e.termsAccepted = "You must accept the Terms & Conditions and Privacy Policy";
 
     setErrors(e);
     if (e.termsAccepted) {
@@ -890,7 +891,9 @@ export default function Checkout() {
                     value={form.billingPostcode}
                     onChange={(event) => update("billingPostcode", event.target.value)}
                   />
-                  {errors.billingPostcode && <div className="form-error">{errors.billingPostcode}</div>}
+                  {errors.billingPostcode && (
+                    <div className="form-error">{errors.billingPostcode}</div>
+                  )}
                 </div>
               </div>
               <div className="form-row">
@@ -1009,13 +1012,28 @@ export default function Checkout() {
               }}
             />
             <span>
-              I have read and agree to the <Link to="/policies#terms">Terms &amp; Conditions</Link>{" "}
-              and <Link to="/policies#privacy">Privacy Policy</Link>.
-              You can also review our <Link to="/policies#shipping">Delivery Policy</Link>{" "}
-              and <Link to="/policies#returns">Returns &amp; Refunds Policy</Link>.
+              I have read and agree to the{" "}
+              <Link to="/policies#terms" target="_blank" rel="noopener noreferrer">
+                Terms &amp; Conditions
+              </Link>{" "}
+              and{" "}
+              <Link to="/policies#privacy" target="_blank" rel="noopener noreferrer">
+                Privacy Policy
+              </Link>
+              . You can also review our{" "}
+              <Link to="/policies#shipping" target="_blank" rel="noopener noreferrer">
+                Delivery Policy
+              </Link>{" "}
+              and{" "}
+              <Link to="/policies#returns" target="_blank" rel="noopener noreferrer">
+                Returns &amp; Refunds Policy
+              </Link>
+              .
             </span>
           </div>
-          {errors.termsAccepted && <div className="form-error checkout-terms-error">{errors.termsAccepted}</div>}
+          {errors.termsAccepted && (
+            <div className="form-error checkout-terms-error">{errors.termsAccepted}</div>
+          )}
           <button
             type="submit"
             className="btn btn-full btn-lg mt-32 checkout-submit-btn"
