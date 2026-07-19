@@ -42,7 +42,13 @@ export function normalizeProduct(raw) {
     ? raw.variants.map((variant) => ({
         id: String(variant?.id || variant?._id || ""),
         name: variant?.name || "Default",
+        sku: String(variant?.sku || "").trim(),
+        colour: String(variant?.colour || "").trim(),
+        finish: String(variant?.finish || "").trim(),
+        size: String(variant?.size || "").trim(),
+        packQuantity: Math.max(1, Number(variant?.packQuantity) || 1),
         price: Number(variant?.price) || 0,
+        compareAtPrice: Number(variant?.compareAtPrice) || 0,
         previousPriceText: String(variant?.previousPriceText || "").trim(),
         stockQuantity: Number(variant?.stockQuantity) || 0,
         lowStock: Boolean(variant?.lowStock),
@@ -51,10 +57,25 @@ export function normalizeProduct(raw) {
         images: Array.isArray(variant?.images) ? variant.images.map(fileUrl).filter(Boolean) : [],
       }))
     : [];
+  const selectedVariantId = String(raw?.selectedVariantId || normalizedVariants?.[0]?.id || "");
+  const selectedVariant = normalizedVariants.find((variant) => variant.id === selectedVariantId);
   const price =
-    raw?.pricing?.price ?? raw?.pricing?.amount ?? raw?.price ?? raw?.variants?.[0]?.price ?? 0;
-  const compareAt = raw?.pricing?.compareAt ?? raw?.pricing?.rrp ?? raw?.compareAt ?? 0;
+    selectedVariant?.price ??
+    raw?.pricing?.price ??
+    raw?.pricing?.amount ??
+    raw?.pricing?.min ??
+    raw?.price ??
+    raw?.variants?.[0]?.price ??
+    0;
+  const compareAt =
+    selectedVariant?.compareAtPrice ??
+    raw?.pricing?.compareAt ??
+    raw?.pricing?.rrp ??
+    raw?.compareAt ??
+    0;
   const image =
+    selectedVariant?.thumbnailImage ||
+    selectedVariant?.images?.[0] ||
     fileUrl(raw.thumbnailImage) ||
     fileUrl(raw?.galleryImages?.[0]) ||
     fileUrl(raw.image) ||
@@ -70,10 +91,12 @@ export function normalizeProduct(raw) {
     category,
     categorySlug: slugify(category),
     description: raw.description || "",
+    contentSections: { ...(raw.contentSections || {}) },
+    specifications: { ...(raw.specifications || {}) },
     image,
     galleryImages: gallery,
     variants: normalizedVariants,
-    selectedVariantId: raw?.selectedVariantId || normalizedVariants?.[0]?.id || undefined,
+    selectedVariantId: selectedVariantId || undefined,
     // Support selectedImages from the selected variant (for displaying multiple images on product page)
     selectedImages: Array.isArray(raw?.selectedImages)
       ? raw.selectedImages.map(fileUrl).filter(Boolean)
@@ -113,11 +136,13 @@ export async function fetchProductsPage({
   return { items, meta: data?.meta || {} };
 }
 
-export async function fetchPublicProduct(identifier) {
+export async function fetchPublicProduct(identifier, { variantId } = {}) {
   const value = String(identifier || "").trim();
   if (!value) return null;
 
-  const { data } = await api.get(`/api/products/${encodeURIComponent(value)}`);
+  const { data } = await api.get(`/api/products/${encodeURIComponent(value)}`, {
+    params: { variantId },
+  });
   return normalizeProduct(data?.data);
 }
 
@@ -314,6 +339,16 @@ export async function fetchPublicDeliveryFee() {
     return Number.isFinite(fee) && fee >= 0 ? fee : 1;
   } catch (error) {
     const message = requestMessage(error?.response || error) || "Could not load delivery fee";
+    throw new Error(message);
+  }
+}
+
+export async function fetchPublicBusinessInfo() {
+  try {
+    const response = await api.get("/api/business-info/public");
+    return unwrapData(response)?.business || null;
+  } catch (error) {
+    const message = requestMessage(error?.response || error) || "Could not load business information";
     throw new Error(message);
   }
 }

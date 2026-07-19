@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useApp } from "../context/AppContext.jsx";
 import { useProducts } from "../context/ProductsContext.jsx";
 import { SITE_BASE, CONTACT_EMAIL, fetchPublicProduct, slugify } from "../lib/api.js";
@@ -10,6 +10,8 @@ import Accordion from "../components/Accordion.jsx";
 import BrandSpinner from "../components/BrandSpinner.jsx";
 import ProductCard from "../components/ProductCard.jsx";
 import Seo from "../components/Seo.jsx";
+import VariantAttributes from "../components/VariantAttributes.jsx";
+import { formatGbp, originalPriceForVariant } from "../lib/pricing.js";
 
 function toImageUrl(value) {
   if (!value) return "";
@@ -22,12 +24,16 @@ function toImageUrl(value) {
 
 export default function Product() {
   const { slug } = useParams();
-  const { findBySlug, products } = useProducts();
+  const [searchParams] = useSearchParams();
+  const requestedVariantId = searchParams.get("variant") || "";
+  const { findBySlug, products, businessInfo } = useProducts();
   const contextProduct = findBySlug(slug);
   const [fetchedProduct, setFetchedProduct] = useState(null);
   const [detailLoading, setDetailLoading] = useState(!contextProduct);
   const [detailError, setDetailError] = useState(null);
-  const product = contextProduct || fetchedProduct;
+  // Prefer the detail response so recently edited variant fields are not
+  // shadowed by the lighter catalogue-list copy held in context.
+  const product = fetchedProduct || contextProduct;
   const navigate = useNavigate();
   const { addToCart, trackView, recentlyViewed } = useApp();
   const [qty, setQty] = useState(1);
@@ -38,19 +44,10 @@ export default function Product() {
   useEffect(() => {
     let active = true;
 
-    if (contextProduct) {
-      setFetchedProduct(null);
-      setDetailError(null);
-      setDetailLoading(false);
-      return () => {
-        active = false;
-      };
-    }
-
-    setDetailLoading(true);
+    setDetailLoading(!contextProduct);
     setDetailError(null);
 
-    fetchPublicProduct(slug)
+    fetchPublicProduct(slug, { variantId: requestedVariantId || undefined })
       .then((nextProduct) => {
         if (!active) return;
         setFetchedProduct(nextProduct);
@@ -67,15 +64,21 @@ export default function Product() {
     return () => {
       active = false;
     };
-  }, [contextProduct, slug]);
+  }, [contextProduct, slug, requestedVariantId]);
 
   useEffect(() => {
     if (product) {
       trackView(product.id);
       setMainImg(toImageUrl(product.image));
-      setSelectedVariantId(product.selectedVariantId || product.variants?.[0]?.id || "");
+      setSelectedVariantId(
+        (requestedVariantId && product.variants?.some((v) => v.id === requestedVariantId)
+          ? requestedVariantId
+          : product.selectedVariantId) ||
+          product.variants?.[0]?.id ||
+          "",
+      );
     }
-  }, [product, trackView]);
+  }, [product, requestedVariantId, trackView]);
 
   useEffect(() => {
     document.body.classList.add("product-page-silver-theme");
@@ -168,12 +171,9 @@ export default function Product() {
       </div>
     );
 
-  const comparePriceText = String(selectedVariant?.previousPriceText || "").trim();
-  const displayComparePrice = comparePriceText
-    ? comparePriceText.startsWith("£")
-      ? comparePriceText
-      : `£${comparePriceText}`
-    : "";
+  const originalPrice =
+    originalPriceForVariant(selectedVariant, activePrice) ||
+    (Number(product.compareAt || 0) > activePrice ? Number(product.compareAt) : 0);
   const variantName = selectedVariant?.name || "Default";
   const priceOnRequest = !product.price || product.price <= 0;
   const stockQuantity = Number(selectedVariant?.stockQuantity || 0);
@@ -192,6 +192,10 @@ export default function Product() {
       name: selectedVariant.name,
       price: activePrice,
       thumbnailImage: selectedVariant.thumbnailImage,
+      colour: selectedVariant.colour,
+      finish: selectedVariant.finish,
+      size: selectedVariant.size,
+      packQuantity: selectedVariant.packQuantity,
     });
   };
   const handleBuy = () => {
@@ -201,6 +205,10 @@ export default function Product() {
       name: selectedVariant.name,
       price: activePrice,
       thumbnailImage: selectedVariant.thumbnailImage,
+      colour: selectedVariant.colour,
+      finish: selectedVariant.finish,
+      size: selectedVariant.size,
+      packQuantity: selectedVariant.packQuantity,
     });
     navigate("/checkout");
   };
@@ -212,6 +220,37 @@ export default function Product() {
 
   const descriptionHtml = sanitizeHtml(product.description);
   const descriptionText = htmlToText(product.description);
+  const specificationLabels = {
+    productType: "Product type",
+    material: "Material",
+    panelDimensions: "Panel dimensions",
+    coveragePerPanel: "Coverage per panel",
+    slatWidth: "Slat width",
+    gapBetweenSlats: "Gap between slats",
+    packQuantity: "Pack quantity",
+    application: "Application",
+    installationMethod: "Installation method",
+    suitability: "Indoor / outdoor suitability",
+    waterResistance: "Water resistance",
+    warranty: "Warranty",
+  };
+  const specifications = Object.entries(product.specifications || {}).filter(
+    ([, value]) => String(value || "").trim(),
+  );
+  const informationSections = [
+    ["installation", "Installation"],
+    ["delivery", "Delivery"],
+    ["returns", "Returns & Refunds"],
+    ["careMaintenance", "Care and Maintenance"],
+    ["faqs", "FAQs"],
+  ]
+    .map(([key, label]) => ({
+      q: label,
+      html: sanitizeHtml(
+        product.contentSections?.[key] || businessInfo?.productContentDefaults?.[key] || "",
+      ),
+    }))
+    .filter((section) => htmlToText(section.html));
 
   const productJsonLd = {
     "@context": "https://schema.org",
@@ -278,7 +317,7 @@ export default function Product() {
             alt={altText}
             width="1000"
             height="1000"
-            fetchpriority="high"
+            fetchPriority="high"
           />
           <div className="pdp-thumbs">
             {thumbs.map((t, i) => (
@@ -286,6 +325,9 @@ export default function Product() {
                 key={`${t}-${i}`}
                 src={t}
                 alt={`${product.title} image ${i + 1}`}
+                loading="lazy"
+                width="120"
+                height="120"
                 className={i === activeThumbIndex ? "active" : ""}
                 onClick={() => {
                   setMainImg(t);
@@ -303,12 +345,8 @@ export default function Product() {
             ) : (
               <>
                 <span className="price-sale">£{Number(activePrice).toFixed(2)}</span>
-                {comparePriceText ? (
-                  <span className="price-compare">{displayComparePrice}</span>
-                ) : (
-                  product.compareAt > activePrice && (
-                    <span className="price-compare">£{Number(product.compareAt).toFixed(2)}</span>
-                  )
+                {originalPrice > 0 && (
+                  <span className="price-compare">Was {formatGbp(originalPrice)}</span>
                 )}
               </>
             )}
@@ -338,6 +376,7 @@ export default function Product() {
                 </button>
               ))}
             </div>
+            <VariantAttributes variant={selectedVariant} />
           </div>
 
           <div className="qty-row">
@@ -395,24 +434,25 @@ export default function Product() {
             )}
           </div>
 
-          <div style={{ marginTop: 32 }}>
-            <Accordion
-              items={[
-                {
-                  q: "Installation",
-                  a: "Panels can be installed in minutes using grab adhesive or screws. Full step-by-step instructions included.",
-                },
-                {
-                  q: "Delivery",
-                  a: "Standard UK delivery is 2–4 working days. Express next-day delivery available at checkout.",
-                },
-                {
-                  q: "Returns",
-                  a: "Free returns within 30 days on unused panels in original packaging.",
-                },
-              ]}
-            />
-          </div>
+          {specifications.length > 0 && (
+            <div className="pdp-specifications" style={{ marginTop: 32 }}>
+              <h4>Product specifications</h4>
+              <dl>
+                {specifications.map(([key, value]) => (
+                  <div key={key}>
+                    <dt>{specificationLabels[key] || key.replace(/([A-Z])/g, " $1")}</dt>
+                    <dd>{String(value)}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          )}
+
+          {informationSections.length > 0 && (
+            <div style={{ marginTop: 32 }}>
+              <Accordion items={informationSections} />
+            </div>
+          )}
         </div>
       </div>
 

@@ -72,6 +72,10 @@ export function AppProvider({ children }) {
           product?.selectedVariantId ||
           product?.variants?.[0]?.id,
         name: variant?.name || variant?.label || "Default",
+        colour: String(variant?.colour || variant?.name || variant?.label || "").trim(),
+        finish: String(variant?.finish || "").trim(),
+        size: String(variant?.size || "").trim(),
+        packQuantity: Math.max(1, Number(variant?.packQuantity) || 1),
         price: Number(variant?.price ?? product?.price ?? 0),
         thumbnailImage: variant?.thumbnailImage || null,
       };

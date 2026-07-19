@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import Seo from "../components/Seo.jsx";
-import livingRoomImage from "../assets/Images/living room.png";
-import officeImage from "../assets/Images/office.png";
-import mediaWallImage from "../assets/Images/media wall.png";
-import hallwayImage from "../assets/Images/hall way.png";
+import livingRoomImage from "../assets/Images/living room.webp";
+import officeImage from "../assets/Images/office.webp";
+import mediaWallImage from "../assets/Images/media wall.webp";
+import hallwayImage from "../assets/Images/hall way.webp";
 
 export default function About() {
   return (

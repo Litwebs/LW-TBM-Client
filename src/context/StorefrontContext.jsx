@@ -4,6 +4,7 @@ import {
   fetchActiveDiscounts,
   fetchAllProducts,
   fetchPublicCategories,
+  fetchPublicBusinessInfo,
   normalizeAnnouncement,
   normalizeCategory,
   slugify,
@@ -55,6 +56,7 @@ export function StorefrontProvider({ children }) {
   const [apiCategories, setApiCategories] = useState([]);
   const [announcement, setAnnouncement] = useState(null);
   const [discounts, setDiscounts] = useState([]);
+  const [businessInfo, setBusinessInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -63,11 +65,12 @@ export function StorefrontProvider({ children }) {
     setError(null);
 
     try {
-      const [productsRes, categoriesRes, announcementRes, discountsRes] = await Promise.allSettled([
+      const [productsRes, categoriesRes, announcementRes, discountsRes, businessRes] = await Promise.allSettled([
         fetchAllProducts({ pageSize: 30 }),
         fetchPublicCategories(),
         fetchActiveAnnouncement(),
         fetchActiveDiscounts({ pageSize: 30 }),
+        fetchPublicBusinessInfo(),
       ]);
 
       if (productsRes.status === "fulfilled") {
@@ -91,6 +94,10 @@ export function StorefrontProvider({ children }) {
 
       if (discountsRes.status === "fulfilled") {
         setDiscounts(discountsRes.value || []);
+      }
+
+      if (businessRes.status === "fulfilled") {
+        setBusinessInfo(businessRes.value || null);
       }
 
       if (
@@ -182,6 +189,9 @@ export function StorefrontProvider({ children }) {
       customer,
       cartItems,
       deliveryAddress,
+      billingAddress,
+      billingSameAsDelivery,
+      legalAcceptance,
       customerInstructions,
       discountCode,
       deliveryDate,
@@ -199,6 +209,9 @@ export function StorefrontProvider({ children }) {
         items,
         discountCode,
         deliveryAddress,
+        billingAddress,
+        billingSameAsDelivery,
+        legalAcceptance,
         customerInstructions,
         deliveryDate,
       });
@@ -250,6 +263,7 @@ export function StorefrontProvider({ children }) {
       categories,
       announcement,
       discounts,
+      businessInfo,
       reload: loadStorefront,
       ensureGuestCustomer,
       validateDiscountForCart,
@@ -265,6 +279,7 @@ export function StorefrontProvider({ children }) {
     error,
     announcement,
     discounts,
+    businessInfo,
     loadStorefront,
     ensureGuestCustomer,
     validateDiscountForCart,

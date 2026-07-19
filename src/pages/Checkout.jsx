@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { ShieldIcon, ToolIcon, TruckIcon } from "../components/Icons.jsx";
 import { useApp } from "../context/AppContext.jsx";
@@ -10,6 +11,7 @@ import {
 } from "../lib/api.js";
 import { trackBeginCheckout, trackPurchase } from "../lib/analytics.js";
 import Seo from "../components/Seo.jsx";
+import VariantAttributes from "../components/VariantAttributes.jsx";
 
 function toUiStatus(apiStatus) {
   if (apiStatus === "refunded" || apiStatus === "partially_refunded") return "Refunded";
@@ -152,8 +154,15 @@ export default function Checkout() {
     city: "",
     postcode: "",
     country: "United Kingdom",
+    billingAddress: "",
+    billingAddress2: "",
+    billingCity: "",
+    billingPostcode: "",
+    billingCountry: "United Kingdom",
     notes: "",
   });
+  const [billingSameAsDelivery, setBillingSameAsDelivery] = useState(true);
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const [errors, setErrors] = useState({});
   const [done, setDone] = useState(null);
   const [deliveryFee, setDeliveryFee] = useState(1);
@@ -165,6 +174,7 @@ export default function Checkout() {
   const [isEditingDetails, setIsEditingDetails] = useState(false);
   const loadedSessionRef = useRef("");
   const checkoutTrackedRef = useRef("");
+  const termsRef = useRef(null);
   const checkoutEmail =
     sessionStorage.getItem("tbm_checkout_email") || form.email || user?.email || "";
   const savedAddresses = useMemo(
@@ -413,7 +423,30 @@ export default function Checkout() {
       e.notes = "Order notes must be 1000 characters or less";
     }
 
+    if (!billingSameAsDelivery) {
+      ["billingAddress", "billingCity", "billingPostcode", "billingCountry"].forEach((field) => {
+        if (!String(form[field] || "").trim()) e[field] = "This field is required";
+      });
+      if (form.billingAddress.trim() && form.billingAddress.trim().length < 3) {
+        e.billingAddress = "Address must be at least 3 characters";
+      }
+      if (form.billingCity.trim() && form.billingCity.trim().length < 2) {
+        e.billingCity = "City must be at least 2 characters";
+      }
+      if (form.billingPostcode.trim() && form.billingPostcode.trim().length < 3) {
+        e.billingPostcode = "Postcode must be at least 3 characters";
+      }
+    }
+
+    if (!termsAccepted) e.termsAccepted = "You must accept the Terms & Conditions and Privacy Policy";
+
     setErrors(e);
+    if (e.termsAccepted) {
+      window.requestAnimationFrame(() => {
+        termsRef.current?.focus();
+        termsRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+    }
     return Object.keys(e).length === 0;
   };
   const submit = async (e) => {
@@ -439,6 +472,15 @@ export default function Checkout() {
         postcode: selectedAddress?.postcode || form.postcode,
         country: selectedAddress?.country || form.country,
       };
+      const billingAddress = billingSameAsDelivery
+        ? { ...address }
+        : {
+            line1: form.billingAddress,
+            line2: form.billingAddress2,
+            city: form.billingCity,
+            postcode: form.billingPostcode,
+            country: form.billingCountry,
+          };
 
       const created = await createCheckoutOrder({
         customer: {
@@ -450,6 +492,12 @@ export default function Checkout() {
         },
         cartItems: cart,
         deliveryAddress: address,
+        billingAddress,
+        billingSameAsDelivery,
+        legalAcceptance: {
+          accepted: true,
+          termsVersion: "2026-07-14",
+        },
         customerInstructions: form.notes,
         discountCode: discountCode || undefined,
       });
@@ -787,6 +835,76 @@ export default function Checkout() {
             </>
           )}
 
+          <h3 style={{ fontSize: 13, letterSpacing: "0.18em", margin: "32px 0 20px" }}>
+            Billing Address
+          </h3>
+          <label className="checkout-choice-row">
+            <input
+              type="checkbox"
+              checked={billingSameAsDelivery}
+              onChange={(event) => {
+                setBillingSameAsDelivery(event.target.checked);
+                setErrors((current) => {
+                  const next = { ...current };
+                  ["billingAddress", "billingCity", "billingPostcode", "billingCountry"].forEach(
+                    (field) => delete next[field],
+                  );
+                  return next;
+                });
+              }}
+            />
+            <span>Use shipping address as billing address</span>
+          </label>
+          {!billingSameAsDelivery && (
+            <div className="checkout-billing-fields">
+              <div className="form-row">
+                <label>Address line 1</label>
+                <input
+                  className={errors.billingAddress ? "is-invalid" : ""}
+                  value={form.billingAddress}
+                  onChange={(event) => update("billingAddress", event.target.value)}
+                />
+                {errors.billingAddress && <div className="form-error">{errors.billingAddress}</div>}
+              </div>
+              <div className="form-row">
+                <label>Address line 2 (optional)</label>
+                <input
+                  value={form.billingAddress2}
+                  onChange={(event) => update("billingAddress2", event.target.value)}
+                />
+              </div>
+              <div className="form-row cols-2">
+                <div>
+                  <label>City</label>
+                  <input
+                    className={errors.billingCity ? "is-invalid" : ""}
+                    value={form.billingCity}
+                    onChange={(event) => update("billingCity", event.target.value)}
+                  />
+                  {errors.billingCity && <div className="form-error">{errors.billingCity}</div>}
+                </div>
+                <div>
+                  <label>Postcode</label>
+                  <input
+                    className={errors.billingPostcode ? "is-invalid" : ""}
+                    value={form.billingPostcode}
+                    onChange={(event) => update("billingPostcode", event.target.value)}
+                  />
+                  {errors.billingPostcode && <div className="form-error">{errors.billingPostcode}</div>}
+                </div>
+              </div>
+              <div className="form-row">
+                <label>Country</label>
+                <input
+                  className={errors.billingCountry ? "is-invalid" : ""}
+                  value={form.billingCountry}
+                  onChange={(event) => update("billingCountry", event.target.value)}
+                />
+                {errors.billingCountry && <div className="form-error">{errors.billingCountry}</div>}
+              </div>
+            </div>
+          )}
+
           <h3 style={{ fontSize: 13, letterSpacing: "0.18em", margin: "32px 0 20px" }}>Payment</h3>
           <p className="muted" style={{ marginBottom: 8 }}>
             You will be redirected to secure Stripe checkout to complete payment.
@@ -818,6 +936,7 @@ export default function Checkout() {
               <div style={{ flex: 1 }}>
                 <div>{it.product.title}</div>
                 <div className="muted">{it.variant?.name || "Default"}</div>
+                <VariantAttributes variant={it.variant} compact />
                 <div
                   style={{
                     display: "inline-flex",
@@ -879,6 +998,24 @@ export default function Checkout() {
               <span>{deliveryFeeLoading ? "Calculating..." : `£${total.toFixed(2)}`}</span>
             </div>
           </div>
+          <div className={`checkout-terms ${errors.termsAccepted ? "is-invalid" : ""}`}>
+            <input
+              ref={termsRef}
+              type="checkbox"
+              checked={termsAccepted}
+              onChange={(event) => {
+                setTermsAccepted(event.target.checked);
+                setErrors((current) => ({ ...current, termsAccepted: undefined }));
+              }}
+            />
+            <span>
+              I have read and agree to the <Link to="/policies#terms">Terms &amp; Conditions</Link>{" "}
+              and <Link to="/policies#privacy">Privacy Policy</Link>.
+              You can also review our <Link to="/policies#shipping">Delivery Policy</Link>{" "}
+              and <Link to="/policies#returns">Returns &amp; Refunds Policy</Link>.
+            </span>
+          </div>
+          {errors.termsAccepted && <div className="form-error checkout-terms-error">{errors.termsAccepted}</div>}
           <button
             type="submit"
             className="btn btn-full btn-lg mt-32 checkout-submit-btn"

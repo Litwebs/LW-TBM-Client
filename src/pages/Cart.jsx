@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useApp } from "../context/AppContext.jsx";
 import { useStorefront } from "../context/StorefrontContext.jsx";
 import Seo from "../components/Seo.jsx";
+import VariantAttributes from "../components/VariantAttributes.jsx";
 
 export default function Cart() {
   const { cart, updateQty, removeFromCart, subtotal, toast, user, lineUnitPrice, lineImageUrl } =
@@ -106,6 +107,7 @@ export default function Cart() {
                 <div style={{ fontSize: 12, color: "var(--muted)", marginBottom: 12 }}>
                   Variant: {it.variant?.name || "Default"}
                 </div>
+                <VariantAttributes variant={it.variant} compact />
                 <div className="qty-stepper" style={{ display: "inline-flex" }}>
                   <button onClick={() => updateQty(it.key, it.qty - 1)}>−</button>
                   <input

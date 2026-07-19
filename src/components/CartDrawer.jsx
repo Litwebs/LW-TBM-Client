@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useApp } from "../context/AppContext.jsx";
 import { CloseIcon } from "./Icons.jsx";
+import VariantAttributes from "./VariantAttributes.jsx";
 
 export default function CartDrawer() {
   const {
@@ -42,6 +43,7 @@ export default function CartDrawer() {
                   <div>
                     <div className="title">{it.product.title}</div>
                     <div className="meta">Variant: {it.variant?.name || "Default"}</div>
+                    <VariantAttributes variant={it.variant} compact />
                     <div className="row">
                       <div className="qty">
                         <button onClick={() => updateQty(it.key, it.qty - 1)}>−</button>

@@ -9,6 +9,7 @@ import ToastHost from "./components/ToastHost.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import ScrollTopButton from "./components/ScrollTopButton.jsx";
 import GaPageTracker from "./components/GaPageTracker.jsx";
+import CookieConsent from "./components/CookieConsent.jsx";
 
 import Home from "./pages/Home.jsx";
 import Shop from "./pages/Shop.jsx";
@@ -94,6 +95,7 @@ export default function App() {
       <CartDrawer />
       <ToastHost />
       <ScrollTopButton />
+      <CookieConsent />
     </>
   );
 }

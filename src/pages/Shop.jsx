@@ -28,7 +28,11 @@ export default function Shop() {
   const { categories, isLive, loading } = useProducts();
   const apiCat = categories.find((c) => c.slug === slug);
   const collection = apiCat
-    ? { name: apiCat.name, description: `Shop our ${apiCat.name} collection.` }
+    ? {
+        name: apiCat.name,
+        description: apiCat.subtitle || `Shop our ${apiCat.name} collection.`,
+        image: apiCat.image || "",
+      }
     : { name: "Products", description: "Our complete catalogue." };
 
   const [sort, setSort] = useState("newest");
@@ -140,7 +144,18 @@ export default function Shop() {
         &nbsp;/&nbsp; <span>{collection.name}</span>
       </div>
       <div className="shop-header">
+        {collection.image && (
+          <img
+            className="shop-category-banner"
+            src={collection.image}
+            alt=""
+            width="1400"
+            height="420"
+            fetchPriority="high"
+          />
+        )}
         <h1>{collection.name}</h1>
+        {collection.description && <p className="intro-text">{collection.description}</p>}
         {isLive && (
           <p
             className="muted"

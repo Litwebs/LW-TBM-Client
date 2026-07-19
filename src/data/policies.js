@@ -2561,4 +2561,46 @@ export const policies = [
       },
     ],
   },
+  {
+    id: "cookies",
+    shortTitle: "Cookies",
+    title: "Cookie Policy",
+    summary: "How necessary, analytics and marketing cookies are used and controlled.",
+    blocks: [
+      { type: "meta", text: "Last updated: 18 July 2026" },
+      {
+        type: "paragraph",
+        text: "This Cookie Policy explains how The British Manor uses cookies and similar technologies on this website.",
+      },
+      { type: "heading", level: 2, text: "1. WHAT COOKIES ARE" },
+      {
+        type: "paragraph",
+        text: "Cookies are small text files stored by your browser. They can keep a shopping basket working, protect a checkout session, remember a preference, or help us understand website performance.",
+      },
+      { type: "heading", level: 2, text: "2. COOKIE CATEGORIES" },
+      {
+        type: "list",
+        items: [
+          "Necessary cookies: required for core functions such as the basket, checkout, account security and consent preferences.",
+          "Analytics cookies: optional measurement used to understand visits and improve website performance.",
+          "Marketing cookies: optional measurement or personalisation used only when a relevant integration is configured.",
+        ],
+      },
+      { type: "heading", level: 2, text: "3. YOUR CHOICES" },
+      {
+        type: "paragraph",
+        text: "Optional cookies are not activated until you consent. You can accept all, reject non-essential cookies, choose categories, or reopen Cookie settings at any time to withdraw or change consent.",
+      },
+      { type: "heading", level: 2, text: "4. HOW LONG WE REMEMBER" },
+      {
+        type: "paragraph",
+        text: "We remember your consent choice for up to 180 days, after which the website will ask you again. Individual service cookies may have shorter lifetimes.",
+      },
+      { type: "heading", level: 2, text: "5. CONTACT" },
+      {
+        type: "paragraph",
+        text: "For questions about cookies or privacy, contact info@thebritishmanor.co.uk.",
+      },
+    ],
+  },
 ];

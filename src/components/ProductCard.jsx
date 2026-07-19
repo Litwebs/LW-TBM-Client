@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useApp } from "../context/AppContext.jsx";
+import { formatGbp, originalPriceForVariant } from "../lib/pricing.js";
 
 export default function ProductCard({ product, onQuickView }) {
   const { addToCart } = useApp();
@@ -61,19 +62,10 @@ export default function ProductCard({ product, onQuickView }) {
   }, [activeImage, currentImage]);
 
   const priceOnRequest = !product.price || product.price <= 0;
-  const compareVariant = useMemo(
-    () =>
-      (product.variants || []).find((variant) => String(variant?.previousPriceText || "").trim()) ||
-      null,
-    [product.variants],
-  );
-  const comparePriceText = String(compareVariant?.previousPriceText || "").trim();
-  const displayComparePrice = comparePriceText
-    ? comparePriceText.startsWith("£")
-      ? comparePriceText
-      : `£${comparePriceText}`
-    : "";
-  const hasComparePrice = Number(product.compareAt || 0) > Number(product.price || 0);
+  const cardVariant = product.variants?.[0] || null;
+  const originalPrice =
+    originalPriceForVariant(cardVariant, product.price) ||
+    (Number(product.compareAt || 0) > Number(product.price || 0) ? Number(product.compareAt) : 0);
   const stockState = useMemo(() => {
     const variants = Array.isArray(product?.variants) ? product.variants : [];
 
@@ -160,11 +152,9 @@ export default function ProductCard({ product, onQuickView }) {
           ) : (
             <>
               <span className="price-sale">£{Number(product.price).toFixed(2)}</span>
-              {comparePriceText ? (
-                <span className="price-compare">{displayComparePrice}</span>
-              ) : hasComparePrice ? (
-                <span className="price-compare">£{Number(product.compareAt).toFixed(2)}</span>
-              ) : null}
+              {originalPrice > 0 && (
+                <span className="price-compare">Was {formatGbp(originalPrice)}</span>
+              )}
             </>
           )}
         </div>

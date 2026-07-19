@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { useApp } from "../context/AppContext.jsx";
 import { CloseIcon } from "./Icons.jsx";
 import Rating from "./Rating.jsx";
+import { formatGbp, originalPriceForVariant } from "../lib/pricing.js";
 
 export default function QuickViewModal({ product, onClose }) {
   const { addToCart } = useApp();
@@ -16,12 +17,9 @@ export default function QuickViewModal({ product, onClose }) {
   );
 
   const activePrice = Number(selectedVariant?.price ?? product.price ?? 0);
-  const comparePriceText = String(selectedVariant?.previousPriceText || "").trim();
-  const displayComparePrice = comparePriceText
-    ? comparePriceText.startsWith("£")
-      ? comparePriceText
-      : `£${comparePriceText}`
-    : "";
+  const originalPrice =
+    originalPriceForVariant(selectedVariant, activePrice) ||
+    (Number(product.compareAt || 0) > activePrice ? Number(product.compareAt) : 0);
   const stockQuantity = Number(selectedVariant?.stockQuantity || 0);
   const isOutOfStock = stockQuantity <= 0;
 
@@ -54,7 +52,7 @@ export default function QuickViewModal({ product, onClose }) {
               <span style={{ color: "var(--accent)", fontWeight: 500 }}>
                 £{activePrice.toFixed(2)}
               </span>
-              {comparePriceText ? (
+              {originalPrice > 0 && (
                 <span
                   style={{
                     color: "#888",
@@ -64,22 +62,8 @@ export default function QuickViewModal({ product, onClose }) {
                     fontWeight: 400,
                   }}
                 >
-                  {displayComparePrice}
+                  Was {formatGbp(originalPrice)}
                 </span>
-              ) : (
-                product.compareAt > activePrice && (
-                  <span
-                    style={{
-                      color: "#888",
-                      textDecoration: "line-through",
-                      marginLeft: 8,
-                      fontSize: 15,
-                      fontWeight: 400,
-                    }}
-                  >
-                    £{product.compareAt.toFixed(2)}
-                  </span>
-                )
               )}
             </div>
             <Rating value={product.rating} count={product.reviews} />

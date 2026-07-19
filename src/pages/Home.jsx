@@ -14,7 +14,7 @@ import { reviews } from "../data/reviews.js";
 import { useState } from "react";
 import Seo from "../components/Seo.jsx";
 import { SITE_BASE } from "../lib/api.js";
-import bedroom from "../assets/Images/bedroom.png";
+import bedroom from "../assets/Images/bedroom.webp";
 
 const HERO_BG = "/images/hero-bg.jpg";
 
@@ -177,7 +177,7 @@ export default function Home() {
           <div className="cat-grid cat-grid-2">
             {homeCategories.map((c) => (
               <Link key={c.slug} to={homeCategoryLink(c)} className="cat-card">
-                <img src={c.image} alt={c.name} />
+                <img src={c.image} alt={c.name} loading="lazy" width="900" height="720" />
                 <div className="cat-overlay">
                   <h3>{c.name}</h3>
                   {c.tagline && <p className="cat-tagline">{c.tagline}</p>}
@@ -190,7 +190,7 @@ export default function Home() {
       </section>
 
       <div className="split">
-        <img className="split-img" src={bedroom} alt="Bedroom feature wall" />
+        <img className="split-img" src={bedroom} alt="Bedroom feature wall" loading="lazy" width="1200" height="900" />
         <div className="split-content">
           <div className="eyebrow">House Philosophy</div>
           <h2>An interior should whisper, never shout.</h2>
@@ -215,10 +215,16 @@ export default function Home() {
             <img
               src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1100&q=80"
               alt="Brass detail on oak panel"
+              loading="lazy"
+              width="1100"
+              height="825"
             />
             <img
               src="https://images.unsplash.com/photo-1618220179428-22790b461013?w=900&q=80"
               alt="Atelier joinery in progress"
+              loading="lazy"
+              width="900"
+              height="675"
             />
           </div>
           <div>

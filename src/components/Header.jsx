@@ -3,14 +3,15 @@ import { Link, NavLink } from "react-router-dom";
 import { useApp } from "../context/AppContext.jsx";
 import { useStorefront } from "../context/StorefrontContext.jsx";
 import { CartIcon, MenuIcon, UserIcon, CloseIcon } from "./Icons.jsx";
+import ProductSearch from "./ProductSearch.jsx";
 
 const GENERAL_NAV = [
   { to: "/", label: "Home" },
-  { to: "/collections/products", label: "Shop All" },
+  { to: "/collections/products", label: "Shop", isShop: true },
   { to: "/portfolio", label: "Portfolio" },
   { to: "/reviews", label: "Reviews" },
   { to: "/faqs", label: "FAQs" },
-  { to: "/about", label: "About" },
+  { to: "/about", label: "About Us" },
   { to: "/contact", label: "Contact" },
 ];
 
@@ -42,7 +43,9 @@ export default function Header() {
   const { cartCount, setCartOpen, menuOpen, setMenuOpen } = useApp();
   const { announcement, discounts, apiCategories } = useStorefront();
   const headerRef = useRef(null);
+  const shopMenuRef = useRef(null);
   const [isCondensed, setIsCondensed] = useState(false);
+  const [shopMenuOpen, setShopMenuOpen] = useState(false);
   const topDiscount = Array.isArray(discounts) && discounts.length > 0 ? discounts[0] : null;
 
   const categoryNav = useMemo(
@@ -56,24 +59,21 @@ export default function Header() {
     [apiCategories],
   );
 
-  const navItems = useMemo(() => {
-    const seen = new Set();
-    const items = [];
-    const [home, shopAll, ...generalRest] = GENERAL_NAV;
+  const navItems = GENERAL_NAV;
 
-    const pushUnique = (item) => {
-      if (!item?.to || seen.has(item.to)) return;
-      seen.add(item.to);
-      items.push(item);
+  useEffect(() => {
+    const closeShopMenu = (event) => {
+      if (event.type === "keydown" && event.key !== "Escape") return;
+      if (event.type === "pointerdown" && shopMenuRef.current?.contains(event.target)) return;
+      setShopMenuOpen(false);
     };
-
-    pushUnique(home);
-    pushUnique(shopAll);
-    categoryNav.forEach(pushUnique);
-    generalRest.forEach(pushUnique);
-
-    return items;
-  }, [categoryNav]);
+    document.addEventListener("pointerdown", closeShopMenu);
+    document.addEventListener("keydown", closeShopMenu);
+    return () => {
+      document.removeEventListener("pointerdown", closeShopMenu);
+      document.removeEventListener("keydown", closeShopMenu);
+    };
+  }, []);
 
   useEffect(() => {
     const CONDENSE_AT = 140;
@@ -176,6 +176,7 @@ export default function Header() {
             <img src="/images/tbm-logo.png" alt="The British Manor" className="brand-mark" />
           </Link>
           <div className="header-side header-side-right">
+            <ProductSearch />
             <Link to="/account" className="icon-btn" aria-label="Account">
               <UserIcon />
             </Link>
@@ -186,11 +187,33 @@ export default function Header() {
           </div>
         </div>
         <nav className="nav nav-row">
-          {navItems.map((n) => (
-            <NavLink key={n.to} to={n.to} end={n.to === "/"}>
-              {n.label}
-            </NavLink>
-          ))}
+          {navItems.map((n) =>
+            n.isShop ? (
+              <div className="header-shop-menu" ref={shopMenuRef} key={n.to}>
+                <button
+                  type="button"
+                  className="header-shop-trigger"
+                  aria-expanded={shopMenuOpen}
+                  aria-controls="header-shop-dropdown"
+                  onClick={() => setShopMenuOpen((current) => !current)}
+                >
+                  Shop <span aria-hidden="true">⌄</span>
+                </button>
+                <div id="header-shop-dropdown" className={`header-shop-dropdown ${shopMenuOpen ? "open" : ""}`}>
+                  <Link to="/collections/products" onClick={() => setShopMenuOpen(false)}>Shop all</Link>
+                  {categoryNav.map((category) => (
+                    <Link key={category.to} to={category.to} onClick={() => setShopMenuOpen(false)}>
+                      {category.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <NavLink key={n.to} to={n.to} end={n.to === "/"}>
+                {n.label}
+              </NavLink>
+            ),
+          )}
         </nav>
       </header>
       <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
@@ -204,9 +227,14 @@ export default function Header() {
         </div>
         <nav>
           {navItems.map((n) => (
-            <Link key={n.to} to={n.to} onClick={() => setMenuOpen(false)}>
-              {n.label}
-            </Link>
+            <div key={n.to} className={n.isShop ? "mobile-shop-group" : undefined}>
+              <Link to={n.to} onClick={() => setMenuOpen(false)}>{n.label}</Link>
+              {n.isShop && categoryNav.map((category) => (
+                <Link className="mobile-shop-category" key={category.to} to={category.to} onClick={() => setMenuOpen(false)}>
+                  {category.label}
+                </Link>
+              ))}
+            </div>
           ))}
         </nav>
       </div>

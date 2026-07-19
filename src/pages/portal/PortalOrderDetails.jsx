@@ -154,7 +154,19 @@ export default function PortalOrderDetails() {
                     className="portal-table-row portal-cols-4"
                     key={`${item.sku || item.name}-${index}`}
                   >
-                    <div>{item.name}</div>
+                    <div>
+                      <div>{item.name}</div>
+                      <div className="muted" style={{ fontSize: 12 }}>
+                        {[
+                          item.colour && `Colour: ${item.colour}`,
+                          item.finish && `Finish: ${item.finish}`,
+                          item.size && `Size: ${item.size}`,
+                          Number(item.packQuantity || 0) > 1 && `Pack: ${item.packQuantity}`,
+                        ]
+                          .filter(Boolean)
+                          .join(" · ")}
+                      </div>
+                    </div>
                     <div>{item.sku || "-"}</div>
                     <div>{item.quantity}</div>
                     <div>

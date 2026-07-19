@@ -8,7 +8,9 @@ export default function Accordion({ items }) {
           <button className="accordion-trigger" onClick={() => setOpen(open === i ? null : i)}>
             <span>{it.q}</span><span className="accordion-icon" />
           </button>
-          <div className="accordion-content"><p>{it.a}</p></div>
+          <div className="accordion-content">
+            {it.html ? <div dangerouslySetInnerHTML={{ __html: it.html }} /> : <p>{it.a}</p>}
+          </div>
         </div>
       ))}
     </div>

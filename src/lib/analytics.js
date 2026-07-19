@@ -1,4 +1,66 @@
 const GA_CURRENCY = "GBP";
+export const GA_MEASUREMENT_ID = "G-SQMX6XEKLC";
+export const COOKIE_CONSENT_KEY = "tbm_cookie_consent_v1";
+
+export function readCookieConsent() {
+  if (typeof window === "undefined") return null;
+  try {
+    const stored = JSON.parse(window.localStorage.getItem(COOKIE_CONSENT_KEY) || "null");
+    if (!stored?.expiresAt || Date.now() >= Number(stored.expiresAt)) return null;
+    return stored;
+  } catch {
+    return null;
+  }
+}
+
+export function applyCookieConsent(consent) {
+  if (typeof window === "undefined") return;
+  const analyticsGranted = Boolean(consent?.analytics);
+  window[`ga-disable-${GA_MEASUREMENT_ID}`] = !analyticsGranted;
+
+  if (!analyticsGranted && typeof document !== "undefined") {
+    document.cookie.split(";").forEach((entry) => {
+      const name = entry.split("=")[0]?.trim();
+      if (name === "_ga" || name?.startsWith("_ga_")) {
+        document.cookie = `${name}=; Max-Age=0; path=/; SameSite=Lax`;
+      }
+    });
+  }
+
+  if (analyticsGranted) initializeAnalytics();
+  if (typeof window.gtag === "function") {
+    window.gtag("consent", "update", {
+      analytics_storage: analyticsGranted ? "granted" : "denied",
+      ad_storage: consent?.marketing ? "granted" : "denied",
+      ad_user_data: consent?.marketing ? "granted" : "denied",
+      ad_personalization: consent?.marketing ? "granted" : "denied",
+    });
+  }
+}
+
+export function initializeAnalytics() {
+  if (typeof window === "undefined" || document.querySelector("script[data-tbm-ga4]")) return;
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = window.gtag || function gtag() { window.dataLayer.push(arguments); };
+  window.gtag("consent", "default", {
+    analytics_storage: "granted",
+    ad_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied",
+  });
+  window.gtag("js", new Date());
+  window.gtag("config", GA_MEASUREMENT_ID, { send_page_view: false });
+  const script = document.createElement("script");
+  script.async = true;
+  script.dataset.tbmGa4 = "true";
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+  document.head.appendChild(script);
+}
+
+if (typeof window !== "undefined") {
+  const initialConsent = readCookieConsent();
+  if (initialConsent) applyCookieConsent(initialConsent);
+}
 
 function toNumber(value, fallback = 0) {
   const num = Number(value);
@@ -6,7 +68,11 @@ function toNumber(value, fallback = 0) {
 }
 
 function hasGtag() {
-  return typeof window !== "undefined" && typeof window.gtag === "function";
+  return (
+    typeof window !== "undefined" &&
+    readCookieConsent()?.analytics === true &&
+    typeof window.gtag === "function"
+  );
 }
 
 function trackEvent(name, params = {}) {

@@ -1,5 +1,5 @@
-import image from "../assets/Images/sofa.png";
-import outdoor from "../assets/Images/outdoor.png";
+import image from "../assets/Images/sofa.webp";
+import outdoor from "../assets/Images/outdoor.webp";
 export const homeCategories = [
   {
     slug: "wall-panels",
