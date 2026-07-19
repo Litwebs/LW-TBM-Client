@@ -47,7 +47,9 @@ function homeCategoryLink(category) {
 
 export default function Home() {
   const [quickView, setQuickView] = useState(null);
-  const { products: liveProducts, isLive, categories } = useProducts();
+  const { products: liveProducts, isLive, categories, businessInfo } = useProducts();
+  const companyName = String(businessInfo?.companyName || "The British Manor").trim();
+  const companyEmail = String(businessInfo?.email || "hello@thebritishmanor.co.uk").trim();
   const productPool = isLive ? liveProducts : bestSellers();
   const featured = (() => {
     const seen = new Set();
@@ -72,10 +74,10 @@ export default function Home() {
     {
       "@context": "https://schema.org",
       "@type": "Organization",
-      name: "The British Manor",
+      name: companyName,
       url: SITE_BASE,
       logo: `${SITE_BASE}/images/tbm-logo.png`,
-      email: "hello@thebritishmanor.co.uk",
+      email: companyEmail,
       sameAs: [],
     },
     {
@@ -190,7 +192,14 @@ export default function Home() {
       </section>
 
       <div className="split">
-        <img className="split-img" src={bedroom} alt="Bedroom feature wall" loading="lazy" width="1200" height="900" />
+        <img
+          className="split-img"
+          src={bedroom}
+          alt="Bedroom feature wall"
+          loading="lazy"
+          width="1200"
+          height="900"
+        />
         <div className="split-content">
           <div className="eyebrow">House Philosophy</div>
           <h2>An interior should whisper, never shout.</h2>

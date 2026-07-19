@@ -157,7 +157,8 @@ h1,h2,h3,h4,h5,h6 { margin: 0; font-weight: 500; letter-spacing: var(--track); t
     grid-template-columns: minmax(0, 1fr);
   }
 }
-.nav a {
+.nav a,
+.nav .header-shop-trigger {
   font-size: 12px;
   letter-spacing: var(--track);
   text-transform: uppercase;
@@ -611,12 +612,14 @@ section.tight { padding: 64px 0; }
 }
 .breadcrumbs a:hover { color: var(--ink); }
 .shop-header { text-align: center; padding: 24px 0 56px; }
+.shop-header.shop-header-compact { padding: 14px 0 24px; }
 .shop-header h1 {
   font-family: var(--font-serif);
   font-size: clamp(28px, 3vw, 44px);
   font-weight: 400;
   letter-spacing: 0.06em;
 }
+.shop-header .intro-text { margin: 14px auto 0; max-width: 780px; }
 .shop-toolbar {
   display: flex; justify-content: space-between; align-items: center;
   border-top: 1px solid var(--border);
@@ -1136,7 +1139,14 @@ section.tight { padding: 64px 0; }
   letter-spacing: var(--track); margin-bottom: 20px;
 }
 .footer ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.footer-social-list { margin-top: 10px; }
 .footer a:hover { color: #fff; }
+.footer a:focus-visible,
+.footer button:focus-visible,
+.footer input:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.75);
+  outline-offset: 2px;
+}
 .footer-bottom {
   border-top: 1px solid #222;
   padding-top: 24px;

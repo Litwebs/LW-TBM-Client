@@ -116,8 +116,13 @@ export default function ProductCard({ product, onQuickView }) {
           src={currentImage || product.image}
           alt={`${product.title} luxury ${product.category || "interior"} by The British Manor`}
           loading="lazy"
+          decoding="async"
           width="600"
           height="600"
+          onError={(event) => {
+            event.currentTarget.onerror = null;
+            event.currentTarget.src = "/images/hero-bg.jpg";
+          }}
           style={{ position: "relative", zIndex: 1 }}
         />
         {nextImage && (
@@ -126,8 +131,13 @@ export default function ProductCard({ product, onQuickView }) {
             src={nextImage}
             alt={`${product.title} gallery preview`}
             loading="lazy"
+            decoding="async"
             width="600"
             height="600"
+            onError={(event) => {
+              event.currentTarget.onerror = null;
+              event.currentTarget.style.display = "none";
+            }}
             style={{
               position: "absolute",
               inset: 0,

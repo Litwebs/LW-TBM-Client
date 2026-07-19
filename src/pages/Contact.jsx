@@ -1,12 +1,22 @@
 import { useState } from "react";
 import { useApp } from "../context/AppContext.jsx";
+import { useProducts } from "../context/ProductsContext.jsx";
 import Seo from "../components/Seo.jsx";
 import { submitPublicEnquiry } from "../lib/api.js";
 
 export default function Contact() {
   const { toast } = useApp();
+  const { businessInfo } = useProducts();
   const [form, setForm] = useState({ name: "", phone: "", email: "", subject: "", message: "" });
   const [submitting, setSubmitting] = useState(false);
+  const businessEmail = String(businessInfo?.email || "hello@thebritishmanor.co.uk").trim();
+  const phoneText = String(businessInfo?.phone || "0161 555 0199").trim();
+  const phoneHref = phoneText.replace(/[^+\d]/g, "");
+  const hasValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(businessEmail);
+  const hasValidPhoneLink = /^\+?\d{7,20}$/.test(phoneHref);
+  const openingHours = String(
+    businessInfo?.openingHours || "Mon–Fri: 9am – 6pm\nSat–Sun: 10am – 5pm\nOpen 7 days a week",
+  ).trim();
   const update = (k) => (e) => setForm({ ...form, [k]: e.target.value });
   const submit = async (e) => {
     e.preventDefault();
@@ -105,18 +115,16 @@ export default function Contact() {
           <h3 style={{ fontSize: 12, letterSpacing: "0.18em", margin: "28px 0 12px" }}>
             Opening Hours
           </h3>
-          <p>
-            Mon–Fri: 9am – 6pm
-            <br />
-            Sat–Sun: 10am – 5pm
-            <br />
-            <em>Open 7 days a week</em>
-          </p>
+          <p style={{ whiteSpace: "pre-line" }}>{openingHours}</p>
           <h3 style={{ fontSize: 12, letterSpacing: "0.18em", margin: "28px 0 12px" }}>Contact</h3>
           <p>
-            <a href="mailto:hello@thebritishmanor.co.uk">hello@thebritishmanor.co.uk</a>
+            {hasValidEmail ? (
+              <a href={`mailto:${businessEmail}`}>{businessEmail}</a>
+            ) : (
+              businessEmail
+            )}
             <br />
-            <a href="tel:+441615550199">0161 555 0199</a>
+            {hasValidPhoneLink ? <a href={`tel:${phoneHref}`}>{phoneText}</a> : phoneText}
           </p>
           <h3 style={{ fontSize: 12, letterSpacing: "0.18em", margin: "28px 0 12px" }}>Delivery</h3>
           <p>Express delivery available at checkout. Standard UK delivery: 2–4 working days.</p>

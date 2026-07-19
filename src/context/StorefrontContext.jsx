@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import {
   fetchActiveAnnouncement,
   fetchActiveDiscounts,
-  fetchAllProducts,
+  fetchProductsPage,
   fetchPublicCategories,
   fetchPublicBusinessInfo,
   normalizeAnnouncement,
@@ -65,13 +65,14 @@ export function StorefrontProvider({ children }) {
     setError(null);
 
     try {
-      const [productsRes, categoriesRes, announcementRes, discountsRes, businessRes] = await Promise.allSettled([
-        fetchAllProducts({ pageSize: 30 }),
-        fetchPublicCategories(),
-        fetchActiveAnnouncement(),
-        fetchActiveDiscounts({ pageSize: 30 }),
-        fetchPublicBusinessInfo(),
-      ]);
+      const [productsRes, categoriesRes, announcementRes, discountsRes, businessRes] =
+        await Promise.allSettled([
+          fetchProductsPage({ page: 1, pageSize: 12, sort: "newest" }),
+          fetchPublicCategories(),
+          fetchActiveAnnouncement(),
+          fetchActiveDiscounts({ pageSize: 30 }),
+          fetchPublicBusinessInfo(),
+        ]);
 
       if (productsRes.status === "fulfilled") {
         setProducts(productsRes.value.items || []);
@@ -191,6 +192,7 @@ export function StorefrontProvider({ children }) {
       deliveryAddress,
       billingAddress,
       billingSameAsDelivery,
+      deliveryMethod,
       legalAcceptance,
       customerInstructions,
       discountCode,
@@ -211,6 +213,7 @@ export function StorefrontProvider({ children }) {
         deliveryAddress,
         billingAddress,
         billingSameAsDelivery,
+        deliveryMethod,
         legalAcceptance,
         customerInstructions,
         deliveryDate,

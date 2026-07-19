@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useApp } from "../context/AppContext.jsx";
 import { useProducts } from "../context/ProductsContext.jsx";
-import { SITE_BASE, CONTACT_EMAIL, fetchPublicProduct, slugify } from "../lib/api.js";
+import { SITE_BASE, fetchProductsPage, fetchPublicProduct, slugify } from "../lib/api.js";
 import { sanitizeHtml, htmlToText } from "../lib/html.js";
 import { trackViewItem } from "../lib/analytics.js";
 import Rating from "../components/Rating.jsx";
@@ -29,6 +29,8 @@ export default function Product() {
   const { findBySlug, products, businessInfo } = useProducts();
   const contextProduct = findBySlug(slug);
   const [fetchedProduct, setFetchedProduct] = useState(null);
+  const [relatedProducts, setRelatedProducts] = useState([]);
+  const [recentProducts, setRecentProducts] = useState([]);
   const [detailLoading, setDetailLoading] = useState(!contextProduct);
   const [detailError, setDetailError] = useState(null);
   // Prefer the detail response so recently edited variant fields are not
@@ -85,20 +87,79 @@ export default function Product() {
     return () => document.body.classList.remove("product-page-silver-theme");
   }, []);
 
+  useEffect(() => {
+    let active = true;
+
+    if (!product?.category) {
+      setRelatedProducts([]);
+      return () => {
+        active = false;
+      };
+    }
+
+    fetchProductsPage({
+      page: 1,
+      pageSize: 12,
+      category: product.category,
+      sort: "newest",
+    })
+      .then(({ items }) => {
+        if (!active) return;
+        setRelatedProducts(
+          (items || []).filter((item) => String(item.id) !== String(product.id)).slice(0, 6),
+        );
+      })
+      .catch(() => {
+        if (active) setRelatedProducts([]);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [product?.category, product?.id]);
+
+  useEffect(() => {
+    let active = true;
+
+    const recentIds = recentlyViewed
+      .filter((id) => String(id) !== String(product?.id || ""))
+      .slice(0, 6);
+
+    if (recentIds.length === 0) {
+      setRecentProducts([]);
+      return () => {
+        active = false;
+      };
+    }
+
+    Promise.allSettled(recentIds.map((id) => fetchPublicProduct(id)))
+      .then((results) => {
+        if (!active) return;
+        const items = results
+          .map((result) => (result.status === "fulfilled" ? result.value : null))
+          .filter(Boolean)
+          .slice(0, 6);
+        setRecentProducts(items);
+      })
+      .catch(() => {
+        if (active) setRecentProducts([]);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [product?.id, recentlyViewed]);
+
   const related = useMemo(
     () =>
-      products.filter((p) => p.category === product?.category && p.id !== product?.id).slice(0, 6),
-    [product, products],
+      relatedProducts.length > 0
+        ? relatedProducts
+        : products
+            .filter((p) => p.category === product?.category && p.id !== product?.id)
+            .slice(0, 6),
+    [product, products, relatedProducts],
   );
-  const recents = useMemo(
-    () =>
-      recentlyViewed
-        .map((id) => products.find((p) => p.id === id))
-        .filter(Boolean)
-        .filter((p) => p.id !== product?.id)
-        .slice(0, 6),
-    [recentlyViewed, product],
-  );
+  const recents = useMemo(() => recentProducts, [recentProducts]);
 
   const selectedVariant = useMemo(
     () =>
@@ -184,6 +245,7 @@ export default function Product() {
   const categorySlug = product.categorySlug || slugify(categoryName);
   const productUrl = `${SITE_BASE}/products/${product.slug}`;
   const altText = `${product.title} luxury ${categoryName} by The British Manor`;
+  const supportEmail = String(businessInfo?.email || "hello@thebritishmanor.co.uk").trim();
 
   const handleAdd = () => {
     if (!selectedVariant?.id || isOutOfStock) return;
@@ -212,7 +274,7 @@ export default function Product() {
     });
     navigate("/checkout");
   };
-  const enquireHref = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+  const enquireHref = `mailto:${supportEmail}?subject=${encodeURIComponent(
     `Enquiry: ${product.title} (${product.slug})`,
   )}&body=${encodeURIComponent(
     `Hello,\n\nI'd like to enquire about ${product.title} (${productUrl}).\n\nThanks,\n`,
@@ -234,8 +296,8 @@ export default function Product() {
     waterResistance: "Water resistance",
     warranty: "Warranty",
   };
-  const specifications = Object.entries(product.specifications || {}).filter(
-    ([, value]) => String(value || "").trim(),
+  const specifications = Object.entries(product.specifications || {}).filter(([, value]) =>
+    String(value || "").trim(),
   );
   const informationSections = [
     ["installation", "Installation"],
@@ -318,6 +380,10 @@ export default function Product() {
             width="1000"
             height="1000"
             fetchPriority="high"
+            onError={(event) => {
+              event.currentTarget.onerror = null;
+              event.currentTarget.src = "/images/hero-bg.jpg";
+            }}
           />
           <div className="pdp-thumbs">
             {thumbs.map((t, i) => (
@@ -326,9 +392,14 @@ export default function Product() {
                 src={t}
                 alt={`${product.title} image ${i + 1}`}
                 loading="lazy"
+                decoding="async"
                 width="120"
                 height="120"
                 className={i === activeThumbIndex ? "active" : ""}
+                onError={(event) => {
+                  event.currentTarget.onerror = null;
+                  event.currentTarget.style.display = "none";
+                }}
                 onClick={() => {
                   setMainImg(t);
                   setActiveThumbIndex(i);

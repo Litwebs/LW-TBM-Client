@@ -146,7 +146,8 @@ h4, h5, h6 { font-weight: 600; }
 }
 
 .nav { gap: 26px; }
-.nav a {
+.nav a,
+.nav .header-shop-trigger {
   font-family: var(--font-sans);
   font-size: 11px;
   letter-spacing: 0.26em;
@@ -155,7 +156,13 @@ h4, h5, h6 { font-weight: 600; }
   font-weight: 500;
   opacity: 0.85;
 }
-.nav a:hover, .nav a.active { color: var(--ink); opacity: 1; }
+.nav a:hover,
+.nav a.active,
+.nav .header-shop-trigger:hover,
+.nav .header-shop-trigger:focus-visible {
+  color: var(--ink);
+  opacity: 1;
+}
 .nav a::after { background: var(--brass); height: 1px; }
 
 .icon-btn { color: var(--ink); }

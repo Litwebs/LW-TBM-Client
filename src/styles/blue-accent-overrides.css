@@ -108,7 +108,8 @@ a:hover { color: var(--royal-blue); }
   padding: 14px 48px 16px;
   flex-wrap: wrap;
 }
-.nav-row a {
+.nav-row a,
+.nav-row .header-shop-trigger {
   font-family: var(--font-sans);
   font-size: 11px;
   letter-spacing: 0.34em;
@@ -117,7 +118,13 @@ a:hover { color: var(--royal-blue); }
   font-weight: 500;
   opacity: 0.85;
 }
-.nav-row a:hover, .nav-row a.active { opacity: 1; color: var(--royal-blue); }
+.nav-row a:hover,
+.nav-row a.active,
+.nav-row .header-shop-trigger:hover,
+.nav-row .header-shop-trigger:focus-visible {
+  opacity: 1;
+  color: var(--royal-blue);
+}
 
 /* Header icons take blue ink */
 .icon-btn { color: var(--manor-blue); }

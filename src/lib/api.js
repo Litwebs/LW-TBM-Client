@@ -6,7 +6,6 @@ export const SITE_BASE = import.meta.env.PROD
   ? "https://api.thebritishmanor.co.uk"
   : "http://localhost:5001";
 export const API_BASE = SITE_BASE;
-export const CONTACT_EMAIL = "hello@thebritishmanor.co.uk";
 
 export const api = axios.create({
   baseURL: API_BASE,
@@ -343,12 +342,35 @@ export async function fetchPublicDeliveryFee() {
   }
 }
 
+export async function fetchPublicDeliveryOptions({ postcode, country } = {}) {
+  try {
+    const response = await api.get("/api/orders/delivery-options", {
+      params: {
+        postcode: String(postcode || "").trim() || undefined,
+        country: String(country || "").trim() || undefined,
+      },
+    });
+    const payload = unwrapData(response);
+    return {
+      postcode: String(payload?.postcode || ""),
+      country: String(payload?.country || "United Kingdom"),
+      options: Array.isArray(payload?.options) ? payload.options : [],
+      vatRate: Number(payload?.vatRate || 0),
+      vatIncludedInPrices: Boolean(payload?.vatIncludedInPrices),
+    };
+  } catch (error) {
+    const message = requestMessage(error?.response || error) || "Could not load delivery options";
+    throw new Error(message);
+  }
+}
+
 export async function fetchPublicBusinessInfo() {
   try {
     const response = await api.get("/api/business-info/public");
     return unwrapData(response)?.business || null;
   } catch (error) {
-    const message = requestMessage(error?.response || error) || "Could not load business information";
+    const message =
+      requestMessage(error?.response || error) || "Could not load business information";
     throw new Error(message);
   }
 }

@@ -178,7 +178,14 @@ export default function Header() {
             </button>
           </div>
           <Link to="/" className="logo brand brand-center">
-            <img src="/images/tbm-logo.png" alt="The British Manor" className="brand-mark" />
+            <img
+              src="/images/tbm-logo.png"
+              alt="The British Manor"
+              className="brand-mark"
+              width="64"
+              height="64"
+              decoding="async"
+            />
           </Link>
           <div className="header-side header-side-right">
             <ProductSearch />

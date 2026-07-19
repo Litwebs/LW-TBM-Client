@@ -39,7 +39,18 @@ export default function CartDrawer() {
             <div className="cart-items">
               {cart.map((it) => (
                 <div key={it.key} className="cart-item">
-                  <img src={lineImageUrl(it)} alt="" />
+                  <img
+                    src={lineImageUrl(it)}
+                    alt=""
+                    width="80"
+                    height="80"
+                    loading="lazy"
+                    decoding="async"
+                    onError={(event) => {
+                      event.currentTarget.onerror = null;
+                      event.currentTarget.src = "/images/hero-bg.jpg";
+                    }}
+                  />
                   <div>
                     <div className="title">{it.product.title}</div>
                     <div className="meta">Variant: {it.variant?.name || "Default"}</div>

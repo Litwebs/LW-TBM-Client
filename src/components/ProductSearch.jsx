@@ -186,7 +186,18 @@ export default function ProductSearch() {
                           to={resultHref(product)}
                           onClick={close}
                         >
-                          <img src={product.image} alt="" width="88" height="88" />
+                          <img
+                            src={product.image}
+                            alt=""
+                            width="88"
+                            height="88"
+                            loading="lazy"
+                            decoding="async"
+                            onError={(event) => {
+                              event.currentTarget.onerror = null;
+                              event.currentTarget.src = "/images/hero-bg.jpg";
+                            }}
+                          />
                           <span className="product-search-result-copy">
                             <span className="product-search-category">{product.category}</span>
                             <strong>{product.title}</strong>

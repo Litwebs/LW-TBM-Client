@@ -3,6 +3,22 @@ import { useState } from "react";
 import { useApp } from "../context/AppContext.jsx";
 import { useStorefront } from "../context/StorefrontContext.jsx";
 
+function isValidWebUrl(value) {
+  const raw = String(value || "").trim();
+  if (!raw) return false;
+  try {
+    const parsed = new URL(raw);
+    return parsed.protocol === "http:" || parsed.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
+function findCategoryLink(categories, matcher) {
+  const category = (categories || []).find((item) => matcher.test(String(item?.name || "")));
+  return category ? `/collections/${category.slug}` : "";
+}
+
 export default function Footer() {
   const { toast } = useApp();
   const { categories, businessInfo } = useStorefront();
@@ -13,32 +29,70 @@ export default function Footer() {
     setEmail("");
     toast("Subscribed — thank you");
   };
-  const preferredShopLinks = [
-    ["Wall Panels", /panel/i],
-    ["Decking", /deck/i],
-    ["Furniture", /furniture|sofa|table|chair/i],
-    ["Sleep Collection", /sleep|bed|mattress/i],
-    ["Lighting", /light|lamp/i],
-  ]
-    .map(([label, pattern]) => {
-      const category = categories.find((item) => pattern.test(item.name));
-      return category ? { label, to: `/collections/${category.slug}` } : null;
-    })
-    .filter(Boolean);
-  const shopLinks = preferredShopLinks.length
-    ? preferredShopLinks
-    : categories.slice(0, 5).map((category) => ({
-        label: category.name,
-        to: `/collections/${category.slug}`,
-      }));
-  const phoneHref = String(businessInfo?.phone || "").replace(/[^+\d]/g, "");
+  const shopLinks = [
+    { label: "Wall Panels", to: findCategoryLink(categories, /wall\s*panel|acoustic/i) },
+    { label: "Decking", to: findCategoryLink(categories, /deck/i) },
+    { label: "Furniture", to: findCategoryLink(categories, /furniture|sofa|table|chair/i) },
+    { label: "Sleep Collection", to: findCategoryLink(categories, /sleep|bed|mattress/i) },
+    { label: "Lighting", to: findCategoryLink(categories, /light|lamp/i) },
+  ].filter((item) => item.to);
+
+  const helpLinks = [
+    { label: "Contact Us", to: "/contact" },
+    { label: "FAQs", to: "/faqs" },
+    { label: "Delivery Policy", to: "/policies#shipping" },
+    { label: "Returns & Refunds Policy", to: "/policies#returns" },
+  ];
+
+  const policyLinks = [
+    { label: "Terms & Conditions", to: "/policies#terms" },
+    { label: "Privacy Policy", to: "/policies#privacy" },
+    { label: "Cookie Policy", to: "/policies#cookies" },
+  ];
+
+  const companyLinks = [
+    { label: "About Us", to: "/about" },
+    { label: "Portfolio", to: "/portfolio" },
+    { label: "Reviews", to: "/reviews" },
+    { label: "Showroom", to: "/contact#showroom" },
+  ];
+
+  const tradeUrl = String(businessInfo?.tradeUrl || "").trim();
+  if (isValidWebUrl(tradeUrl)) {
+    companyLinks.push({ label: "Trade", href: tradeUrl });
+  }
+
+  const socialCandidates = [
+    ["Instagram", businessInfo?.socialLinks?.instagram || businessInfo?.instagramUrl],
+    ["Facebook", businessInfo?.socialLinks?.facebook || businessInfo?.facebookUrl],
+    ["TikTok", businessInfo?.socialLinks?.tiktok || businessInfo?.tiktokUrl],
+    ["YouTube", businessInfo?.socialLinks?.youtube || businessInfo?.youtubeUrl],
+    ["LinkedIn", businessInfo?.socialLinks?.linkedin || businessInfo?.linkedinUrl],
+    ["Pinterest", businessInfo?.socialLinks?.pinterest || businessInfo?.pinterestUrl],
+  ];
+  const socialLinks = socialCandidates
+    .map(([label, href]) => ({ label, href: String(href || "").trim() }))
+    .filter((item) => isValidWebUrl(item.href));
+
+  const businessEmail = String(businessInfo?.email || "").trim();
+  const hasValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(businessEmail);
+  const phoneText = String(businessInfo?.phone || "").trim();
+  const phoneHref = phoneText.replace(/[^+\d]/g, "");
+  const hasValidPhoneLink = /^\+?\d{7,20}$/.test(phoneHref);
   return (
     <footer className="footer">
       <div className="container">
         <div className="footer-grid footer-grid-with-policies">
           <div className="footer-brand-col">
             <div className="logo brand" style={{ color: "#fff", marginBottom: 16 }}>
-              <img src="/images/tbm-logo.png" alt="The British Manor" className="brand-mark" />
+              <img
+                src="/images/tbm-logo.png"
+                alt="The British Manor"
+                className="brand-mark"
+                width="64"
+                height="64"
+                decoding="async"
+              />
               <span className="brand-word">
                 The British Manor<small>Heritage · Elegance · Distinction</small>
               </span>
@@ -91,60 +145,84 @@ export default function Footer() {
           <div>
             <h5>Shop</h5>
             <ul>
-              <li><Link to="/collections/products">Shop all</Link></li>
-              {shopLinks.map((item) => <li key={item.to}><Link to={item.to}>{item.label}</Link></li>)}
+              {shopLinks.map((item) => (
+                <li key={item.to}>
+                  <Link to={item.to}>{item.label}</Link>
+                </li>
+              ))}
             </ul>
           </div>
           <div>
             <h5>Help</h5>
             <ul>
-              <li>
-                <Link to="/contact">Contact Us</Link>
-              </li>
-              <li>
-                <Link to="/faqs">FAQs</Link>
-              </li>
-              <li>
-                <Link to="/policies#shipping">Delivery Policy</Link>
-              </li>
-              <li>
-                <Link to="/policies#returns">Returns &amp; Refunds Policy</Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h5>Company</h5>
-            <ul>
-              <li>
-                <Link to="/about">About Us</Link>
-              </li>
-              <li><Link to="/portfolio">Portfolio</Link></li>
-              <li>
-                <Link to="/reviews">Reviews</Link>
-              </li>
+              {helpLinks.map((item) => (
+                <li key={item.to}>
+                  <Link to={item.to}>{item.label}</Link>
+                </li>
+              ))}
             </ul>
           </div>
           <div>
             <h5>Policies</h5>
             <ul>
-              <li>
-                <Link to="/policies#terms">Terms &amp; Conditions</Link>
-              </li>
-              <li>
-                <Link to="/policies#privacy">Privacy Policy</Link>
-              </li>
-              <li>
-                <Link to="/policies#cookies">Cookie Policy</Link>
-              </li>
+              {policyLinks.map((item) => (
+                <li key={item.to}>
+                  <Link to={item.to}>{item.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h5>Company</h5>
+            <ul>
+              {companyLinks.map((item) => (
+                <li key={item.to || item.href}>
+                  {item.to ? (
+                    <Link to={item.to}>{item.label}</Link>
+                  ) : (
+                    <a href={item.href} target="_blank" rel="noopener noreferrer">
+                      {item.label}
+                    </a>
+                  )}
+                </li>
+              ))}
             </ul>
           </div>
           <div className="footer-contact-col">
             <h5>Contact</h5>
             {businessInfo?.companyName && <p>{businessInfo.companyName}</p>}
             {businessInfo?.address && <p>{businessInfo.address}</p>}
-            {businessInfo?.email && <p><a href={`mailto:${businessInfo.email}`}>{businessInfo.email}</a></p>}
-            {businessInfo?.phone && <p><a href={`tel:${phoneHref}`}>{businessInfo.phone}</a></p>}
-            {businessInfo?.openingHours && <p className="footer-opening-hours">{businessInfo.openingHours}</p>}
+            {businessInfo?.email ? (
+              <p>
+                {hasValidEmail ? (
+                  <a href={`mailto:${businessEmail}`}>{businessEmail}</a>
+                ) : (
+                  businessEmail
+                )}
+              </p>
+            ) : null}
+            {businessInfo?.phone ? (
+              <p>{hasValidPhoneLink ? <a href={`tel:${phoneHref}`}>{phoneText}</a> : phoneText}</p>
+            ) : null}
+            {businessInfo?.openingHours ? (
+              <p className="footer-opening-hours" style={{ whiteSpace: "pre-line" }}>
+                {businessInfo.openingHours}
+              </p>
+            ) : null}
+            {socialLinks.length ? (
+              <>
+                <h5 style={{ marginTop: 20 }}>Social</h5>
+                <ul className="footer-social-list">
+                  {socialLinks.map((item) => (
+                    <li key={item.href}>
+                      <a href={item.href} target="_blank" rel="noopener noreferrer">
+                        {item.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : null}
           </div>
         </div>
         <div className="footer-bottom">

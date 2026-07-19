@@ -6,6 +6,7 @@ import { useApp } from "../context/AppContext.jsx";
 import { useStorefront } from "../context/StorefrontContext.jsx";
 import {
   fetchCustomerPortalMe,
+  fetchPublicDeliveryOptions,
   fetchPublicDeliveryFee,
   fetchPublicOrderByCheckoutSession,
 } from "../lib/api.js";
@@ -136,11 +137,11 @@ export default function Checkout() {
     lineUnitPrice,
     lineImageUrl,
   } = useApp();
-  const { createCheckoutOrder } = useStorefront();
+  const { createCheckoutOrder, validateDiscountForCart } = useStorefront();
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
-  const discountCode = searchParams.get("discount") || "";
+  const urlDiscountCode = searchParams.get("discount") || "";
   const sessionId = searchParams.get("session_id") || "";
   const isSuccessView = location.pathname === "/checkout/success";
   const isCancelView = location.pathname === "/checkout/cancel";
@@ -163,10 +164,20 @@ export default function Checkout() {
   });
   const [billingSameAsDelivery, setBillingSameAsDelivery] = useState(true);
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const [termsAcceptedAt, setTermsAcceptedAt] = useState("");
   const [errors, setErrors] = useState({});
   const [done, setDone] = useState(null);
   const [deliveryFee, setDeliveryFee] = useState(1);
   const [deliveryFeeLoading, setDeliveryFeeLoading] = useState(true);
+  const [deliveryOptions, setDeliveryOptions] = useState([]);
+  const [deliveryMethodCode, setDeliveryMethodCode] = useState("");
+  const [vatRate, setVatRate] = useState(0);
+  const [vatIncludedInPrices, setVatIncludedInPrices] = useState(true);
+  const [discountInput, setDiscountInput] = useState(String(urlDiscountCode || "").toUpperCase());
+  const [appliedDiscountCode, setAppliedDiscountCode] = useState("");
+  const [discountAmount, setDiscountAmount] = useState(0);
+  const [discountApplying, setDiscountApplying] = useState(false);
+  const [discountError, setDiscountError] = useState("");
   const [statusLoading, setStatusLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [portalCustomer, setPortalCustomer] = useState(null);
@@ -189,7 +200,14 @@ export default function Checkout() {
   );
   const hasSavedAddresses = savedAddresses.length > 0;
 
-  const total = subtotal + deliveryFee;
+  const totalBeforeDiscount = subtotal + deliveryFee;
+  const total = Math.max(0, totalBeforeDiscount - discountAmount);
+  const vatAmount =
+    vatRate > 0
+      ? vatIncludedInPrices
+        ? Number(((total * vatRate) / (100 + vatRate)).toFixed(2))
+        : Number(((total * vatRate) / 100).toFixed(2))
+      : 0;
 
   const update = (k, v) => setForm((f) => ({ ...f, [k]: v }));
   const doneStageIndex = done ? getCheckoutStageIndex(done) : 0;
@@ -205,9 +223,9 @@ export default function Checkout() {
     trackBeginCheckout({
       cart,
       lineUnitPrice,
-      coupon: discountCode || undefined,
+      coupon: appliedDiscountCode || undefined,
     });
-  }, [cart, discountCode, isCancelView, isSuccessView, lineUnitPrice]);
+  }, [appliedDiscountCode, cart, isCancelView, isSuccessView, lineUnitPrice]);
 
   useEffect(() => {
     if (isSuccessView || isCancelView) return;
@@ -216,20 +234,116 @@ export default function Checkout() {
     const loadDeliveryFee = async () => {
       setDeliveryFeeLoading(true);
       try {
-        const fee = await fetchPublicDeliveryFee();
-        if (!cancelled) setDeliveryFee(fee);
+        const optionsPayload = await fetchPublicDeliveryOptions({
+          postcode: form.postcode,
+          country: form.country,
+        });
+        if (cancelled) return;
+
+        const options = Array.isArray(optionsPayload?.options) ? optionsPayload.options : [];
+        setDeliveryOptions(options);
+        setVatRate(Number(optionsPayload?.vatRate || 0));
+        setVatIncludedInPrices(Boolean(optionsPayload?.vatIncludedInPrices));
+
+        const fallbackOption = options[0];
+        const selectedByBackend = options.find((opt) => opt.code === optionsPayload?.selectedCode);
+        const existing = options.find((opt) => opt.code === deliveryMethodCode);
+        const nextOption = existing || selectedByBackend || fallbackOption;
+
+        if (nextOption?.code) {
+          setDeliveryMethodCode(nextOption.code);
+          setDeliveryFee(Number(nextOption.fee || 0));
+        } else {
+          const fee = await fetchPublicDeliveryFee();
+          if (!cancelled) setDeliveryFee(fee);
+        }
       } catch {
-        if (!cancelled) setDeliveryFee(1);
+        if (!cancelled) {
+          setDeliveryOptions([]);
+          setDeliveryMethodCode("");
+          setVatRate(0);
+          setVatIncludedInPrices(true);
+          try {
+            const fee = await fetchPublicDeliveryFee();
+            if (!cancelled) setDeliveryFee(fee);
+          } catch {
+            if (!cancelled) setDeliveryFee(1);
+          }
+        }
       } finally {
         if (!cancelled) setDeliveryFeeLoading(false);
       }
     };
 
-    loadDeliveryFee();
+    const timer = setTimeout(loadDeliveryFee, 250);
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [deliveryMethodCode, form.country, form.postcode, isCancelView, isSuccessView]);
+
+  useEffect(() => {
+    if (!urlDiscountCode) return;
+    setDiscountInput(String(urlDiscountCode).toUpperCase());
+  }, [urlDiscountCode]);
+
+  useEffect(() => {
+    if (!urlDiscountCode) return;
+    if (appliedDiscountCode) return;
+    if (!cart.length) return;
+
+    const normalized = String(urlDiscountCode).trim().toUpperCase();
+    if (!normalized) return;
+
+    let cancelled = false;
+    const validateInitialDiscount = async () => {
+      setDiscountApplying(true);
+      setDiscountError("");
+      try {
+        const result = await validateDiscountForCart({
+          customer: {
+            email: form.email || user?.email,
+            firstName: form.firstName || user?.name,
+            lastName: form.lastName || "",
+            phone: form.phone,
+          },
+          cartItems: cart,
+          discountCode: normalized,
+        });
+        if (cancelled) return;
+        const amount = Number(result?.discountAmount || 0);
+        setAppliedDiscountCode(normalized);
+        setDiscountAmount(amount > 0 ? amount : 0);
+        if (amount <= 0) {
+          setDiscountError("Code is valid, but no eligible items were found in your cart.");
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setAppliedDiscountCode("");
+          setDiscountAmount(0);
+          setDiscountError(err?.message || "Invalid discount code");
+        }
+      } finally {
+        if (!cancelled) setDiscountApplying(false);
+      }
+    };
+
+    validateInitialDiscount();
     return () => {
       cancelled = true;
     };
-  }, [isCancelView, isSuccessView]);
+  }, [
+    appliedDiscountCode,
+    cart,
+    form.email,
+    form.firstName,
+    form.lastName,
+    form.phone,
+    urlDiscountCode,
+    user?.email,
+    user?.name,
+    validateDiscountForCart,
+  ]);
 
   useEffect(() => {
     if (!isSuccessView || !sessionId) return;
@@ -441,6 +555,10 @@ export default function Checkout() {
     if (!termsAccepted)
       e.termsAccepted = "You must accept the Terms & Conditions and Privacy Policy";
 
+    if (!deliveryMethodCode) {
+      e.deliveryMethod = "Select a delivery option";
+    }
+
     setErrors(e);
     if (e.termsAccepted) {
       window.requestAnimationFrame(() => {
@@ -495,12 +613,23 @@ export default function Checkout() {
         deliveryAddress: address,
         billingAddress,
         billingSameAsDelivery,
+        deliveryMethod: {
+          code: deliveryMethodCode,
+        },
         legalAcceptance: {
           accepted: true,
+          acceptedAt: termsAcceptedAt || new Date().toISOString(),
+          acceptedSource: "checkout_ui",
           termsVersion: "2026-07-14",
+          policyUrls: {
+            terms: `${window.location.origin}/policies#terms`,
+            privacy: `${window.location.origin}/policies#privacy`,
+            shipping: `${window.location.origin}/policies#shipping`,
+            returns: `${window.location.origin}/policies#returns`,
+          },
         },
         customerInstructions: form.notes,
-        discountCode: discountCode || undefined,
+        discountCode: appliedDiscountCode || undefined,
       });
 
       if (created?.checkoutUrl) {
@@ -645,6 +774,48 @@ export default function Checkout() {
         </button>
       </div>
     );
+
+  const applyDiscount = async (event) => {
+    event?.preventDefault?.();
+    const normalized = String(discountInput || "")
+      .trim()
+      .toUpperCase();
+    if (!normalized) return;
+
+    setDiscountApplying(true);
+    setDiscountError("");
+    try {
+      const result = await validateDiscountForCart({
+        customer: {
+          email: form.email || user?.email,
+          firstName: form.firstName || user?.name,
+          lastName: form.lastName || "",
+          phone: form.phone,
+        },
+        cartItems: cart,
+        discountCode: normalized,
+      });
+
+      const amount = Number(result?.discountAmount || 0);
+      setAppliedDiscountCode(normalized);
+      setDiscountAmount(amount > 0 ? amount : 0);
+      if (amount <= 0) {
+        setDiscountError("Code is valid, but no eligible items were found in your cart.");
+      }
+    } catch (err) {
+      setAppliedDiscountCode("");
+      setDiscountAmount(0);
+      setDiscountError(err?.message || "Invalid discount code");
+    } finally {
+      setDiscountApplying(false);
+    }
+  };
+
+  const clearDiscount = () => {
+    setAppliedDiscountCode("");
+    setDiscountAmount(0);
+    setDiscountError("");
+  };
 
   return (
     <div className="container">
@@ -908,6 +1079,34 @@ export default function Checkout() {
             </div>
           )}
 
+          <h3 style={{ fontSize: 13, letterSpacing: "0.18em", margin: "32px 0 20px" }}>
+            Delivery Method
+          </h3>
+          <div className="form-row">
+            <label>Choose delivery option</label>
+            <select
+              className={errors.deliveryMethod ? "is-invalid" : ""}
+              value={deliveryMethodCode}
+              onChange={(event) => {
+                const code = event.target.value;
+                setDeliveryMethodCode(code);
+                const selectedOption = deliveryOptions.find((opt) => opt.code === code);
+                if (selectedOption) {
+                  setDeliveryFee(Number(selectedOption.fee || 0));
+                }
+                setErrors((current) => ({ ...current, deliveryMethod: undefined }));
+              }}
+            >
+              {!deliveryOptions.length ? <option value="">Standard delivery</option> : null}
+              {deliveryOptions.map((option) => (
+                <option key={option.code} value={option.code}>
+                  {option.label} - A3{Number(option.fee || 0).toFixed(2)}
+                </option>
+              ))}
+            </select>
+            {errors.deliveryMethod && <div className="form-error">{errors.deliveryMethod}</div>}
+          </div>
+
           <h3 style={{ fontSize: 13, letterSpacing: "0.18em", margin: "32px 0 20px" }}>Payment</h3>
           <p className="muted" style={{ marginBottom: 8 }}>
             You will be redirected to secure Stripe checkout to complete payment.
@@ -940,6 +1139,14 @@ export default function Checkout() {
                 <div>{it.product.title}</div>
                 <div className="muted">{it.variant?.name || "Default"}</div>
                 <VariantAttributes variant={it.variant} compact />
+                {Number(it.variant?.compareAtPrice || 0) > Number(lineUnitPrice(it) || 0) ? (
+                  <div className="muted" style={{ marginTop: 4 }}>
+                    <span style={{ textDecoration: "line-through", marginRight: 8 }}>
+                      £{(Number(it.variant?.compareAtPrice || 0) * it.qty).toFixed(2)}
+                    </span>
+                    <span>£{(Number(lineUnitPrice(it) || 0) * it.qty).toFixed(2)}</span>
+                  </div>
+                ) : null}
                 <div
                   style={{
                     display: "inline-flex",
@@ -981,6 +1188,42 @@ export default function Checkout() {
               <div>£{(lineUnitPrice(it) * it.qty).toFixed(2)}</div>
             </div>
           ))}
+
+          <div style={{ marginTop: 16 }}>
+            <div className="form-row" style={{ marginBottom: 10 }}>
+              <label>Discount code</label>
+              <div style={{ display: "flex", gap: 8 }}>
+                <input
+                  value={discountInput}
+                  onChange={(event) => {
+                    setDiscountInput(event.target.value.toUpperCase());
+                    setDiscountError("");
+                  }}
+                  placeholder="Enter code"
+                />
+                <button
+                  type="button"
+                  onClick={applyDiscount}
+                  className="btn btn-outline"
+                  disabled={discountApplying || !String(discountInput || "").trim()}
+                >
+                  {discountApplying ? "Applying..." : "Apply"}
+                </button>
+                {appliedDiscountCode ? (
+                  <button type="button" className="btn btn-outline" onClick={clearDiscount}>
+                    Remove
+                  </button>
+                ) : null}
+              </div>
+            </div>
+            {appliedDiscountCode ? (
+              <div className="muted" style={{ marginTop: 4 }}>
+                Applied: {appliedDiscountCode}
+              </div>
+            ) : null}
+            {discountError ? <div className="form-error">{discountError}</div> : null}
+          </div>
+
           <div style={{ marginTop: 16 }}>
             <div className="summary-row">
               <span>Subtotal</span>
@@ -990,24 +1233,35 @@ export default function Checkout() {
               <span>Delivery</span>
               <span>{deliveryFeeLoading ? "Loading..." : `£${deliveryFee.toFixed(2)}`}</span>
             </div>
-            {discountCode && (
+            {appliedDiscountCode ? (
               <div className="summary-row">
-                <span>Discount Code</span>
-                <span>{discountCode}</span>
+                <span>Discount ({appliedDiscountCode})</span>
+                <span>-£{discountAmount.toFixed(2)}</span>
               </div>
-            )}
+            ) : null}
+            {vatRate > 0 ? (
+              <div className="summary-row">
+                <span>
+                  {vatIncludedInPrices ? `VAT (${vatRate}%) included` : `VAT (${vatRate}%)`}
+                </span>
+                <span>£{vatAmount.toFixed(2)}</span>
+              </div>
+            ) : null}
             <div className="summary-row total">
               <span>Total</span>
               <span>{deliveryFeeLoading ? "Calculating..." : `£${total.toFixed(2)}`}</span>
             </div>
           </div>
+
           <div className={`checkout-terms ${errors.termsAccepted ? "is-invalid" : ""}`}>
             <input
               ref={termsRef}
               type="checkbox"
               checked={termsAccepted}
               onChange={(event) => {
-                setTermsAccepted(event.target.checked);
+                const checked = event.target.checked;
+                setTermsAccepted(checked);
+                setTermsAcceptedAt(checked ? new Date().toISOString() : "");
                 setErrors((current) => ({ ...current, termsAccepted: undefined }));
               }}
             />

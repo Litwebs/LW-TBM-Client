@@ -33,6 +33,13 @@ export default function QuickViewModal({ product, onClose }) {
           <img
             src={product.image}
             alt={product.title}
+            width="900"
+            height="900"
+            decoding="async"
+            onError={(event) => {
+              event.currentTarget.onerror = null;
+              event.currentTarget.src = "/images/hero-bg.jpg";
+            }}
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
           <div style={{ padding: 32 }}>
