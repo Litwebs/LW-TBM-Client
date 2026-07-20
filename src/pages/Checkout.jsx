@@ -638,6 +638,10 @@ export default function Checkout() {
         return;
       }
 
+      if (created?.message) {
+        throw new Error(created.message);
+      }
+
       throw new Error("Could not start secure checkout.");
     } catch (err) {
       toast(err?.message || "Checkout failed. Please try again.");

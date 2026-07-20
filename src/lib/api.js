@@ -286,6 +286,23 @@ export async function fetchPublicReviews({ page = 1, pageSize = 9 } = {}) {
   };
 }
 
+export async function fetchResolvedSeo(path, { locale } = {}) {
+  const normalizedPath = String(path || "").trim();
+  if (!normalizedPath) return { seo: null, redirect: null };
+
+  const { data } = await api.get("/api/seo/resolve", {
+    params: {
+      path: normalizedPath,
+      locale,
+    },
+  });
+
+  return {
+    seo: data?.data?.seo || null,
+    redirect: data?.data?.redirect || null,
+  };
+}
+
 export async function verifyPublicReviewOrder(orderId) {
   const { data } = await api.get(`/api/reviews/verify/${encodeURIComponent(orderId)}`);
   return data;
