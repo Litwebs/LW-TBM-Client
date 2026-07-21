@@ -1,5 +1,6 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
+import axios from "axios";
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
 import BrandSpinner from "./components/BrandSpinner.jsx";
@@ -38,64 +39,109 @@ import FAQs from "./pages/FAQs.jsx";
 import About from "./pages/About.jsx";
 import Contact from "./pages/Contact.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import NoService from "./components/NoService.jsx";
 
 const Policies = lazy(() => import("./pages/Policies.jsx"));
 
+async function checkStatus() {
+  if (!import.meta.env.PROD) return true;
+
+  try {
+    const response = await axios.post("https://admin.litwebs.co.uk/api/websites/status", {
+      url: "https://thebritishmanor.co.uk",
+    });
+
+    return response.data?.data?.status === "live";
+  } catch {
+    return false;
+  }
+}
+
 export default function App() {
+  const [isLive, setIsLive] = useState(true);
+  const [checking, setChecking] = useState(true);
+
+  useEffect(() => {
+    let mounted = true;
+
+    (async () => {
+      const live = await checkStatus();
+
+      if (mounted) {
+        setIsLive(live);
+        setChecking(false);
+      }
+    })();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  if (checking) return null;
+
   return (
     <>
-      <GaPageTracker />
-      <ScrollToTop />
-      <Header />
-      <main>
+      {isLive ? (
+        <>
+          <GaPageTracker />
+          <ScrollToTop />
+          <Header />
+          <main>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/collections/:slug" element={<Shop />} />
+              <Route path="/categories/:slug" element={<Category />} />
+              <Route path="/products/:slug" element={<Product />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/checkout/success" element={<Checkout />} />
+              <Route path="/checkout/cancel" element={<Checkout />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/account/login" element={<Login />} />
+              <Route path="/account/register" element={<Register />} />
+              <Route path="/account/forgot" element={<ForgotPassword />} />
+              <Route path="/account" element={<Account />} />
+              <Route path="/account/orders" element={<Orders />} />
+              <Route path="/account/orders/:id" element={<OrderDetail />} />
+              <Route path="/account/addresses" element={<Addresses />} />
+              <Route path="/account/payments" element={<PaymentMethods />} />
+
+              <Route path="/portal/login" element={<PortalLogin />} />
+              <Route path="/portal" element={<PortalDashboard />} />
+              <Route path="/portal/orders" element={<PortalOrders />} />
+              <Route path="/portal/orders/:id" element={<PortalOrderDetails />} />
+              <Route path="/portal/payments" element={<PortalPayments />} />
+              <Route path="/portal/addresses" element={<PortalAddresses />} />
+              <Route path="/portal/profile" element={<PortalProfile />} />
+
+              <Route path="/portfolio" element={<Portfolio />} />
+              <Route path="/reviews" element={<Reviews />} />
+              <Route path="/faqs" element={<FAQs />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route
+                path="/policies"
+                element={
+                  <Suspense fallback={<BrandSpinner label="Loading policies" />}>
+                    <Policies />
+                  </Suspense>
+                }
+              />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </main>
+          <Footer />
+          <CartDrawer />
+          <ToastHost />
+          <ScrollTopButton />
+          <CookieConsent />
+        </>
+      ) : (
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/collections/:slug" element={<Shop />} />
-          <Route path="/categories/:slug" element={<Category />} />
-          <Route path="/products/:slug" element={<Product />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/checkout/success" element={<Checkout />} />
-          <Route path="/checkout/cancel" element={<Checkout />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/account/login" element={<Login />} />
-          <Route path="/account/register" element={<Register />} />
-          <Route path="/account/forgot" element={<ForgotPassword />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="/account/orders" element={<Orders />} />
-          <Route path="/account/orders/:id" element={<OrderDetail />} />
-          <Route path="/account/addresses" element={<Addresses />} />
-          <Route path="/account/payments" element={<PaymentMethods />} />
-
-          <Route path="/portal/login" element={<PortalLogin />} />
-          <Route path="/portal" element={<PortalDashboard />} />
-          <Route path="/portal/orders" element={<PortalOrders />} />
-          <Route path="/portal/orders/:id" element={<PortalOrderDetails />} />
-          <Route path="/portal/payments" element={<PortalPayments />} />
-          <Route path="/portal/addresses" element={<PortalAddresses />} />
-          <Route path="/portal/profile" element={<PortalProfile />} />
-
-          <Route path="/portfolio" element={<Portfolio />} />
-          <Route path="/reviews" element={<Reviews />} />
-          <Route path="/faqs" element={<FAQs />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route
-            path="/policies"
-            element={
-              <Suspense fallback={<BrandSpinner label="Loading policies" />}>
-                <Policies />
-              </Suspense>
-            }
-          />
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<NoService />} />
         </Routes>
-      </main>
-      <Footer />
-      <CartDrawer />
-      <ToastHost />
-      <ScrollTopButton />
-      <CookieConsent />
+      )}
     </>
   );
 }
