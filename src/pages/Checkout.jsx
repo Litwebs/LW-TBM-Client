@@ -79,6 +79,9 @@ function CheckoutConfirmationPending({ navigate }) {
         description="Your payment was successful and your order is being prepared."
         path="/checkout/success"
       />
+      <Helmet>
+        <script type="text/javascript">{`fbq('track', 'Purchase');`}</script>
+      </Helmet>
       <section className="checkout-complete-hero">
         <div className="checkout-complete-badge" aria-hidden="true">
           <ShieldIcon />
