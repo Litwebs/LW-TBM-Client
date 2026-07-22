@@ -717,6 +717,9 @@ export default function Checkout() {
           description="Complete your wall panel order with fast UK delivery."
           path="/checkout"
         />
+        <Helmet>
+          <script type="text/javascript">{`fbq('track', 'Purchase');`}</script>
+        </Helmet>
         <section className="checkout-complete-hero">
           <div className="checkout-complete-badge" aria-hidden="true">
             <ShieldIcon />
