@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { ShieldIcon, ToolIcon, TruckIcon } from "../components/Icons.jsx";
 import { useApp } from "../context/AppContext.jsx";
 import { useStorefront } from "../context/StorefrontContext.jsx";
